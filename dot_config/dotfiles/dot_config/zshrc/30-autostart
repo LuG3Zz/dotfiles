@@ -12,7 +12,9 @@ cat ~/.cache/wal/sequences
 # Fastfetch
 # -----------------------------------------------------
 if [[ $(tty) == *"pts"* ]]; then
-    fastfetch --config examples/13
+    if [[ $PWD == $HOME ]]; then
+        fastfetch --config examples/13
+    fi
 else
     echo
     if [ -f /bin/qtile ]; then
