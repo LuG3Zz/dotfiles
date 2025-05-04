@@ -24,4 +24,10 @@ return {
       opts = {},
     },
   },
+  {
+    "mg979/vim-visual-multi",
+  },
+  {
+    "eandrju/cellular-automaton.nvim",
+  },
 }

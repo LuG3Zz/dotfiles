@@ -1,14 +1,50 @@
 # -----------------------------------------------------
-# INIT
+# 代理切换函数
+# -----------------------------------------------------
+function proxy_toggle() {
+  # 定义代理配置
+  local proxy_addr="127.0.0.1:7897"
+  local proxy_vars=(
+    "http_proxy"
+    "https_proxy"
+    "all_proxy"
+  )
+
+  # 检测当前代理状态
+  if [[ -n "$http_proxy" ]]; then
+    # 移除代理
+    for var in $proxy_vars; do
+      unset $var
+    done
+    echo "❌ 代理已禁用"
+  else
+    # 设置代理
+    export http_proxy="http://$proxy_addr"
+    export https_proxy="http://$proxy_addr"
+    export all_proxy="socks5://$proxy_addr"
+    echo "✅ 代理已启用"
+    
+    # 可选：测试代理连通性
+    # curl -Is https://google.com | head -n1
+  fi
+}
+
+# -----------------------------------------------------
+# 初始化执行
+# -----------------------------------------------------
+# 启动时自动启用代理（取消注释以下行生效）
+proxy_toggle
+
+# -----------------------------------------------------
+# 命令补全配置
 # -----------------------------------------------------
 autoload -U compinit; compinit
-
 # -----------------------------------------------------
 # Exports
 # -----------------------------------------------------
 export EDITOR=nvim
 export PATH="/usr/lib/ccache/bin/:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
-export https_proxy="http://127.0.0.1:7897" 
-export http_proxy="http://127.0.0.1:7897" 
-export all_proxy="socks5://127.0.0.1:7897"
+# export https_proxy="http://127.0.0.1:7897" 
+# export http_proxy="http://127.0.0.1:7897" 
+# export all_proxy="socks5://127.0.0.1:7897"

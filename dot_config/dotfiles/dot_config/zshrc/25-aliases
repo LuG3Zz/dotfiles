@@ -20,6 +20,7 @@ alias wifi='nmtui'
 alias cleanup='~/.config/ml4w/scripts/cleanup.sh'
 alias lzg='lazygit'
 alias lzd='sudo lazydocker'
+alias so='source'
 
 # -----------------------------------------------------
 # ML4W Apps

@@ -14,4 +14,5 @@ return {
       vim.g.asynctasks_term_pos = "kitty"
     end,
   },
+  { "augmentcode/augment.vim" },
 }
