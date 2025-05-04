@@ -18,12 +18,12 @@ return {
       image_support = true,
     },
   },
-  {
-    {
-      "3rd/image.nvim",
-      opts = {},
-    },
-  },
+  -- {
+  --   {
+  --     "3rd/image.nvim",
+  --     opts = {},
+  --   },
+  -- },
   {
     "mg979/vim-visual-multi",
   },
