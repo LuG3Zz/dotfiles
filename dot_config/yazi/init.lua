@@ -1,4 +1,3 @@
-require("git"):setup()
 -- You can configure your bookmarks by lua language
 local bookmarks = {}
 
