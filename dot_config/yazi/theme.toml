@@ -10,14 +10,14 @@
 # : Flavor {{{
 
 [flavor]
-dark  = ""
+dark  = "dracula"
 light = ""
 
 # : }}}
 
 # : Manager {{{
 
-[manager]
+[mgr]
 cwd = { fg = "cyan" }
 
 # Hovered

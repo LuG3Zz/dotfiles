@@ -1,18 +1,23 @@
--- You can configure your bookmarks by lua language
-local bookmarks = {}
+-- ~/.config/yazi/init.lua
 
-local path_sep = package.config:sub(1, 1)
+require("bookmarks"):setup({
+	last_directory = { enable = false, persist = false, mode = "dir" },
+	persist = "none",
+	desc_format = "full",
+	file_pick_mode = "hover",
+	custom_desc_input = false,
+	notify = {
+		enable = false,
+		timeout = 1,
+		message = {
+			new = "New bookmark '<key>' -> '<folder>'",
+			delete = "Deleted bookmark in '<key>'",
+			delete_all = "Deleted all bookmarks",
+		},
+	},
+})
 
-require("yamb"):setup({
-	-- Optional, the path ending with path seperator represents folder.
-	bookmarks = bookmarks,
-	-- Optional, recieve notification everytime you jump.
-	jump_notify = true,
-	-- Optional, the cli of fzf.
-	cli = "fzf",
-	-- Optional, a string used for randomly generating keys, where the preceding characters have higher priority.
-	keys = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
-	-- Optional, the path of bookmarks
-	path = (ya.target_family() == "windows" and os.getenv("APPDATA") .. "\\yazi\\config\\bookmark")
-		or (os.getenv("HOME") .. "/.config/yazi/bookmark"),
+require("full-border"):setup({
+	-- Available values: ui.Border.PLAIN, ui.Border.ROUNDED
+	type = ui.Border.ROUNDED,
 })

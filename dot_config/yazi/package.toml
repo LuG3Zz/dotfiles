@@ -1,0 +1,39 @@
+[[plugin.deps]]
+use = "yazi-rs/plugins:git"
+rev = "71c4fc2"
+hash = ""
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:max-preview"
+rev = "71c4fc2"
+hash = ""
+
+[[plugin.deps]]
+use = "h-hg/yamb"
+rev = "22af003"
+hash = "7cc42012a7c2099f80064d228feb8d44"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:mount"
+rev = "7c174cc"
+hash = "b3f1d6ec3721d4061aad5f69cddb0cf9"
+
+[[plugin.deps]]
+use = "dedukun/bookmarks"
+rev = "fbb7c00"
+hash = "1d231a808d3344546380df33daf43e91"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:full-border"
+rev = "7c174cc"
+hash = "3996fc74044bc44144b323686f887e1"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:toggle-pane"
+rev = "7c174cc"
+hash = "d6f60c24d8c0cf57a855bf46115b2502"
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:dracula"
+rev = "d04a298"
+hash = "7b9ff01a0070cc9176e0c683329aeb26"
