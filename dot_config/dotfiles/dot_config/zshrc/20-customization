@@ -12,27 +12,53 @@ plugins=(
 )
 
 # -----------------------------------------------------
-# Set-up FZF key bindings (CTRL R for fuzzy history finder)
+# History
+# -----------------------------------------------------
+HISTFILE=~/.zsh_history
+HISTSIZE=100000
+SAVEHIST=100000
+setopt appendhistory sharehistory histignorealldups histreduceblanks
+
+# -----------------------------------------------------
+# FZF (CTRL R for fuzzy history, CTRL T for files)
 # -----------------------------------------------------
 source <(fzf --zsh)
-
-# zsh history
-HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
-setopt appendhistory
 
 # -----------------------------------------------------
 # Prompt (oh-my-posh)
 # -----------------------------------------------------
-eval "$(oh-my-posh init zsh --config /usr/share/oh-my-posh/themes/catppuccin.omp.json)"
+eval "$(oh-my-posh init zsh --config /usr/share/oh-my-posh/themes/catppuccin_mocha.omp.json)"
 eval "$(zoxide init zsh)"
 
-function y() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	yazi "$@" --cwd-file="$tmp"
-	IFS= read -r -d '' cwd < "$tmp"
-	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
-	rm -f -- "$tmp"
+# -----------------------------------------------------
+# Useful options
+# -----------------------------------------------------
+setopt autocd            # 直接输入目录名即可跳转
+setopt autopushd         # cd 时记录目录栈
+setopt correct           # 命令拼写纠正
+setopt interactivecomments # 允许在交互式 shell 中使用 # 注释
+
+# -----------------------------------------------------
+# Convenience functions
+# -----------------------------------------------------
+mkcd() { mkdir -p "$1" && cd "$1"; }
+extract() {
+    case "$1" in
+        *.tar.gz|*.tgz) tar xzf "$1" ;;
+        *.tar.xz) tar xJf "$1" ;;
+        *.tar.bz2) tar xjf "$1" ;;
+        *.zip) unzip "$1" ;;
+        *.rar) unrar x "$1" ;;
+        *.7z) 7z x "$1" ;;
+        *) echo "Unknown archive: $1" ;;
+    esac
+}
+
+y() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+    yazi "$@" --cwd-file="$tmp"
+    IFS= read -r -d '' cwd < "$tmp"
+    [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+    rm -f -- "$tmp"
 }
 
