@@ -33,7 +33,7 @@ function proxy_toggle() {
 # 初始化执行
 # -----------------------------------------------------
 # 启动时自动启用代理（取消注释以下行生效）
-proxy_toggle
+# proxy_toggle
 
 # -----------------------------------------------------
 # 命令补全配置
@@ -44,7 +44,7 @@ autoload -U compinit; compinit
 # -----------------------------------------------------
 export EDITOR=nvim
 export PATH="/usr/lib/ccache/bin/:$PATH"
-export ZSH="$HOME/.oh-my-zsh"
+# export ZSH="$HOME/.oh-my-zsh"
 # export https_proxy="http://127.0.0.1:7897" 
 # export http_proxy="http://127.0.0.1:7897" 
 # export all_proxy="socks5://127.0.0.1:7897"
