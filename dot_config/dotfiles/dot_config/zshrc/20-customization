@@ -27,7 +27,7 @@ source <(fzf --zsh)
 # -----------------------------------------------------
 # Prompt (oh-my-posh)
 # -----------------------------------------------------
-eval "$(oh-my-posh init zsh --config /usr/share/oh-my-posh/themes/catppuccin_mocha.omp.json)"
+eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/custom.omp.json)"
 eval "$(zoxide init zsh)"
 
 # -----------------------------------------------------
