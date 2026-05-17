@@ -59,18 +59,9 @@ fi
 
 # 显示方式选择：可以终端分页显示，也可以用 rofi 显示
 # 这里提供两种选项，通过命令行参数控制：./cheatsheet.sh [rofi|term]
-display_mode="${1:-term}"
-
-if [[ "$display_mode" == "rofi" ]]; then
-  # 使用 rofi 显示（需要安装 rofi）
-  # 将临时文件内容转换为 rofi 可读的格式（去掉制表符，用空格对齐）
-  column -t -s $'\t' "$TEMP_FILE" | rofi -dmenu -p "Mangowc 按键速查" -i -markup-rows
-else
-  # 终端显示，使用 less 分页
-  {
-    echo -e "${HEADER_COLOR}Mangowc 按键绑定速查表${RESET_COLOR}\n"
-    echo "类型    按键组合             动作/命令"
-    echo "----------------------------------------"
-    column -t -s $'\t' "$TEMP_FILE"
-  } | less -R
-fi
+{
+  echo -e "${HEADER_COLOR}Mango 按键绑定速查表${RESET_COLOR}\n"
+  echo "类型    按键组合             动作/命令"
+  echo "----------------------------------------"
+  column -t -s $'\t' "$TEMP_FILE"
+} | less -R
