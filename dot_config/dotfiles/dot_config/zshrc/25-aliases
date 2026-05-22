@@ -27,6 +27,7 @@ alias du='du -h'
 alias free='free -h'
 alias lzg='lazygit'
 alias lzd='sudo lazydocker'
+alias oc='opencode'
 
 # Navigation
 alias ..='cd ..'
