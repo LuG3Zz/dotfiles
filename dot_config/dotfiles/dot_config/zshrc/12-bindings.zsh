@@ -18,7 +18,10 @@ bindkey '^[[1;5D' backward-word
 bindkey '^f' fzf-file-widget
 
 # ---- Ctrl+R: FZF history search (overrides Zsh default bck-i-search) ----
-bindkey '^r' fzf-history-widget
-
+# 使用 zvm_after_init 确保在 Vi 模式初始化后绑定（否则被插件覆盖）
+function zvm_after_init() {
+    bindkey '^r' fzf-history-widget
+    bindkey '^f' fzf-file-widget
+}
 # ---- Ctrl+\: toggle autosuggest accept/reject ----
 bindkey '^\' autosuggest-toggle
