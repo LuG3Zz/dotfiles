@@ -29,7 +29,7 @@ export PATH="$HOME/.local/bin:$PATH"
 # -----------------------------------------------------
 # Starship config (co-located with zsh config)
 # -----------------------------------------------------
-export STARSHIP_CONFIG="$XDG_CONFIG_HOME/zshrc/starship.toml"
+export STARSHIP_CONFIG="$XDG_CONFIG_HOME/zshrc/.starship.toml"
 
 # -----------------------------------------------------
 # MANPAGER — render man pages with bat
