@@ -17,5 +17,8 @@ bindkey '^[[1;5D' backward-word
 # ---- Ctrl+F: FZF file search (no hidden files) ----
 bindkey '^f' fzf-file-widget
 
+# ---- Ctrl+R: FZF history search (overrides Zsh default bck-i-search) ----
+bindkey '^r' fzf-history-widget
+
 # ---- Ctrl+\: toggle autosuggest accept/reject ----
 bindkey '^\' autosuggest-toggle
