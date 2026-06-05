@@ -9,15 +9,51 @@ alias c='clear'
 alias nf='fastfetch'
 alias pf='fastfetch'
 alias ff='fastfetch'
-alias ls='eza -a --icons=always'
-alias ll='eza -al --icons=always'
-alias lt='eza -a --tree --level=1 --icons=always'
-alias shutdown='systemctl poweroff'
-alias reboot='systemctl reboot'
 alias v='$EDITOR'
 alias vim='$EDITOR'
 alias so='source'
-alias grep='grep --color=auto'
+alias shutdown='systemctl poweroff'
+alias reboot='systemctl reboot'
+alias lzg='lazygit'
+alias lzd='sudo lazydocker'
+alias oc='opencode'
+
+# -----------------------------------------------------
+# ls (eza) — with --group-directories-first for cleaner output
+# -----------------------------------------------------
+alias ls='eza --icons --group-directories-first'
+alias ll='eza -l --icons --git --group-directories-first'
+alias la='eza -la --icons --git --group-directories-first'
+alias lt='eza --tree --icons --group-directories-first'
+alias tree='eza --tree --icons --group-directories-first'
+alias llt='eza -l --icons --git --tree --level=2 --group-directories-first'
+
+# -----------------------------------------------------
+# cat (bat)
+# -----------------------------------------------------
+if command -v batcat &> /dev/null; then
+  alias cat='batcat'
+  alias catp='batcat --paging=never'
+else
+  alias cat='bat'
+  alias catp='bat --paging=never'
+fi
+
+# -----------------------------------------------------
+# fd
+# -----------------------------------------------------
+if command -v fdfind &> /dev/null; then
+  alias fd='fdfind'
+fi
+
+# -----------------------------------------------------
+# grep (ripgrep)
+# -----------------------------------------------------
+alias grep='rg'
+
+# -----------------------------------------------------
+# Safe defaults
+# -----------------------------------------------------
 alias cp='cp -iv'
 alias mv='mv -iv'
 alias rm='rm -i'
@@ -25,11 +61,10 @@ alias mkdir='mkdir -p'
 alias df='df -h'
 alias du='du -h'
 alias free='free -h'
-alias lzg='lazygit'
-alias lzd='sudo lazydocker'
-alias oc='opencode'
 
+# -----------------------------------------------------
 # Navigation
+# -----------------------------------------------------
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
@@ -49,3 +84,13 @@ alias pacr='sudo pacman -Rns'
 alias pacq='pacman -Q'
 alias yays='yay -Ss'
 alias yayu='yay -Syu'
+
+# -----------------------------------------------------
+# Git
+# -----------------------------------------------------
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit'
+alias gp='git push'
+alias gl='git log --oneline --graph'
+alias gd='git diff'

@@ -1,8 +1,17 @@
+# =====================================================
+# 00-init — 基础配置入口
+# =====================================================
+# 本文件是 Zsh 模块化配置的第一项（按字母序加载）。
+# 配置原则参考: BV1f6Go6sEFW "2026终极Zsh配置指南"
+# - 不使用框架/插件管理器，完全掌控
+# - 遵循 XDG Base Directory 标准
+# - 模块化拆分配置，按编号加载
+# =====================================================
+
 # -----------------------------------------------------
 # 代理切换函数
 # -----------------------------------------------------
 function proxy_toggle() {
-  # 定义代理配置
   local proxy_addr="127.0.0.1:7897"
   local proxy_vars=(
     "http_proxy"
@@ -10,41 +19,59 @@ function proxy_toggle() {
     "all_proxy"
   )
 
-  # 检测当前代理状态
   if [[ -n "$http_proxy" ]]; then
-    # 移除代理
     for var in $proxy_vars; do
       unset $var
     done
     echo "❌ 代理已禁用"
   else
-    # 设置代理
     export http_proxy="http://$proxy_addr"
     export https_proxy="http://$proxy_addr"
     export all_proxy="socks5://$proxy_addr"
     echo "✅ 代理已启用"
-    
-    # 可选：测试代理连通性
-    # curl -Is https://google.com | head -n1
   fi
 }
 
-# -----------------------------------------------------
-# 初始化执行
-# -----------------------------------------------------
 # 启动时自动启用代理（取消注释以下行生效）
 # proxy_toggle
 
 # -----------------------------------------------------
 # 命令补全配置
 # -----------------------------------------------------
-autoload -U compinit; compinit
+autoload -Uz compinit
+compinit -d "$XDG_CACHE_HOME/zsh/zcompdump"
+
+# 补全菜单和大小写不敏感
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+# -----------------------------------------------------
+# History configuration (XDG paths)
+# -----------------------------------------------------
+HISTFILE="$XDG_STATE_HOME/zsh/history"
+HISTSIZE=100000
+SAVEHIST=100000
+
+setopt APPEND_HISTORY          # 追加而非覆盖历史
+setopt SHARE_HISTORY           # 在多个终端会话间共享历史
+setopt EXTENDED_HISTORY        # 在历史文件中记录时间戳和持续时间
+setopt HIST_IGNORE_DUPS        # 连续重复的命令只保存一次
+setopt HIST_IGNORE_SPACE       # 以空格开头的命令不记入历史（秘密命令）
+setopt HIST_EXPIRE_DUPS_FIRST  # 历史记录达到上限时优先删除重复项
+setopt HIST_FIND_NO_DUPS       # 历史搜索时跳过重复显示
+setopt HIST_REDUCE_BLANKS      # 保存命令前去除多余空格
+
+# -----------------------------------------------------
+# Shell options
+# -----------------------------------------------------
+setopt AUTO_CD             # 输入目录名自动 cd，无需 cd 命令
+setopt NO_BEEP             # 禁用蜂鸣声
+setopt NUMERIC_GLOB_SORT   # 数字排序 (1,2,3...10 而非 1,10,2)
+setopt AUTOPUSHD           # cd 时自动将目录推入目录栈
+setopt CORRECT             # 命令拼写纠正
+setopt INTERACTIVECOMMENTS # 允许在交互式 shell 中使用 # 注释
+
 # -----------------------------------------------------
 # Exports
 # -----------------------------------------------------
-export EDITOR=nvim
 export PATH="/usr/lib/ccache/bin/:$PATH"
-# export ZSH="$HOME/.oh-my-zsh"
-# export https_proxy="http://127.0.0.1:7897" 
-# export http_proxy="http://127.0.0.1:7897" 
-# export all_proxy="socks5://127.0.0.1:7897"

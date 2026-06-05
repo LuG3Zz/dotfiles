@@ -1,42 +1,15 @@
 # -----------------------------------------------------
 # CUSTOMIZATION
 # -----------------------------------------------------
-POSH=agnoster
 
 # -----------------------------------------------------
-# Plugins
+# Zoxide — smart directory navigation
 # -----------------------------------------------------
-plugins=(
-    zsh-autosuggestions
-    zsh-syntax-highlighting
-)
-
-# -----------------------------------------------------
-# History
-# -----------------------------------------------------
-HISTFILE=~/.zsh_history
-HISTSIZE=100000
-SAVEHIST=100000
-setopt appendhistory sharehistory histignorealldups histreduceblanks
-
-# -----------------------------------------------------
-# FZF (CTRL R for fuzzy history, CTRL T for files)
-# -----------------------------------------------------
-source <(fzf --zsh)
-
-# -----------------------------------------------------
-# Prompt (oh-my-posh)
-# -----------------------------------------------------
-eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/custom.omp.json)"
 eval "$(zoxide init zsh)"
 
 # -----------------------------------------------------
-# Useful options
+# Useful options (not already set in 00-init)
 # -----------------------------------------------------
-setopt autocd            # 直接输入目录名即可跳转
-setopt autopushd         # cd 时记录目录栈
-setopt correct           # 命令拼写纠正
-setopt interactivecomments # 允许在交互式 shell 中使用 # 注释
 
 # -----------------------------------------------------
 # Convenience functions
@@ -61,4 +34,3 @@ y() {
     [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
     rm -f -- "$tmp"
 }
-
