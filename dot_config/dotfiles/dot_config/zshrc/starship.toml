@@ -1,7 +1,6 @@
 palette = 'catppuccin_mocha'
 
 format = """
-$os\
 $username\
 $directory\
 $git_branch\
@@ -14,8 +13,7 @@ $character"""
 add_newline = false
 
 [os]
-disabled = false
-style = "fg:red"
+disabled = true
 
 [username]
 show_always = true
