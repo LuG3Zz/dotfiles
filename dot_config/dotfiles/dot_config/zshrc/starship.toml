@@ -231,8 +231,8 @@ format = " [bun](italic) [◫ ($version)](bold bright-green)"
 version_format = "${raw}"
 
 [python]
-format = " [py](italic) [${symbol}${version}]($style) [$virtualenv](italic bright-cyan)"
-symbol = "[⌉](bold bright-blue)⌊ "
+format = " [${symbol}${version}]($style) [$virtualenv](italic bright-cyan)"
+symbol = " "
 version_format = "${raw}"
 style = "bold bright-yellow"
 
