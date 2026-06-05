@@ -5,6 +5,7 @@ $username\
 $directory\
 $git_branch\
 $git_status\
+$python\
 $fill\
 $cmd_duration\
 $line_break\
@@ -39,6 +40,11 @@ style = "fg:lavender"
 show_milliseconds = false
 min_time = 2000
 format = "⏱️ $duration"
+
+[python]
+symbol = " "
+style = "fg:sapphire"
+format = '[$symbol$virtualenv]($style)'
 
 [character]
 success_symbol = "[❯](fg:green)"
