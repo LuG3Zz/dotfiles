@@ -25,7 +25,7 @@
 # 加载模块化配置（支持 custom 覆盖）
 # -----------------------------------------------------
 for f in ~/.config/zshrc/*; do
-    if [ ! -d "$f" ]; then
+    if [ ! -d "$f" ] && [[ "$f" != *.toml ]]; then
         c="${f/.config\/zshrc/.config\/zshrc\/custom}"
         [[ -f "$c" ]] && source "$c" || source "$f"
     fi
