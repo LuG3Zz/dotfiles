@@ -1,36 +1,39 @@
-#            _
-#    _______| |__  _ __ ___
-#   |_  / __| '_ \| '__/ __|
-#  _ / /\__ \ | | | | | (__
-# (_)___|___/_| |_|_|  \___|
+# =====================================================
+# .zshrc — 模块化 Zsh 配置加载器
+# =====================================================
 #
-# -----------------------------------------------------
-# ML4W zshrc loader
-# -----------------------------------------------------
+# 本文件自动加载 ~/.config/zshrc/ 下的所有模块化配置。
+# 如需覆盖某个模块，在 ~/.config/zshrc/custom/ 下
+# 放置同名文件即可（优先级更高）。
+#
+# 额外自定义配置可放入 ~/.zshrc_custom。
+#
+# 配置结构参考:
+#   ~/.config/zshrc/
+#   ├── 00-init           基础配置
+#   ├── 05-fzf.zsh        FZF 模糊搜索
+#   ├── 10-plugins.zsh    插件管理
+#   ├── 12-bindings.zsh   快捷键绑定
+#   ├── 14-prompt.zsh     Starship 提示符
+#   ├── 20-customization  工具配置 + 函数
+#   ├── 25-aliases        别名
+#   ├── 30-autostart      启动任务
+#   └── .starship.toml    Starship 主题
+# =====================================================
 
-# DON'T CHANGE THIS FILE
-
-# You can define your custom configuration by adding
-# files in ~/.config/zshrc
-# or by creating a folder ~/.config/zshrc/custom
-# with copies of files from ~/.config/zshrc
 # -----------------------------------------------------
-
+# 加载模块化配置（支持 custom 覆盖）
 # -----------------------------------------------------
-# Load modular configarion
-# -----------------------------------------------------
-
 for f in ~/.config/zshrc/*; do
-    if [ ! -d $f ]; then
-        c=`echo $f | sed -e "s=.config/zshrc=.config/zshrc/custom="`
-        [[ -f $c ]] && source $c || source $f
+    if [ ! -d "$f" ]; then
+        c="${f/.config\/zshrc/.config\/zshrc\/custom}"
+        [[ -f "$c" ]] && source "$c" || source "$f"
     fi
 done
 
 # -----------------------------------------------------
-# Load single customization file (if exists)
+# 加载单文件自定义配置
 # -----------------------------------------------------
-
 if [ -f ~/.zshrc_custom ]; then
     source ~/.zshrc_custom
 fi
