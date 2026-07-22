@@ -1,0 +1,3 @@
+#!/bin/bash
+chezmoi execute-template -f {{ joinPath .chezmoi.sourceDir "etc/keyd/default.conf.tmpl" | quote }} | sudo tee /etc/keyd/default.conf > /dev/null
+sudo keyd reload
