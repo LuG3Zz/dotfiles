@@ -22,10 +22,13 @@ vim.pack.add({
   gh('mason-org/mason.nvim'),
   gh('mason-org/mason-lspconfig.nvim'),
   gh('neovim/nvim-lspconfig'),
+  gh('alker0/chezmoi.vim'),
   gh('nickjvandyke/opencode.nvim'),
 })
 
 -- 显式加载需要在 init 期间配置的插件（opt/ 目录需 packadd）
+-- chezmoi.vim 需在 filetype/syntax 之前加载，放最前
+vim.cmd.packadd('chezmoi.vim')
 vim.cmd.packadd('nvim')                -- catppuccin/nvim
 vim.cmd.packadd('nvim-treesitter')
 vim.cmd.packadd('mini.pick')
@@ -115,9 +118,21 @@ if starter_ok then
     return content
   end
 
+  -- 自定义 dotfiles 操作入口
+  local dotfiles_section = {
+    { name = 'Edit Neovim config',     action = 'lua vim.cmd("edit ~/.config/nvim/init.lua")',      section = 'Dotfiles (chezmoi)' },
+    { name = 'Edit Zsh config',        action = 'lua vim.cmd("edit ~/.zshrc")',                     section = 'Dotfiles (chezmoi)' },
+    { name = 'Edit Tmux config',       action = 'lua vim.cmd("edit ~/.tmux.conf")',                 section = 'Dotfiles (chezmoi)' },
+    { name = 'Edit Keyd config',       action = 'lua vim.cmd("edit /etc/keyd/default.conf")',       section = 'Dotfiles (chezmoi)' },
+    { name = 'Edit Hyprland config',   action = 'lua vim.cmd("edit ~/.config/hypr/hyprland.conf")', section = 'Dotfiles (chezmoi)' },
+    { name = 'Chezmoi apply',          action = '!cd ~/.local/share/chezmoi && chezmoi apply',      section = 'Dotfiles (chezmoi)' },
+    { name = 'Chezmoi status',         action = '!cd ~/.local/share/chezmoi && git status',         section = 'Dotfiles (chezmoi)' },
+  }
+
   starter.setup({
     evaluate_single = true,
     items = {
+      dotfiles_section,
       starter.sections.builtin_actions(),
       starter.sections.recent_files(10, false),
       starter.sections.recent_files(10, true),
@@ -126,7 +141,7 @@ if starter_ok then
     content_hooks = {
       header_hook,
       starter.gen_hook.adding_bullet(),
-      starter.gen_hook.indexing('all', { 'Builtin Actions' }),
+      starter.gen_hook.indexing('all', { 'Dotfiles (chezmoi)', 'Builtin Actions' }),
       starter.gen_hook.padding(1, 1),
     },
   })
