@@ -16,6 +16,7 @@ vim.pack.add({
   gh('folke/snacks.nvim'),
   gh('nvim-lualine/lualine.nvim'),
   gh('HiPhish/rainbow-delimiters.nvim'),
+  gh('Bekaboo/dropbar.nvim'),
   gh('stevearc/oil.nvim'),
   gh('saghen/blink.lib'),
   gh('saghen/blink.cmp'),
@@ -43,6 +44,7 @@ vim.cmd.packadd('mini.surround')
 vim.cmd.packadd('snacks.nvim')
 vim.cmd.packadd('lualine.nvim')
 vim.cmd.packadd('rainbow-delimiters.nvim')
+vim.cmd.packadd('dropbar.nvim')
 vim.cmd.packadd('oil.nvim')
 vim.cmd.packadd('blink.lib')            -- blink.cmp 依赖
 vim.cmd.packadd('blink.cmp')
@@ -290,6 +292,12 @@ end
 -- ====== 多光标 ======
 -- vim-visual-multi: 使用默认键位
 -- <C-n> 选词，<C-x> 跳过，<C-p> 移除
+
+-- ====== 代码结构导航栏 (dropbar) ======
+local dropbar_ok, dropbar = pcall(require, 'dropbar')
+if dropbar_ok then
+  dropbar.setup({})
+end
 
 -- ====== 彩虹括号 ======
 -- rainbow-delimiters.nvim: 使用 Treesitter 高亮括号层级

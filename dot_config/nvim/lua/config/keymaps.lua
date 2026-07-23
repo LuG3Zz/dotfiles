@@ -102,6 +102,19 @@ map('n', 'zk', 'zckzOzz', { desc = 'Close current fold, open previous' })
 map('n', '<leader>ui', vim.show_pos, { desc = 'Inspect highlight group' })
 map('n', '<leader>uI', '<cmd>InspectTree<CR>', { desc = 'Inspect Treesitter tree' })
 
+-- ====== 代码结构导航 (dropbar) ======
+map('n', '<leader>;', function()
+  require('dropbar.api').pick()
+end, { desc = 'Pick symbols in winbar' })
+
+map('n', '[;', function()
+  require('dropbar.api').goto_context_start()
+end, { desc = 'Go to start of current context' })
+
+map('n', '];', function()
+  require('dropbar.api').select_next_context()
+end, { desc = 'Select next context' })
+
 -- ====== Terminal 模式窗口导航 ======
 map('t', '<C-h>', '<cmd>wincmd h<CR>', { desc = 'Terminal: Go to left window' })
 map('t', '<C-j>', '<cmd>wincmd j<CR>', { desc = 'Terminal: Go to lower window' })
