@@ -67,7 +67,6 @@ if catppuccin_ok then
       treesitter = true,
       cmp = true,
       snacks = true,
-      lualine = true,
       rainbow_delimiters = true,
     },
   })
