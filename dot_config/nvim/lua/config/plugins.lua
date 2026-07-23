@@ -296,7 +296,19 @@ end
 -- ====== 代码结构导航栏 (dropbar) ======
 local dropbar_ok, dropbar = pcall(require, 'dropbar')
 if dropbar_ok then
-  dropbar.setup({})
+  dropbar.setup({
+    bar = {
+      sources = function(buf, _)
+        local sources = require('dropbar.sources')
+        local utils = require('dropbar.utils')
+        -- LSP 优先，显示函数/类层级；回退到 treesitter 再到文件路径
+        return {
+          utils.source.fallback({ sources.lsp, sources.treesitter, sources.path }),
+        }
+      end,
+      truncate = true,
+    },
+  })
 end
 
 -- ====== 彩虹括号 ======
