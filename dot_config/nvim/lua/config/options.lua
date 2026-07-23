@@ -39,3 +39,46 @@ vim.opt.showmode = false       -- 状态行已显示模式，无需重复
 -- 隐藏缩进标记（0.12+ 内置）
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+
+-- ====== 取自 Duy NG 参考配置 ======
+
+-- 滚动上下文
+vim.opt.scrolloff = 10
+vim.opt.sidescrolloff = 8
+
+-- 智能缩进
+vim.opt.smartindent = true
+vim.opt.autoindent = true
+vim.opt.shiftround = true
+
+-- 保持视图位置
+vim.opt.splitkeep = 'screen'
+
+-- 行为增强
+vim.opt.confirm = true          -- 退出时确认保存
+vim.opt.hidden = true           -- 允许隐藏 buffer
+vim.opt.showmatch = true        -- 输入括号时短暂高亮匹配
+vim.opt.matchtime = 2           -- 匹配高亮时长
+vim.opt.backspace = 'indent,eol,start'
+vim.opt.virtualedit = 'block'   -- 可视块模式可移出文本末尾
+
+-- 搜索增强
+vim.opt.grepprg = 'rg --vimgrep'
+vim.opt.grepformat = '%f:%l:%c:%m'
+
+-- 单词构成（破折号视为单词一部分）
+vim.opt.iskeyword:append('-')
+vim.opt.path:append('**')
+
+-- 性能与显示
+vim.opt.synmaxcol = 300         -- 大文件截断语法高亮
+vim.opt.smoothscroll = true     -- 平滑滚动
+vim.opt.foldlevel = 99          -- 默认展开所有折叠
+vim.opt.fillchars:append({
+  eob = ' ',                     -- 文件末尾空白行用空格
+  diff = '╱',
+  fold = ' ',
+  foldopen = '▾',
+  foldclose = '▸',
+  foldsep = ' ',
+})
