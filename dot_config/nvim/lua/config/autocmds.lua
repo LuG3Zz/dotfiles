@@ -33,6 +33,12 @@ autocmd('LspAttach', {
 
     local bufopts = { buffer = args.buf, silent = true }
 
+    -- 绕过 method_wrapper deprecation bug：直接读 server_capabilities
+    local function lsp_supports(method)
+      local cap_path = vim.lsp.protocol._request_name_to_server_capability[method]
+      return cap_path and vim.tbl_get(client.server_capabilities, unpack(cap_path)) ~= nil
+    end
+
     -- 跳转到定义
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, vim.tbl_extend('force', bufopts, { desc = 'LSP: Go to definition' }))
     -- 跳转到实现
@@ -53,7 +59,7 @@ autocmd('LspAttach', {
     vim.keymap.set('n', ']d', vim.diagnostic.goto_next, vim.tbl_extend('force', bufopts, { desc = 'LSP: Next diagnostic' }))
 
     -- 格式化
-    if client.supports_method('textDocument/formatting') then
+    if lsp_supports('textDocument/formatting') then
       vim.keymap.set({ 'n', 'v' }, '<leader>lf', function()
         vim.lsp.buf.format({ async = false, timeout_ms = 5000 })
       end, vim.tbl_extend('force', bufopts, { desc = 'LSP: Format buffer' }))
@@ -65,7 +71,7 @@ autocmd('LspAttach', {
     end, vim.tbl_extend('force', bufopts, { desc = 'LSP: Toggle inlay hints' }))
 
     -- Code lens
-    if client.supports_method('textDocument/codeLens') then
+    if lsp_supports('textDocument/codeLens') then
       vim.keymap.set('n', '<leader>ll', vim.lsp.codelens.run, vim.tbl_extend('force', bufopts, { desc = 'LSP: Run codelens' }))
       vim.keymap.set('n', '<leader>lL', vim.lsp.codelens.refresh, vim.tbl_extend('force', bufopts, { desc = 'LSP: Refresh codelens' }))
     end
