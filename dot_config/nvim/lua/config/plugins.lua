@@ -122,7 +122,7 @@ if snacks_ok then
     ╚═════╝ ╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝╚══════╝ ╚═════╝
         ]],
         keys = {
-          { icon = '󰛓 ', key = 'd', desc = 'Dotfiles (chezmoi)', action = ':lua require("oil").open_float("~/.local/share/chezmoi")' },
+          { icon = '󰛓 ', key = 'd', desc = 'Dotfiles (chezmoi)', action = ':lua require("mini.pick").start({ source = { items = vim.fn.systemlist({"find", vim.fn.expand("~/.local/share/chezmoi"), "-type", "f", "-not", "-path", "*/.git/*"}), name = "Dotfiles" } })' },
           { icon = ' ', key = 'f', desc = 'Find File',          action = ':Pick files' },
           { icon = ' ', key = 'r', desc = 'Recent Files',       action = ':lua require("mini.pick").start({ source = { items = vim.v.oldfiles, name = "Recent files" } })' },
           { icon = ' ', key = 'q', desc = 'Quit',               action = ':qa' },
