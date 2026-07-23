@@ -158,6 +158,7 @@ if oil_ok then
       border = 'rounded',
     },
     keymaps = {
+      ['q'] = 'actions.close',
       ['<C-h>'] = false,
       ['<M-h>'] = 'actions.select_split',
     },
