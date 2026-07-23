@@ -34,9 +34,15 @@ map('n', '<leader>wq', '<C-w>q', { desc = 'Close window' })
 -- ====== 文件浏览 (Oil) ======
 map('n', '<leader>e', function()
   require('oil').open_float()
-  vim.schedule(function()
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-p>', true, false, true), 'tm', false)
-  end)
+
+  -- 等 Oil 加载完内容后自动打开预览
+  local delay = 400
+  vim.defer_fn(function()
+    local oil = require('oil')
+    if oil.get_cursor_entry() then
+      oil.open_preview({})
+    end
+  end, delay)
 end, { desc = 'Open file explorer (float + preview)' })
 
 -- ====== 搜索 (mini.pick) ======

@@ -215,6 +215,7 @@ if oil_ok then
       max_width = 0.6,
       max_height = 0.8,
       border = 'rounded',
+      preview_split = 'auto',
     },
     keymaps = {
       ['q'] = 'actions.close',
