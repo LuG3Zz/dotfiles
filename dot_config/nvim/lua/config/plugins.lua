@@ -177,11 +177,12 @@ local lualine_ok, lualine = pcall(require, 'lualine')
 if lualine_ok then
   lualine.setup({
     options = {
-      theme = 'catppuccin',
+      theme = 'catppuccin-mocha',
       icons_enabled = true,
       component_separators = { left = '', right = '' },
       section_separators = { left = '', right = '' },
       disabled_filetypes = { statusline = { 'dashboard', 'alpha' } },
+      globalstatus = true,
     },
     sections = {
       lualine_a = { { 'mode', separator = { left = '' }, right_padding = 2 } },
