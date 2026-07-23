@@ -13,6 +13,7 @@ vim.pack.add({
   gh('nvim-mini/mini.pick'),
   gh('nvim-mini/mini.ai'),
   gh('nvim-mini/mini.surround'),
+  gh('nvim-mini/mini.starter'),
   gh('stevearc/oil.nvim'),
   gh('saghen/blink.lib'),
   gh('saghen/blink.cmp'),
@@ -30,6 +31,7 @@ vim.cmd.packadd('nvim-treesitter')
 vim.cmd.packadd('mini.pick')
 vim.cmd.packadd('mini.ai')
 vim.cmd.packadd('mini.surround')
+vim.cmd.packadd('mini.starter')
 vim.cmd.packadd('oil.nvim')
 vim.cmd.packadd('blink.lib')            -- blink.cmp 依赖
 vim.cmd.packadd('blink.cmp')
@@ -82,6 +84,52 @@ end
 local surround_ok, surround = pcall(require, 'mini.surround')
 if surround_ok then
   surround.setup({})
+end
+
+-- ====== 启动 Dashboard ======
+local starter_ok, starter = pcall(require, 'mini.starter')
+if starter_ok then
+  -- ██████╗ BROWNLU ██╗   ██╗ logo
+  local logo = {
+    '██████╗ ██████╗  ██████╗ ██╗    ██╗███╗   ██╗██╗     ██╗   ██╗',
+    '██╔══██╗██╔══██╗██╔═══██╗██║    ██║████╗  ██║██║     ██║   ██║',
+    '██████╔╝██████╔╝██║   ██║██║ █╗ ██║██╔██╗ ██║██║     ██║   ██║',
+    '██╔══██╗██╔══██╗██║   ██║██║███╗██║██║╚██╗██║██║     ██║   ██║',
+    '██████╔╝██║  ██║╚██████╔╝╚███╔███╔╝██║ ╚████║███████╗╚██████╔╝',
+    '╚═════╝ ╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝╚══════╝ ╚═════╝',
+  }
+
+  -- 自定义 header hook：在顶部插入 logo
+  local header_hook = function(content)
+    local header = {}
+    table.insert(header, { { type = 'empty', string = '' } })
+    for _, line in ipairs(logo) do
+      table.insert(header, { { type = 'empty', string = line } })
+    end
+    table.insert(header, { { type = 'empty', string = '' } })
+    table.insert(header, { { type = 'empty', string = '   Welcome back, brownlu' } })
+    table.insert(header, { { type = 'empty', string = '' } })
+    for i = #header, 1, -1 do
+      table.insert(content, 1, header[i])
+    end
+    return content
+  end
+
+  starter.setup({
+    evaluate_single = true,
+    items = {
+      starter.sections.builtin_actions(),
+      starter.sections.recent_files(10, false),
+      starter.sections.recent_files(10, true),
+      starter.sections.sessions(5, true),
+    },
+    content_hooks = {
+      header_hook,
+      starter.gen_hook.adding_bullet(),
+      starter.gen_hook.indexing('all', { 'Builtin Actions' }),
+      starter.gen_hook.padding(1, 1),
+    },
+  })
 end
 
 -- ====== 文件浏览 ======
