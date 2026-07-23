@@ -121,12 +121,15 @@ if snacks_ok then
         ]],
         keys = {
           { icon = '󰛓 ', key = 'd', desc = 'Dotfiles (chezmoi)', action = ':e ~/.local/share/chezmoi' },
-          { icon = ' ', key = 'q', desc = 'Quit',              action = ':qa' },
+          { icon = ' ', key = 'f', desc = 'Find File',          action = ':Pick files' },
+          { icon = ' ', key = 'r', desc = 'Recent Files',       action = ':Pick oldfiles' },
+          { icon = ' ', key = 'q', desc = 'Quit',               action = ':qa' },
         },
       },
       sections = {
         { section = 'header' },
         { section = 'keys', gap = 1, padding = 1 },
+        { section = 'hitokoto' },
       },
     },
     -- 通知系统（替换默认 vim.notify）
@@ -160,6 +163,16 @@ if snacks_ok then
     quickfile = { enabled = true },
   })
 
+  -- 注册一言格言 section（每次打开 Dashboard 时刷新）
+  local hitokoto_ok, hitokoto = pcall(require, 'config.hitokoto')
+  if hitokoto_ok then
+    snacks.dashboard.sections.hitokoto = function()
+      return {
+        align = 'center',
+        text = { { hitokoto.dashboard_text(), hl = 'SpecialComment' } },
+      }
+    end
+  end
 end
 
 -- ====== 状态栏 (lualine) ======
