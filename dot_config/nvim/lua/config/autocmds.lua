@@ -51,6 +51,29 @@ autocmd('LspAttach', {
     vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, vim.tbl_extend('force', bufopts, { desc = 'LSP: Previous diagnostic' }))
     -- 下一个诊断
     vim.keymap.set('n', ']d', vim.diagnostic.goto_next, vim.tbl_extend('force', bufopts, { desc = 'LSP: Next diagnostic' }))
+
+    -- 格式化
+    if client.supports_method('textDocument/formatting') then
+      vim.keymap.set({ 'n', 'v' }, '<leader>lf', function()
+        vim.lsp.buf.format({ async = false, timeout_ms = 5000 })
+      end, vim.tbl_extend('force', bufopts, { desc = 'LSP: Format buffer' }))
+    end
+
+    -- Inlay hints 开关
+    vim.keymap.set('n', '<leader>li', function()
+      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({}), nil)
+    end, vim.tbl_extend('force', bufopts, { desc = 'LSP: Toggle inlay hints' }))
+
+    -- Code lens
+    if client.supports_method('textDocument/codeLens') then
+      vim.keymap.set('n', '<leader>ll', vim.lsp.codelens.run, vim.tbl_extend('force', bufopts, { desc = 'LSP: Run codelens' }))
+      vim.keymap.set('n', '<leader>lL', vim.lsp.codelens.refresh, vim.tbl_extend('force', bufopts, { desc = 'LSP: Refresh codelens' }))
+    end
+
+    -- 文档符号（需 mini.pick 已加载）
+    vim.keymap.set('n', '<leader>ls', function()
+      vim.lsp.buf.document_symbol({})
+    end, vim.tbl_extend('force', bufopts, { desc = 'LSP: Document symbols' }))
   end,
 })
 
