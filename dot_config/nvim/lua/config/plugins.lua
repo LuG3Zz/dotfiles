@@ -152,6 +152,11 @@ local oil_ok, oil = pcall(require, 'oil')
 if oil_ok then
   oil.setup({
     default_file_explorer = true,
+    float = {
+      max_width = 0.6,
+      max_height = 0.8,
+      border = 'rounded',
+    },
     keymaps = {
       ['<C-h>'] = false,
       ['<M-h>'] = 'actions.select_split',

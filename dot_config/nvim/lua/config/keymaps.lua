@@ -24,7 +24,9 @@ map('n', '<leader>wh', '<C-w>s', { desc = 'Split horizontally' })
 map('n', '<leader>wq', '<C-w>q', { desc = 'Close window' })
 
 -- ====== 文件浏览 (Oil) ======
-map('n', '<leader>e', '<cmd>Oil<CR>', { desc = 'Open file explorer' })
+map('n', '<leader>e', function()
+  require('oil').open_float()
+end, { desc = 'Open file explorer (float)' })
 
 -- ====== 搜索 (mini.pick) ======
 map('n', '<leader>f', '<cmd>Pick files<CR>', { desc = 'Find files' })
