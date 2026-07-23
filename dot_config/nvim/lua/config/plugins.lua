@@ -204,6 +204,13 @@ local oil_ok, oil = pcall(require, 'oil')
 if oil_ok then
   oil.setup({
     default_file_explorer = true,
+    preview_win = {
+      update_on_cursor_moved = true,
+      preview_method = 'fast_scratch',
+      win_options = {
+        winhl = 'Normal:NormalFloat',
+      },
+    },
     float = {
       max_width = 0.6,
       max_height = 0.8,
