@@ -137,7 +137,6 @@ if snacks_ok then
       sections = {
         { section = 'header' },
         { section = 'keys', gap = 1, padding = 1 },
-        { section = 'startup' },
       },
     },
     -- 通知系统（替换默认 vim.notify）
