@@ -145,3 +145,20 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
     vim.opt_local.filetype = 'sh'
   end,
 })
+
+-- 保存 chezmoi 源文件后自动 apply
+local chezmoi_dir = vim.fn.expand('~/.local/share/chezmoi') .. '/'
+autocmd('BufWritePost', {
+  group = user_group,
+  callback = function()
+    local file = vim.api.nvim_buf_get_name(0)
+    if file:sub(1, #chezmoi_dir) ~= chezmoi_dir then
+      return
+    end
+    vim.system({ 'chezmoi', 'apply' }, { text = true }, function(obj)
+      if obj.code ~= 0 then
+        vim.notify('chezmoi apply: ' .. (obj.stdout or obj.stderr or ''), vim.log.levels.WARN)
+      end
+    end)
+  end,
+})
