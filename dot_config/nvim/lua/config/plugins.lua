@@ -120,17 +120,8 @@ if snacks_ok then
     ╚═════╝ ╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝╚══════╝ ╚═════╝
         ]],
         keys = {
-          { icon = ' ', key = 'e', desc = 'Neovim Config',  action = ':e ~/.config/nvim/init.lua' },
-          { icon = ' ', key = 'z', desc = 'Zsh Config',     action = ':e ~/.zshrc' },
-          { icon = ' ', key = 't', desc = 'Tmux Config',    action = ':e ~/.tmux.conf' },
-          { icon = '󰌌 ', key = 'k', desc = 'Keyd Config',    action = ':e /etc/keyd/default.conf' },
-          { icon = '󰖳 ', key = 'h', desc = 'Hyprland Config', action = ':e ~/.config/hypr/hyprland.conf' },
-          { icon = '󰊢 ', key = 's', desc = 'Chezmoi Status',  action = ':!cd ~/.local/share/chezmoi && git status' },
-          { icon = ' ', key = 'f', desc = 'Find File',      action = ':Pick files' },
-          { icon = ' ', key = 'g', desc = 'Grep',           action = ':Pick grep' },
-          { icon = ' ', key = 'r', desc = 'Recent Files',   action = ':Pick oldfiles' },
-          { icon = ' ', key = 'c', desc = 'NVim Config Dir', action = ':e ~/.config/nvim/lua/config' },
-          { icon = ' ', key = 'q', desc = 'Quit',           action = ':qa' },
+          { icon = '󰛓 ', key = 'd', desc = 'Dotfiles (chezmoi)', action = ':e ~/.local/share/chezmoi' },
+          { icon = ' ', key = 'q', desc = 'Quit',              action = ':qa' },
         },
       },
       sections = {
