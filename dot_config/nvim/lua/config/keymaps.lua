@@ -34,8 +34,13 @@ map('n', '<leader>g', '<cmd>Pick grep<CR>', { desc = 'Grep search' })
 map('n', '<leader>b', '<cmd>Pick buffers<CR>', { desc = 'Find buffers' })
 map('n', '<leader>h', '<cmd>Pick help<CR>', { desc = 'Find help' })
 
--- ====== 撤销历史 (内置 0.12) ======
-map('n', '<leader>u', '<cmd>Undotree<CR>', { desc = 'Undo tree' })
+-- ====== 撤销树 (mbbill/undotree) ======
+map('n', '<leader>u', '<cmd>UndotreeToggle<CR>', { desc = 'Toggle undo tree' })
+
+-- ====== 无干扰写作 ======
+map('n', '<leader>z', function()
+  require('zen-mode').toggle()
+end, { desc = 'Toggle zen mode' })
 
 -- ====== 文本操作 ======
 map('n', '<leader>y', '"+y', { desc = 'Yank to clipboard' })

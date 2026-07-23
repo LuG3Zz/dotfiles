@@ -24,6 +24,10 @@ vim.pack.add({
   gh('neovim/nvim-lspconfig'),
   gh('alker0/chezmoi.vim'),
   gh('nickjvandyke/opencode.nvim'),
+  gh('windwp/nvim-autopairs'),
+  gh('folke/flash.nvim'),
+  gh('mbbill/undotree'),
+  gh('folke/zen-mode.nvim'),
 })
 
 -- 显式加载需要在 init 期间配置的插件（opt/ 目录需 packadd）
@@ -43,6 +47,10 @@ vim.cmd.packadd('mason.nvim')
 vim.cmd.packadd('mason-lspconfig.nvim')
 vim.cmd.packadd('nvim-lspconfig')
 vim.cmd.packadd('opencode.nvim')
+vim.cmd.packadd('nvim-autopairs')
+vim.cmd.packadd('flash.nvim')
+vim.cmd.packadd('undotree')
+vim.cmd.packadd('zen-mode.nvim')
 
 -- ====== 主题：Catppuccin Mocha ======
 local catppuccin_ok, catppuccin = pcall(require, 'catppuccin')
@@ -173,6 +181,56 @@ if wk_ok then
       marks = true,
       registers = true,
       spelling = { enabled = false },
+    },
+  })
+end
+
+-- ====== 自动补全括号/引号 ======
+local autopairs_ok, autopairs = pcall(require, 'nvim-autopairs')
+if autopairs_ok then
+  autopairs.setup({})
+end
+
+-- ====== 增强字符跳转 (f/t) ======
+local flash_ok, flash = pcall(require, 'flash')
+if flash_ok then
+  flash.setup({
+    modes = {
+      char = {
+        enabled = true,
+        jump_labels = true,
+      },
+    },
+    highlight = {
+        backdrop = true,
+        groups = { match = 'DiffAdd', label = 'String' },
+    },
+  })
+end
+
+-- ====== 撤销树浏览 ======
+-- mbbill/undotree: `<leader>u` 切换撤销树
+-- 已通过 pcall 安全加载，无需额外 setup
+
+-- ====== 无干扰写作模式 ======
+local zen_ok, zen = pcall(require, 'zen-mode')
+if zen_ok then
+  zen.setup({
+    window = {
+      options = {
+        number = true,
+        relativenumber = true,
+      },
+    },
+    plugins = {
+      options = {
+        enabled = true,
+        ruler = false,
+        showcmd = false,
+      },
+      tmux = { enabled = false }, -- 未使用 tmux
+      kitty = { enabled = false },
+      alacritty = { enabled = false },
     },
   })
 end
