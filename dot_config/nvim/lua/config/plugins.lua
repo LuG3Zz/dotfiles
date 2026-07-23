@@ -13,7 +13,9 @@ vim.pack.add({
   gh('nvim-mini/mini.pick'),
   gh('nvim-mini/mini.ai'),
   gh('nvim-mini/mini.surround'),
-  gh('nvim-mini/mini.starter'),
+  gh('folke/snacks.nvim'),
+  gh('nvim-lualine/lualine.nvim'),
+  gh('HiPhish/rainbow-delimiters.nvim'),
   gh('stevearc/oil.nvim'),
   gh('saghen/blink.lib'),
   gh('saghen/blink.cmp'),
@@ -38,7 +40,9 @@ vim.cmd.packadd('nvim-treesitter')
 vim.cmd.packadd('mini.pick')
 vim.cmd.packadd('mini.ai')
 vim.cmd.packadd('mini.surround')
-vim.cmd.packadd('mini.starter')
+vim.cmd.packadd('snacks.nvim')
+vim.cmd.packadd('lualine.nvim')
+vim.cmd.packadd('rainbow-delimiters.nvim')
 vim.cmd.packadd('oil.nvim')
 vim.cmd.packadd('blink.lib')            -- blink.cmp 依赖
 vim.cmd.packadd('blink.cmp')
@@ -62,7 +66,9 @@ if catppuccin_ok then
     integrations = {
       treesitter = true,
       cmp = true,
-      indent_blankline = { enabled = false },
+      snacks = true,
+      lualine = true,
+      rainbow_delimiters = true,
     },
   })
   vim.cmd.colorscheme('catppuccin')
@@ -97,61 +103,96 @@ if surround_ok then
   surround.setup({})
 end
 
--- ====== 启动 Dashboard ======
-local starter_ok, starter = pcall(require, 'mini.starter')
-if starter_ok then
-  -- ██████╗ BROWNLU ██╗   ██╗ logo
-  local logo = {
-    '██████╗ ██████╗  ██████╗ ██╗    ██╗███╗   ██╗██╗     ██╗   ██╗',
-    '██╔══██╗██╔══██╗██╔═══██╗██║    ██║████╗  ██║██║     ██║   ██║',
-    '██████╔╝██████╔╝██║   ██║██║ █╗ ██║██╔██╗ ██║██║     ██║   ██║',
-    '██╔══██╗██╔══██╗██║   ██║██║███╗██║██║╚██╗██║██║     ██║   ██║',
-    '██████╔╝██║  ██║╚██████╔╝╚███╔███╔╝██║ ╚████║███████╗╚██████╔╝',
-    '╚═════╝ ╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝╚══════╝ ╚═════╝',
-  }
-
-  -- 自定义 header hook：在顶部插入 logo
-  local header_hook = function(content)
-    local header = {}
-    table.insert(header, { { type = 'empty', string = '' } })
-    for _, line in ipairs(logo) do
-      table.insert(header, { { type = 'empty', string = line } })
-    end
-    table.insert(header, { { type = 'empty', string = '' } })
-    table.insert(header, { { type = 'empty', string = '   Welcome back, brownlu' } })
-    table.insert(header, { { type = 'empty', string = '' } })
-    for i = #header, 1, -1 do
-      table.insert(content, 1, header[i])
-    end
-    return content
-  end
-
-  -- 自定义 dotfiles 操作入口
-  local dotfiles_section = {
-    { name = 'Edit Neovim config',     action = 'lua vim.cmd("edit ~/.config/nvim/init.lua")',      section = 'Dotfiles (chezmoi)' },
-    { name = 'Edit Zsh config',        action = 'lua vim.cmd("edit ~/.zshrc")',                     section = 'Dotfiles (chezmoi)' },
-    { name = 'Edit Tmux config',       action = 'lua vim.cmd("edit ~/.tmux.conf")',                 section = 'Dotfiles (chezmoi)' },
-    { name = 'Edit Keyd config',       action = 'lua vim.cmd("edit /etc/keyd/default.conf")',       section = 'Dotfiles (chezmoi)' },
-    { name = 'Edit Hyprland config',   action = 'lua vim.cmd("edit ~/.config/hypr/hyprland.conf")', section = 'Dotfiles (chezmoi)' },
-    { name = 'Chezmoi apply',          action = '!cd ~/.local/share/chezmoi && chezmoi apply',      section = 'Dotfiles (chezmoi)' },
-    { name = 'Chezmoi status',         action = '!cd ~/.local/share/chezmoi && git status',         section = 'Dotfiles (chezmoi)' },
-  }
-
-  starter.setup({
-    evaluate_single = true,
-    items = {
-      dotfiles_section,
-      starter.sections.builtin_actions(),
-      starter.sections.recent_files(10, false),
-      starter.sections.recent_files(10, true),
-      starter.sections.sessions(5, true),
+-- ====== snacks.nvim 一体化增强 ======
+-- 提供 UI 增强：Dashboard、通知、缩进线、滚动条、状态列
+local snacks_ok, snacks = pcall(require, 'snacks')
+if snacks_ok then
+  snacks.setup({
+    -- 启动 Dashboard（替换 mini.starter）
+    dashboard = {
+      enabled = true,
+      preset = {
+        header = [[
+    ██████╗ ██████╗  ██████╗ ██╗    ██╗███╗   ██╗██╗     ██╗   ██╗
+    ██╔══██╗██╔══██╗██╔═══██╗██║    ██║████╗  ██║██║     ██║   ██║
+    ██████╔╝██████╔╝██║   ██║██║ █╗ ██║██╔██╗ ██║██║     ██║   ██║
+    ██╔══██╗██╔══██╗██║   ██║██║███╗██║██║╚██╗██║██║     ██║   ██║
+    ██████╔╝██║  ██║╚██████╔╝╚███╔███╔╝██║ ╚████║███████╗╚██████╔╝
+    ╚═════╝ ╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝╚══════╝ ╚═════╝
+        ]],
+        keys = {
+          { icon = ' ', key = 'e', desc = 'Neovim Config',  action = ':e ~/.config/nvim/init.lua' },
+          { icon = ' ', key = 'z', desc = 'Zsh Config',     action = ':e ~/.zshrc' },
+          { icon = ' ', key = 't', desc = 'Tmux Config',    action = ':e ~/.tmux.conf' },
+          { icon = '󰌌 ', key = 'k', desc = 'Keyd Config',    action = ':e /etc/keyd/default.conf' },
+          { icon = '󰖳 ', key = 'h', desc = 'Hyprland Config', action = ':e ~/.config/hypr/hyprland.conf' },
+          { icon = '󰊢 ', key = 's', desc = 'Chezmoi Status',  action = ':!cd ~/.local/share/chezmoi && git status' },
+          { icon = ' ', key = 'f', desc = 'Find File',      action = ':Pick files' },
+          { icon = ' ', key = 'g', desc = 'Grep',           action = ':Pick grep' },
+          { icon = ' ', key = 'r', desc = 'Recent Files',   action = ':Pick oldfiles' },
+          { icon = ' ', key = 'c', desc = 'NVim Config Dir', action = ':e ~/.config/nvim/lua/config' },
+          { icon = ' ', key = 'q', desc = 'Quit',           action = ':qa' },
+        },
+      },
+      sections = {
+        { section = 'header' },
+        { section = 'keys', gap = 1, padding = 1 },
+        { section = 'startup' },
+      },
     },
-    content_hooks = {
-      header_hook,
-      starter.gen_hook.adding_bullet(),
-      starter.gen_hook.indexing('all', { 'Dotfiles (chezmoi)', 'Builtin Actions' }),
-      starter.gen_hook.padding(1, 1),
+    -- 通知系统（替换默认 vim.notify）
+    notifier = {
+      enabled = true,
+      timeout = 3000,
     },
+    -- 缩进指示线（替代 indent-blankline）
+    indent = {
+      enabled = true,
+      indent = {
+        animate = { enabled = true },
+      },
+      chunk = {
+        enabled = true,
+        only_current = true,
+      },
+    },
+    -- 右侧滚动条
+    scroll = {
+      enabled = true,
+    },
+    -- 增强状态列（行号区 + fold/git/diagnostic）
+    statuscolumn = {
+      enabled = true,
+    },
+    -- 禁用不需要的组件
+    bigfile = { enabled = true },
+    picker = { enabled = false },    -- 使用 mini.pick
+    words = { enabled = false },     -- 使用 LSP
+    quickfile = { enabled = true },
+  })
+
+end
+
+-- ====== 状态栏 (lualine) ======
+local lualine_ok, lualine = pcall(require, 'lualine')
+if lualine_ok then
+  lualine.setup({
+    options = {
+      theme = 'catppuccin',
+      icons_enabled = true,
+      component_separators = { left = '', right = '' },
+      section_separators = { left = '', right = '' },
+      disabled_filetypes = { statusline = { 'dashboard', 'alpha' } },
+    },
+    sections = {
+      lualine_a = { { 'mode', separator = { left = '' }, right_padding = 2 } },
+      lualine_b = { 'branch', 'diff', 'diagnostics' },
+      lualine_c = { { 'filename', path = 1 } },
+      lualine_x = { 'filetype', 'encoding', 'fileformat' },
+      lualine_y = { 'progress' },
+      lualine_z = { { 'location', separator = { right = '' }, left_padding = 2 } },
+    },
+    extensions = { 'oil' },
   })
 end
 
@@ -238,6 +279,10 @@ end
 -- ====== 多光标 ======
 -- vim-visual-multi: 使用默认键位
 -- <C-n> 选词，<C-x> 跳过，<C-p> 移除
+
+-- ====== 彩虹括号 ======
+-- rainbow-delimiters.nvim: 使用 Treesitter 高亮括号层级
+-- 默认配置即可工作，无需额外 setup
 
 -- ====== 其余插件 ======
 -- blink.cmp 配置在 completion.lua 中
