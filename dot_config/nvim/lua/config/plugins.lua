@@ -379,13 +379,27 @@ end
 local obs_ok, obs = pcall(require, 'obsidian')
 if obs_ok then
   obs.setup({
+    -- 动态检测 vault：从当前文件向上找 .obsidian 目录
     workspaces = {
-      { name = 'ALL-IN-ONE', path = '~/Documents/OB/ALL-IN-ONE' },
+      {
+        name = 'auto',
+        path = function()
+          local f = vim.fn.expand('%:p')
+          local root = vim.fs.root(f, '.obsidian')
+          return assert(root, 'Not in an Obsidian vault')
+        end,
+      },
     },
-    notes_subdir = '',
     daily_notes = {
       folder = 'Daily',
       date_format = '%Y-%m-%d',
+    },
+    -- 模板（与 Templater 共用同一目录）
+    templates = {
+      folder = '06-附件/模板',
+      date_format = '%Y-%m-%d',
+      time_format = '%H:%M',
+      substitutions = {},
     },
     completion = {
       nvim_cmp = false,  -- 用 blink.cmp
@@ -394,6 +408,7 @@ if obs_ok then
       name = 'mini.pick',
     },
     ui = { enable = true },
+    new_notes_location = 'current_dir',
     mappings = {
       ['<leader>ch'] = {
         action = function() return require('obsidian').util.toggle_checkbox() end,
