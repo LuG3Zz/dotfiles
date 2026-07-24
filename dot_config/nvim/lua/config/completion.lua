@@ -31,12 +31,16 @@ blink.setup({
     default = { 'lsp', 'path', 'snippets', 'buffer' },
   },
 
+  snippets = {
+    preset = 'luasnip',
+  },
+
   completion = {
     documentation = {
       auto_show = true,
       auto_show_delay_ms = 300,
     },
-    ghost_text = { enabled = false },
+    ghost_text = { enabled = true },
   },
 
   signature = {

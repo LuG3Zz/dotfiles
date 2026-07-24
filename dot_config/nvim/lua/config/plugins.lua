@@ -31,6 +31,10 @@ vim.pack.add({
   gh('folke/flash.nvim'),
   gh('mbbill/undotree'),
   gh('folke/zen-mode.nvim'),
+  gh('lewis6991/gitsigns.nvim'),
+  gh('kdheepak/lazygit.nvim'),
+  gh('L3MON4D3/LuaSnip'),
+  gh('rafamadriz/friendly-snippets'),
 })
 
 -- 显式加载需要在 init 期间配置的插件（opt/ 目录需 packadd）
@@ -57,6 +61,10 @@ vim.cmd.packadd('nvim-autopairs')
 vim.cmd.packadd('flash.nvim')
 vim.cmd.packadd('undotree')
 vim.cmd.packadd('zen-mode.nvim')
+vim.cmd.packadd('gitsigns.nvim')
+vim.cmd.packadd('lazygit.nvim')
+vim.cmd.packadd('LuaSnip')
+vim.cmd.packadd('friendly-snippets')
 
 -- ====== 主题：Catppuccin Mocha ======
 local catppuccin_ok, catppuccin = pcall(require, 'catppuccin')
@@ -289,6 +297,28 @@ if zen_ok then
   })
 end
 
+-- ====== Git 标记 (gitsigns) ======
+local gs_ok, gs = pcall(require, 'gitsigns')
+if gs_ok then
+  gs.setup({
+    signs = {
+      add = { text = '│' },
+      change = { text = '│' },
+      delete = { text = '_' },
+      topdelete = { text = '‾' },
+      changedelete = { text = '~' },
+    },
+    current_line_blame = false,       -- 用 <leader>gb 触发
+    signcolumn = true,
+    numhl = false,
+    watch_gitdir = { interval = 1000 },
+  })
+end
+
+-- ====== Lazygit 集成 ======
+-- kdheepak/lazygit.nvim 无需 setup，直接调用
+-- require('lazygit').lazygit() 或 require('lazygit').lazygitcurrentfile()
+
 -- ====== 多光标 ======
 -- vim-visual-multi: 使用默认键位
 -- <C-n> 选词，<C-x> 跳过，<C-p> 移除
@@ -308,6 +338,18 @@ if dropbar_ok then
       end,
       truncate = true,
     },
+  })
+end
+
+-- ====== 代码片段 (LuaSnip) ======
+local luasnip_ok, luasnip = pcall(require, 'luasnip')
+if luasnip_ok then
+  -- 加载 friendly-snippets
+  require('luasnip.loaders.from_vscode').lazy_load()
+  luasnip.setup({
+    history = true,
+    update_events = 'TextChanged,TextChangedI',
+    enable_autosnippets = true,
   })
 end
 
