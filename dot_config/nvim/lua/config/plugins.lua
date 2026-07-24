@@ -89,7 +89,6 @@ if catppuccin_ok then
       snacks = true,
       noice = true,
       mini = true,
-      rainbow_delimiters = true,
     },
   })
   vim.cmd.colorscheme('catppuccin')
