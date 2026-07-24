@@ -241,7 +241,7 @@ if lualine_ok then
       icons_enabled = true,
       component_separators = { left = '', right = '' },
       section_separators = { left = '', right = '' },
-      disabled_filetypes = { statusline = { 'dashboard', 'alpha' } },
+      disabled_filetypes = { statusline = { 'dashboard', 'alpha', 'terminal' } },
       globalstatus = true,
     },
     sections = {

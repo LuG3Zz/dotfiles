@@ -52,6 +52,14 @@ autocmd('TextYankPost', {
   end,
 })
 
+-- 终端窗口隐藏 lualine 状态栏
+autocmd('TermOpen', {
+  group = user_group,
+  callback = function()
+    require('lualine').hide({ place = 'statusline', bufnr = vim.api.nvim_get_current_buf() })
+  end,
+})
+
 -- 终端窗口大小变化时自动均衡分屏
 autocmd('VimResized', {
   group = user_group,
