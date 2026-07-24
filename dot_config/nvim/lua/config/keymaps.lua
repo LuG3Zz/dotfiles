@@ -119,6 +119,11 @@ map("n", "zv", "zMzvzz", { desc = "Close all folds except current" })
 map("n", "zj", "zcjzOzz", { desc = "Close current fold, open next" })
 map("n", "zk", "zckzOzz", { desc = "Close current fold, open previous" })
 
+-- ====== 翻译 (kd) ======
+map({ "n", "x" }, "<leader>kd", function()
+  require("config.translate").translate()
+end, { desc = "Translate word" })
+
 -- ====== 检查工具 ======
 map("n", "<leader>ui", vim.show_pos, { desc = "Inspect highlight group" })
 map("n", "<leader>uI", "<cmd>InspectTree<CR>", { desc = "Inspect Treesitter tree" })
