@@ -25,7 +25,7 @@ vim.opt.undofile = true        -- 撤销历史持久化
 vim.opt.undodir = vim.fn.stdpath('state') .. '/undo'
 
 vim.opt.updatetime = 300       -- 更新延迟（ms）
-vim.opt.timeoutlen = 300       -- 键序列超时
+vim.opt.timeoutlen = 500       -- 键序列超时（ms，按 <leader>r 等第二个键的等待时间）
 
 vim.opt.completeopt = 'menuone,noselect'  -- 补全行为
 vim.opt.pumblend = 10          -- 弹出菜单透明度
