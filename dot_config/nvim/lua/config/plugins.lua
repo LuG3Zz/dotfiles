@@ -43,7 +43,7 @@ vim.pack.add({
   gh('rafamadriz/friendly-snippets'),
   gh('nvim-lua/plenary.nvim'),
   gh('epwalsh/obsidian.nvim'),
-  gh('AxtinM/quickrun'),
+  gh('thinca/vim-quickrun'),
 })
 
 -- 显式加载需要在 init 期间配置的插件（opt/ 目录需 packadd）
@@ -87,7 +87,7 @@ vim.cmd.packadd('LuaSnip')
 vim.cmd.packadd('friendly-snippets')
 vim.cmd.packadd('plenary.nvim')
 vim.cmd.packadd('obsidian.nvim')
-vim.cmd.packadd('quickrun')
+vim.cmd.packadd('vim-quickrun')
 
 -- ====== 主题：Catppuccin Mocha ======
 local catppuccin_ok, catppuccin = pcall(require, 'catppuccin')

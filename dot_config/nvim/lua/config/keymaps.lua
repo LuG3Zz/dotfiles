@@ -103,12 +103,8 @@ map("n", "<leader>fn", "<cmd>enew<CR>", { desc = "New file" })
 map("n", "<leader>tw", "<cmd>set wrap!<CR>", { desc = "Toggle wrap", silent = true })
 
 -- ====== 快速运行代码 ======
-map("n", "<leader>x", function()
-  require("quickrun").run()
-end, { desc = "Run code" })
-map("x", "<leader>x", function()
-  require("quickrun").run()
-end, { desc = "Run selection" })
+map("n", "<leader>x", "<cmd>QuickRun<CR>", { desc = "Run code" })
+map("x", "<leader>x", "<cmd>QuickRun<CR>", { desc = "Run selection" })
 
 -- ====== 重启 Neovim（内置 0.12） ======
 map("n", "<leader>r", function()
