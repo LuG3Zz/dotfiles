@@ -1,4 +1,4 @@
--- lua/config/runner.lua — 快速运行当前文件
+-- lua/config/runner.lua — 快速运行代码（asyncrun.vim）
 
 local M = {}
 
@@ -7,15 +7,9 @@ local runners = {
   lua        = 'lua "%s"',
   sh         = 'bash "%s"',
   zsh        = 'zsh "%s"',
-  rust       = 'cargo run --manifest-path "%s/Cargo.toml"',
-  c          = function(f)
-    local out = '/tmp/' .. vim.fn.fnamemodify(f, ':t:r')
-    return string.format('gcc "%s" -o %s && %s', f, out, out)
-  end,
-  cpp        = function(f)
-    local out = '/tmp/' .. vim.fn.fnamemodify(f, ':t:r')
-    return string.format('g++ "%s" -o %s && %s', f, out, out)
-  end,
+  rust       = 'cargo run',
+  c          = 'gcc "%s" -o /tmp/a.out && /tmp/a.out',
+  cpp        = 'g++ "%s" -o /tmp/a.out && /tmp/a.out',
   javascript = 'node "%s"',
   typescript = 'npx tsx "%s"',
   go         = 'go run "%s"',
@@ -37,7 +31,7 @@ function M.run()
   end
 
   local cmd = type(runner) == 'function' and runner(file) or string.format(runner, file)
-  require('snacks').terminal.toggle(cmd, { cwd = vim.fn.expand('%:p:h') })
+  vim.cmd('AsyncRun ' .. cmd)
 end
 
 return M

@@ -43,7 +43,7 @@ vim.pack.add({
   gh('rafamadriz/friendly-snippets'),
   gh('nvim-lua/plenary.nvim'),
   gh('epwalsh/obsidian.nvim'),
-  -- 使用 config/runner.lua 运行代码
+  gh('skywind3000/asyncrun.vim'),
 })
 
 -- 显式加载需要在 init 期间配置的插件（opt/ 目录需 packadd）
@@ -87,6 +87,7 @@ vim.cmd.packadd('LuaSnip')
 vim.cmd.packadd('friendly-snippets')
 vim.cmd.packadd('plenary.nvim')
 vim.cmd.packadd('obsidian.nvim')
+vim.cmd.packadd('asyncrun.vim')
 
 -- ====== 主题：Catppuccin Mocha ======
 local catppuccin_ok, catppuccin = pcall(require, 'catppuccin')
@@ -520,6 +521,10 @@ end
 -- ====== 彩虹括号 ======
 -- rainbow-delimiters.nvim: 使用 Treesitter 高亮括号层级
 -- 默认配置即可工作，无需额外 setup
+
+-- ====== AsyncRun 配置 ======
+-- 异步运行命令，结果输出到 quickfix 窗口
+vim.g.asyncrun_open = 8     -- 自动打开 quickfix，高度 8
 
 -- ====== 其余插件 ======
 -- blink.cmp 配置在 completion.lua 中
