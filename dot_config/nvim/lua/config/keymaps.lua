@@ -172,7 +172,7 @@ end, { desc = "Toggle outline" })
 
 -- ====== 浮动终端 ======
 map("n", "<leader>tt", function()
-  require("snacks").terminal.toggle()
+  require("snacks").terminal.toggle(nil, { cwd = vim.fn.expand('%:p:h') })
 end, { desc = "Toggle floating terminal" })
 
 -- ====== Terminal 模式窗口导航 ======
