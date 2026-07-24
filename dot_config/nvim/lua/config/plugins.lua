@@ -59,7 +59,12 @@ vim.cmd.packadd('oil.nvim')
 vim.cmd.packadd('aerial.nvim')
 vim.cmd.packadd('blink.lib')            -- blink.cmp 依赖
 vim.cmd.packadd('blink.cmp')
+-- jieba.vim 需要先设配置再 packadd，否则 g: 变量读不到
+vim.g.jieba_vim_lazy = 1
+vim.g.jieba_vim_keymap = 1
+
 vim.cmd.packadd('jieba.vim')
+
 vim.cmd.packadd('which-key.nvim')
 vim.cmd.packadd('mason.nvim')
 vim.cmd.packadd('mason-lspconfig.nvim')
@@ -365,11 +370,6 @@ end
 -- ====== Lazygit 集成 ======
 -- kdheepak/lazygit.nvim 无需 setup，直接调用
 -- require('lazygit').lazygit() 或 require('lazygit').lazygitcurrentfile()
-
--- ====== 中文分词 (jieba.vim) ======
--- 按词跳转：w/b/e 对中文按词移动
-vim.g.jieba_vim_lazy = 1    -- 惰性加载
-vim.g.jieba_vim_keymap = 1  -- 启用 keymap
 
 -- ====== 多光标 ======
 -- vim-visual-multi: 使用默认键位
