@@ -147,6 +147,11 @@ map("n", "];", function()
   require("dropbar.api").select_next_context()
 end, { desc = "Select next context" })
 
+-- ====== 代码大纲 ======
+map("n", "<leader>o", function()
+  require("aerial").toggle()
+end, { desc = "Toggle outline" })
+
 -- ====== 浮动终端 ======
 map("n", "<leader>tt", function()
   require("snacks").terminal.toggle()

@@ -18,6 +18,7 @@ vim.pack.add({
   gh('HiPhish/rainbow-delimiters.nvim'),
   gh('Bekaboo/dropbar.nvim'),
   gh('stevearc/oil.nvim'),
+  gh('stevearc/aerial.nvim'),
   gh('saghen/blink.lib'),
   gh('saghen/blink.cmp'),
   gh('folke/which-key.nvim'),
@@ -54,6 +55,7 @@ vim.cmd.packadd('lualine.nvim')
 vim.cmd.packadd('rainbow-delimiters.nvim')
 vim.cmd.packadd('dropbar.nvim')
 vim.cmd.packadd('oil.nvim')
+vim.cmd.packadd('aerial.nvim')
 vim.cmd.packadd('blink.lib')            -- blink.cmp 依赖
 vim.cmd.packadd('blink.cmp')
 vim.cmd.packadd('which-key.nvim')
@@ -261,6 +263,21 @@ if oil_ok then
       ['<C-h>'] = false,
       ['<M-h>'] = 'actions.select_split',
     },
+  })
+end
+
+-- ====== 代码大纲 (aerial) ======
+local aerial_ok, aerial = pcall(require, 'aerial')
+if aerial_ok then
+  aerial.setup({
+    -- 右侧纵向分割窗口
+    layout = { width = 35, default_direction = 'prefer_right' },
+    -- 显示所有符号（函数、变量、类等）
+    filter_kind = { 'Class', 'Constructor', 'Enum', 'Function', 'Interface', 'Method', 'Struct', 'Variable' },
+    -- 关闭其他大纲视图（单例模式）
+    close_behavior = 'auto',
+    -- 使用优先级：LSP > Treesitter
+    sources = { 'lsp', 'treesitter' },
   })
 end
 
