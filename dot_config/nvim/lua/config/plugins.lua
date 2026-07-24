@@ -527,7 +527,7 @@ end
 -- 默认配置即可工作，无需额外 setup
 
 -- ====== AsyncRun + AsyncTasks 配置 ======
-vim.g.asyncrun_open = 8     -- 自动打开 quickfix，高度 8
+vim.g.asyncrun_open = 0     -- 不自动打开 quickfix（由 asynctasks 控制）
 vim.g.asynctasks_term_pos = 'bottom'  -- 终端模式默认位置
 vim.g.asynctasks_term_rows = 12       -- 终端高度
 vim.g.asynctasks_term_reuse = 1       -- 复用已有终端窗口
