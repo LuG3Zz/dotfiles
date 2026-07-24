@@ -45,6 +45,7 @@ vim.pack.add({
   gh('epwalsh/obsidian.nvim'),
   gh('skywind3000/asyncrun.vim'),
   gh('skywind3000/asynctasks.vim'),
+  gh('OXY2DEV/markview.nvim'),
 })
 
 -- 显式加载需要在 init 期间配置的插件（opt/ 目录需 packadd）
@@ -90,6 +91,7 @@ vim.cmd.packadd('plenary.nvim')
 vim.cmd.packadd('obsidian.nvim')
 vim.cmd.packadd('asyncrun.vim')
 vim.cmd.packadd('asynctasks.vim')
+vim.cmd.packadd('markview.nvim')
 
 -- ====== 主题：Catppuccin Mocha ======
 local catppuccin_ok, catppuccin = pcall(require, 'catppuccin')
@@ -529,6 +531,17 @@ vim.g.asyncrun_open = 8     -- 自动打开 quickfix，高度 8
 vim.g.asynctasks_term_pos = 'bottom'  -- 终端模式默认位置
 vim.g.asynctasks_term_rows = 12       -- 终端高度
 vim.g.asynctasks_term_reuse = 1       -- 复用已有终端窗口
+
+-- ====== Markdown 预览 (markview.nvim) ======
+local mv_ok, mv = pcall(require, 'markview')
+if mv_ok then
+  mv.setup({
+    preview = {
+      enable = true,
+      filetypes = { 'markdown', 'md' },
+    },
+  })
+end
 
 -- ====== 其余插件 ======
 -- blink.cmp 配置在 completion.lua 中
