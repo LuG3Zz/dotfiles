@@ -166,6 +166,17 @@ if snacks_ok then
     statuscolumn = {
       enabled = true,
     },
+    -- 浮动终端
+    terminal = {
+      enabled = true,
+      win = {
+        style = 'float',
+        relative = 'editor',
+        width = 0.8,
+        height = 0.8,
+        border = 'rounded',
+      },
+    },
     -- 禁用不需要的组件
     bigfile = { enabled = true },
     picker = { enabled = false },    -- 使用 mini.pick

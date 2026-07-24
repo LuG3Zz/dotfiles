@@ -151,6 +151,11 @@ map("n", "];", function()
   require("dropbar.api").select_next_context()
 end, { desc = "Select next context" })
 
+-- ====== 浮动终端 ======
+map("n", "<leader>t", function()
+  require("snacks").terminal.toggle()
+end, { desc = "Toggle floating terminal" })
+
 -- ====== Terminal 模式窗口导航 ======
 map("t", "<C-h>", "<cmd>wincmd h<CR>", { desc = "Terminal: Go to left window" })
 map("t", "<C-j>", "<cmd>wincmd j<CR>", { desc = "Terminal: Go to lower window" })
