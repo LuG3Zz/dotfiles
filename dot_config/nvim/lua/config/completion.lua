@@ -20,6 +20,7 @@ blink.setup({
     ['<C-space>'] = { 'show', 'hide' },
     ['<C-n>'] = { 'select_next', 'snippet_forward' },
     ['<C-p>'] = { 'select_prev', 'snippet_backward' },
+    ['<CR>'] = { 'accept', 'fallback' },
   },
 
   appearance = {
