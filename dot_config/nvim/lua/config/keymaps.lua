@@ -122,10 +122,7 @@ map("n", "zk", "zckzOzz", { desc = "Close current fold, open previous" })
 -- ====== 翻译 (kd) ======
 map({ "n", "x" }, "<leader>kd", function()
   require("config.translate").show()
-end, { desc = "Translate: show in float" })
-map({ "n", "x" }, "<leader>kD", function()
-  require("config.translate").replace()
-end, { desc = "Translate: replace with Chinese" })
+end, { desc = "Translate word" })
 
 -- ====== 检查工具 ======
 map("n", "<leader>ui", vim.show_pos, { desc = "Inspect highlight group" })
