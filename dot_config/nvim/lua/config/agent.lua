@@ -7,6 +7,13 @@
 --   go     Operator
 
 vim.g.opencode_opts = {
+  ask = {
+    snacks = {
+      win = {
+        width = 100,  -- 输入框宽度，默认为 60
+      },
+    },
+  },
   -- Custom commands visible in the select() command menu (<C-x>)
   commands = {
     -- Review
