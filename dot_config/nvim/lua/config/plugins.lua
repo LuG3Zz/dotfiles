@@ -170,6 +170,14 @@ if snacks_ok then
     statuscolumn = {
       enabled = true,
     },
+    -- 浮动输入框
+    input = {
+      enabled = true,
+      win = {
+        border = 'rounded',
+        width = 0.5,
+      },
+    },
     -- 浮动终端
     terminal = {
       enabled = true,

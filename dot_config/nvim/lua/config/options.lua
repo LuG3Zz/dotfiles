@@ -30,6 +30,7 @@ vim.opt.timeoutlen = 300       -- 键序列超时
 vim.opt.completeopt = 'menuone,noselect'  -- 补全行为
 vim.opt.pumblend = 10          -- 弹出菜单透明度
 vim.opt.pumheight = 10         -- 弹出菜单最大行数
+vim.opt.wildoptions = 'pum'    -- cmdline 补全弹出菜单（而非滚屏）
 
 vim.opt.mouse = 'a'            -- 启用鼠标
 
