@@ -548,7 +548,7 @@ if jaq_ok then
       },
     },
     behavior = {
-      default     = 'float',
+      default     = 'terminal',
       startinsert = false,
       wincmd      = false,
     },
