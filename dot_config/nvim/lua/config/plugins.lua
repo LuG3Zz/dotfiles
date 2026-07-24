@@ -31,6 +31,8 @@ vim.pack.add({
   gh('folke/flash.nvim'),
   gh('mbbill/undotree'),
   gh('folke/zen-mode.nvim'),
+  gh('kevinhwang91/nvim-ufo'),
+  gh('kevinhwang91/promise-async'),
   gh('lewis6991/gitsigns.nvim'),
   gh('kdheepak/lazygit.nvim'),
   gh('L3MON4D3/LuaSnip'),
@@ -61,6 +63,8 @@ vim.cmd.packadd('nvim-autopairs')
 vim.cmd.packadd('flash.nvim')
 vim.cmd.packadd('undotree')
 vim.cmd.packadd('zen-mode.nvim')
+vim.cmd.packadd('promise-async')
+vim.cmd.packadd('nvim-ufo')
 vim.cmd.packadd('gitsigns.nvim')
 vim.cmd.packadd('lazygit.nvim')
 vim.cmd.packadd('LuaSnip')
@@ -349,6 +353,21 @@ if dropbar_ok then
       end,
       truncate = true,
     },
+  })
+end
+
+-- ====== 折叠增强 (nvim-ufo) ======
+local ufo_ok, ufo = pcall(require, 'ufo')
+if ufo_ok then
+  ufo.setup({
+    provider_selector = function()
+      return { 'treesitter', 'indent' }
+    end,
+    fold_virt_text_handler = function(virt_text, lnum, end_lnum, width, truncate)
+      local text = vim.fn.getline(lnum):gsub('^%s+', ''):gsub('{.*', '')
+      virt_text[1] = { text, 'Normal' }
+      virt_text[2] = { '  ' .. (end_lnum - lnum) .. ' lines', 'Comment' }
+    end,
   })
 end
 
