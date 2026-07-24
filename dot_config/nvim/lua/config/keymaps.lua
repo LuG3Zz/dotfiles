@@ -94,7 +94,11 @@ map("n", "<leader>fn", "<cmd>enew<CR>", { desc = "New file" })
 map("n", "<leader>tw", "<cmd>set wrap!<CR>", { desc = "Toggle wrap", silent = true })
 
 -- ====== 重启 Neovim（内置 0.12） ======
-map("n", "<leader>rr", "<cmd>restart<CR>", { desc = "Restart Neovim" })
+map("n", "<leader>rr", function()
+  local session_file = vim.fn.stdpath('state') .. '/session.vim'
+  vim.cmd('mksession! ' .. session_file)
+  vim.cmd('restart +wqa! source ' .. session_file)
+end, { desc = "Save session & restart" })
 
 -- ====== 折叠导航 ======
 map("n", "zv", "zMzvzz", { desc = "Close all folds except current" })
