@@ -162,16 +162,11 @@ if snacks_ok then
     indent = {
       enabled = true,
       indent = {
-        char = '┊',
-        hl = 'SnacksIndent',
         animate = { enabled = true },
       },
       chunk = {
         enabled = true,
         only_current = true,
-      },
-      scope = {
-        hl = 'SnacksIndentScope',
       },
     },
     -- 右侧滚动条
