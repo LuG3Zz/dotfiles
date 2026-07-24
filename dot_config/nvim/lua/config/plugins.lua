@@ -376,11 +376,6 @@ if noice_ok then
     cmdline = {
       enabled = true,
       view = 'cmdline_popup',
-      opts = {
-        position = { row = 6, col = 0 },
-        size = { width = 'auto', height = 'auto' },
-        border = { style = 'rounded' },
-      },
     },
     messages = {
       enabled = true,
@@ -390,12 +385,9 @@ if noice_ok then
       enabled = true,
       backend = 'nui',
     },
-    views = {
-      notify = { backend = 'mini', position = 'top-center' },
-    },
     lsp = {
-      progress = { enabled = false },  -- 用我们自己的 progress handler
-      signature = { enabled = false }, -- 用 blink.cmp 的
+      progress = { enabled = false },
+      signature = { enabled = false },
       override = {
         ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
         ['vim.lsp.util.stylify_markdown'] = true,
@@ -408,7 +400,6 @@ if noice_ok then
       inc_rename = true,
       lsp_doc_border = true,
     },
-    throttle = 50,
   })
 end
 
