@@ -103,29 +103,7 @@ map("n", "<leader>fn", "<cmd>enew<CR>", { desc = "New file" })
 map("n", "<leader>tw", "<cmd>set wrap!<CR>", { desc = "Toggle wrap", silent = true })
 
 -- ====== 快速运行代码 ======
-map("n", "<leader>x", function()
-  local file = vim.fn.expand('%:p')
-  if file == '' then vim.notify('No file', vim.log.levels.WARN) return end
-  local ft = vim.bo.filetype
-  local runners = {
-    python     = 'python3',
-    lua        = 'lua',
-    sh         = 'bash',
-    zsh        = 'zsh',
-    c          = 'gcc "%s" -o /tmp/a.out && /tmp/a.out',
-    cpp        = 'g++ "%s" -o /tmp/a.out && /tmp/a.out',
-    javascript = 'node',
-    typescript = 'npx tsx',
-    go         = 'go run',
-    ruby       = 'ruby',
-    markdown   = 'glow',
-  }
-  local cmd = runners[ft]
-  if not cmd then vim.notify('No runner for: ' .. ft, vim.log.levels.WARN) return end
-  cmd = cmd:gsub('%%s', file)
-  vim.cmd('AsyncRun -pos=snacks ' .. cmd)
-end, { desc = "Run file" })
-map("n", "<leader>xt", "<cmd>AsyncTask<CR>", { desc = "Select task" })
+map("n", "<leader>x", "<cmd>AsyncTask file-run<CR>", { desc = "Run file" })
 
 -- ====== 重启 Neovim（内置 0.12） ======
 map("n", "<leader>r", function()
