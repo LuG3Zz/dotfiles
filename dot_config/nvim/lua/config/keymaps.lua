@@ -178,7 +178,7 @@ map("n", "<leader>od", "<cmd>ObsidianToday<CR>", { desc = "Obsidian: daily note"
 map("n", "<leader>ob", "<cmd>ObsidianBacklinks<CR>", { desc = "Obsidian: backlinks" })
 
 -- ====== 代码大纲 ======
-map("n", "<leader>o", function()
+map("n", "<leader>O", function()
   require("aerial").toggle()
 end, { desc = "Toggle outline" })
 
