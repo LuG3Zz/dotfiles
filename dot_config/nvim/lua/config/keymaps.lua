@@ -46,6 +46,14 @@ map("n", "<leader>e", function()
   end, delay)
 end, { desc = "Open file explorer (float + preview)" })
 
+-- ====== 搜索快捷键映射 ======
+map("n", "<leader>?", function()
+  local lines = vim.split(vim.fn.execute('nmap'), '\n', { plain = true })
+  require("mini.pick").start({
+    source = { items = lines, name = 'Keymaps' },
+  })
+end, { desc = "Search keymaps" })
+
 -- ====== 搜索 (mini.pick) ======
 map("n", "<leader>f", "<cmd>Pick files<CR>", { desc = "Find files" })
 map("n", "<leader>g", "<cmd>Pick grep<CR>", { desc = "Grep search" })
