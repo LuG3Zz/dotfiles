@@ -170,6 +170,13 @@ map("n", "];", function()
   require("dropbar.api").select_next_context()
 end, { desc = "Select next context" })
 
+-- ====== Obsidian 笔记 ======
+map("n", "<leader>os", "<cmd>ObsidianSearch<CR>", { desc = "Obsidian: search notes" })
+map("n", "<leader>oo", "<cmd>ObsidianQuickSwitch<CR>", { desc = "Obsidian: quick switch" })
+map("n", "<leader>on", "<cmd>ObsidianNew<CR>", { desc = "Obsidian: new note" })
+map("n", "<leader>od", "<cmd>ObsidianToday<CR>", { desc = "Obsidian: daily note" })
+map("n", "<leader>ob", "<cmd>ObsidianBacklinks<CR>", { desc = "Obsidian: backlinks" })
+
 -- ====== 代码大纲 ======
 map("n", "<leader>o", function()
   require("aerial").toggle()

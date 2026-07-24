@@ -41,6 +41,8 @@ vim.pack.add({
   gh('kdheepak/lazygit.nvim'),
   gh('L3MON4D3/LuaSnip'),
   gh('rafamadriz/friendly-snippets'),
+  gh('nvim-lua/plenary.nvim'),
+  gh('epwalsh/obsidian.nvim'),
 })
 
 -- 显式加载需要在 init 期间配置的插件（opt/ 目录需 packadd）
@@ -82,6 +84,8 @@ vim.cmd.packadd('gitsigns.nvim')
 vim.cmd.packadd('lazygit.nvim')
 vim.cmd.packadd('LuaSnip')
 vim.cmd.packadd('friendly-snippets')
+vim.cmd.packadd('plenary.nvim')
+vim.cmd.packadd('obsidian.nvim')
 
 -- ====== 主题：Catppuccin Mocha ======
 local catppuccin_ok, catppuccin = pcall(require, 'catppuccin')
@@ -370,6 +374,34 @@ end
 -- ====== Lazygit 集成 ======
 -- kdheepak/lazygit.nvim 无需 setup，直接调用
 -- require('lazygit').lazygit() 或 require('lazygit').lazygitcurrentfile()
+
+-- ====== Obsidian 笔记集成 ======
+local obs_ok, obs = pcall(require, 'obsidian')
+if obs_ok then
+  obs.setup({
+    workspaces = {
+      { name = 'ALL-IN-ONE', path = '~/Documents/OB/ALL-IN-ONE' },
+    },
+    notes_subdir = '',
+    daily_notes = {
+      folder = 'Daily',
+      date_format = '%Y-%m-%d',
+    },
+    completion = {
+      nvim_cmp = false,  -- 用 blink.cmp
+    },
+    picker = {
+      name = 'mini.pick',
+    },
+    ui = { enable = true },
+    mappings = {
+      ['<leader>ch'] = {
+        action = function() return require('obsidian').util.toggle_checkbox() end,
+        opts = { buffer = true },
+      },
+    },
+  })
+end
 
 -- ====== 多光标 ======
 -- vim-visual-multi: 使用默认键位
