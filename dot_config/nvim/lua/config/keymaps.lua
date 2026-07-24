@@ -93,11 +93,8 @@ map("n", "<leader>bb", "<cmd>e #<CR>", { desc = "Switch to other buffer" })
 map("n", "<leader>fn", "<cmd>enew<CR>", { desc = "New file" })
 map("n", "<leader>tw", "<cmd>set wrap!<CR>", { desc = "Toggle wrap", silent = true })
 
--- ====== 重启 Neovim ======
-map("n", "<leader>rr", function()
-  vim.cmd("silent wa")
-  vim.cmd("!exec nvim")
-end, { desc = "Save & restart Neovim" })
+-- ====== 重启 Neovim（内置 0.12） ======
+map("n", "<leader>rr", "<cmd>Restart<CR>", { desc = "Restart Neovim" })
 
 -- ====== 折叠导航 ======
 map("n", "zv", "zMzvzz", { desc = "Close all folds except current" })
