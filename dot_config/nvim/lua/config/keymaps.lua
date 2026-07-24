@@ -90,6 +90,9 @@ map("n", "<leader>fn", "<cmd>enew<CR>", { desc = "New file" })
 map("n", "<leader>tw", "<cmd>set wrap!<CR>", { desc = "Toggle wrap", silent = true })
 
 -- ====== 重启 Neovim（内置 0.12） ======
+map("n", "<leader>r", function()
+  require("mini.pick").start({ source = { items = vim.v.oldfiles, name = "Recent files" } })
+end, { desc = "Recent files" })
 map("n", "<leader>rr", function()
   local session_file = vim.fn.stdpath('state') .. '/session.vim'
   vim.cmd('mksession! ' .. session_file)
