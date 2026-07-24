@@ -62,4 +62,9 @@ map('n', '[e', diagnostic_goto(false, 'ERROR'), { desc = 'Prev error' })
 map('n', ']w', diagnostic_goto(true, 'WARN'),  { desc = 'Next warning' })
 map('n', '[w', diagnostic_goto(false, 'WARN'), { desc = 'Prev warning' })
 
+-- ====== 缩进线颜色 ======
+vim.api.nvim_set_hl(0, 'SnacksIndent',      { fg = '#313244' })  -- 比背景稍亮
+vim.api.nvim_set_hl(0, 'SnacksIndentScope', { fg = '#45475a' })  -- 当前范围高亮
+vim.api.nvim_set_hl(0, 'SnacksIndentChunk', { fg = '#45475a' })
+
 
