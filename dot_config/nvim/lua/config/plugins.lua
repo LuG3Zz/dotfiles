@@ -20,7 +20,7 @@ vim.pack.add({
   gh('stevearc/oil.nvim'),
   gh('saghen/blink.lib'),
   gh('saghen/blink.cmp'),
-  gh('folke/which-key.nvim'),
+  gh('nvim-mini/mini.clue'),
   gh('mg979/vim-visual-multi'),
   gh('mason-org/mason.nvim'),
   gh('mason-org/mason-lspconfig.nvim'),
@@ -56,7 +56,7 @@ vim.cmd.packadd('dropbar.nvim')
 vim.cmd.packadd('oil.nvim')
 vim.cmd.packadd('blink.lib')            -- blink.cmp 依赖
 vim.cmd.packadd('blink.cmp')
-vim.cmd.packadd('which-key.nvim')
+vim.cmd.packadd('mini.clue')
 vim.cmd.packadd('mason.nvim')
 vim.cmd.packadd('mason-lspconfig.nvim')
 vim.cmd.packadd('nvim-lspconfig')
@@ -263,14 +263,22 @@ if oil_ok then
   })
 end
 
--- ====== 快捷键提示 ======
-local wk_ok, wk = pcall(require, 'which-key')
-if wk_ok then
-  wk.setup({
-    plugins = {
-      marks = true,
-      registers = true,
-      spelling = { enabled = false },
+-- ====== 快捷键提示 (mini.clue) ======
+local clue_ok, clue = pcall(require, 'mini.clue')
+if clue_ok then
+  clue.setup({
+    clues = {
+      -- leader 键触发提示
+      { mode = 'n', keys = '<leader>', desc = 'Leader prefix' },
+    },
+    triggers = {
+      { mode = 'n', keys = '<leader>' },
+    },
+    window = {
+      config = {
+        width = 'auto',
+        border = 'rounded',
+      },
     },
   })
 end
