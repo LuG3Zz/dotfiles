@@ -435,8 +435,8 @@ if dropbar_ok then
   dropbar.setup({
     bar = {
       sources = function(buf, _)
-        -- 终端窗口不显示 winbar
-        if vim.bo[buf].filetype == 'terminal' then return {} end
+        -- 终端缓冲区不显示 winbar
+        if vim.bo[buf].buftype == 'terminal' then return {} end
         local sources = require('dropbar.sources')
         local utils = require('dropbar.utils')
         return {
