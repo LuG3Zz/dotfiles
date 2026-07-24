@@ -32,6 +32,7 @@ vim.pack.add({
   gh('mbbill/undotree'),
   gh('folke/zen-mode.nvim'),
   gh('folke/noice.nvim'),
+  gh('MunifTanjim/nui.nvim'),
   gh('kevinhwang91/nvim-ufo'),
   gh('kevinhwang91/promise-async'),
   gh('lewis6991/gitsigns.nvim'),
@@ -65,6 +66,7 @@ vim.cmd.packadd('flash.nvim')
 vim.cmd.packadd('undotree')
 vim.cmd.packadd('zen-mode.nvim')
 vim.cmd.packadd('noice.nvim')
+vim.cmd.packadd('nui.nvim')
 vim.cmd.packadd('promise-async')
 vim.cmd.packadd('nvim-ufo')
 vim.cmd.packadd('gitsigns.nvim')
