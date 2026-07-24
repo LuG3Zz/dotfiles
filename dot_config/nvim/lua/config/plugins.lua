@@ -385,8 +385,9 @@ if obs_ok then
         name = 'auto',
         path = function()
           local f = vim.fn.expand('%:p')
+          if f == '' then return '~/Documents/OB/ALL-IN-ONE' end
           local root = vim.fs.root(f, '.obsidian')
-          return assert(root, 'Not in an Obsidian vault')
+          return root or '~/Documents/OB/ALL-IN-ONE'
         end,
       },
     },

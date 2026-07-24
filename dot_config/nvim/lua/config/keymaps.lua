@@ -176,6 +176,8 @@ map("n", "<leader>oo", "<cmd>ObsidianQuickSwitch<CR>", { desc = "Obsidian: quick
 map("n", "<leader>on", "<cmd>ObsidianNew<CR>", { desc = "Obsidian: new note" })
 map("n", "<leader>od", "<cmd>ObsidianToday<CR>", { desc = "Obsidian: daily note" })
 map("n", "<leader>ob", "<cmd>ObsidianBacklinks<CR>", { desc = "Obsidian: backlinks" })
+map("n", "<leader>ot", "<cmd>ObsidianTemplate<CR>", { desc = "Obsidian: insert template" })
+map("n", "<leader>ol", "<cmd>ObsidianLink<CR>", { desc = "Obsidian: link selection to note" })
 
 -- ====== 代码大纲 ======
 map("n", "<leader>O", function()
