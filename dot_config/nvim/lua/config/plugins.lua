@@ -528,6 +528,7 @@ end
 vim.g.asyncrun_open = 8     -- 自动打开 quickfix，高度 8
 vim.g.asynctasks_term_pos = 'bottom'  -- 终端模式默认位置
 vim.g.asynctasks_term_rows = 12       -- 终端高度
+vim.g.asynctasks_term_reuse = 1       -- 复用已有终端窗口
 
 -- ====== 其余插件 ======
 -- blink.cmp 配置在 completion.lua 中
