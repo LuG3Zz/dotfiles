@@ -10,7 +10,12 @@ vim.g.maplocalleader = " "
 -- ====== 基础操作 ======
 map("n", "<C-s>", "<cmd>w<CR>", { desc = "Save file" })
 map("i", "<C-s>", "<cmd>w<CR>", { desc = "Save file" })
-map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
+-- 用 <C-l> 清除搜索高亮（<Esc> 留给终端 vim 模式）
+map("n", "<C-l>", function()
+  vim.cmd("nohlsearch")
+  vim.cmd("diffupdate")
+  vim.cmd("normal! <C-l>")
+end, { desc = "Clear highlight & redraw" })
 
 -- 智能 j/k：无 count 时按折行移动，有 count 时按实际行
 map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true })
