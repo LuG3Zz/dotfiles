@@ -365,8 +365,11 @@ if ufo_ok then
     end,
     fold_virt_text_handler = function(virt_text, lnum, end_lnum, width, truncate)
       local text = vim.fn.getline(lnum):gsub('^%s+', ''):gsub('{.*', '')
-      virt_text[1] = { text, 'Normal' }
-      virt_text[2] = { '  ' .. (end_lnum - lnum) .. ' lines', 'Comment' }
+      local line_count = end_lnum - lnum
+      return {
+        { text, 'NormalFloat' },
+        { '  ' .. line_count .. ' lines', 'Comment' },
+      }
     end,
   })
 end
