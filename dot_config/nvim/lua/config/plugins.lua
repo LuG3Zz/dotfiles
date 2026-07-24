@@ -27,7 +27,7 @@ vim.pack.add({
   gh('neovim/nvim-lspconfig'),
   gh('alker0/chezmoi.vim'),
   gh('nickjvandyke/opencode.nvim'),
-  gh('windwp/nvim-autopairs'),
+  gh('nvim-mini/mini.pairs'),
   gh('folke/flash.nvim'),
   gh('mbbill/undotree'),
   gh('folke/zen-mode.nvim'),
@@ -61,7 +61,7 @@ vim.cmd.packadd('mason.nvim')
 vim.cmd.packadd('mason-lspconfig.nvim')
 vim.cmd.packadd('nvim-lspconfig')
 vim.cmd.packadd('opencode.nvim')
-vim.cmd.packadd('nvim-autopairs')
+vim.cmd.packadd('mini.pairs')
 vim.cmd.packadd('flash.nvim')
 vim.cmd.packadd('undotree')
 vim.cmd.packadd('zen-mode.nvim')
@@ -86,7 +86,7 @@ if catppuccin_ok then
       cmp = true,
       snacks = true,
       noice = true,
-      rainbow_delimiters = true,
+      mini = true,
     },
   })
   vim.cmd.colorscheme('catppuccin')
@@ -275,10 +275,10 @@ if wk_ok then
   })
 end
 
--- ====== 自动补全括号/引号 ======
-local autopairs_ok, autopairs = pcall(require, 'nvim-autopairs')
-if autopairs_ok then
-  autopairs.setup({})
+-- ====== 自动补全括号/引号 (mini.pairs) ======
+local pairs_ok, pairs = pcall(require, 'mini.pairs')
+if pairs_ok then
+  pairs.setup({})
 end
 
 -- ====== 增强字符跳转 (f/t) ======
