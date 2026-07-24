@@ -56,7 +56,7 @@ autocmd('TextYankPost', {
 autocmd('TermOpen', {
   group = user_group,
   callback = function()
-    require('lualine').hide({ place = 'statusline', bufnr = vim.api.nvim_get_current_buf() })
+    vim.wo.statusline = ' '
   end,
 })
 
