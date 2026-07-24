@@ -435,9 +435,10 @@ if dropbar_ok then
   dropbar.setup({
     bar = {
       sources = function(buf, _)
+        -- 终端窗口不显示 winbar
+        if vim.bo[buf].filetype == 'terminal' then return {} end
         local sources = require('dropbar.sources')
         local utils = require('dropbar.utils')
-        -- LSP 优先，显示函数/类层级；回退到 treesitter 再到文件路径
         return {
           utils.source.fallback({ sources.lsp, sources.treesitter, sources.path }),
         }
