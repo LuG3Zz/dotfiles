@@ -31,6 +31,7 @@ vim.pack.add({
   gh('folke/flash.nvim'),
   gh('mbbill/undotree'),
   gh('folke/zen-mode.nvim'),
+  gh('folke/noice.nvim'),
   gh('kevinhwang91/nvim-ufo'),
   gh('kevinhwang91/promise-async'),
   gh('lewis6991/gitsigns.nvim'),
@@ -63,6 +64,7 @@ vim.cmd.packadd('nvim-autopairs')
 vim.cmd.packadd('flash.nvim')
 vim.cmd.packadd('undotree')
 vim.cmd.packadd('zen-mode.nvim')
+vim.cmd.packadd('noice.nvim')
 vim.cmd.packadd('promise-async')
 vim.cmd.packadd('nvim-ufo')
 vim.cmd.packadd('gitsigns.nvim')
@@ -81,6 +83,7 @@ if catppuccin_ok then
       treesitter = true,
       cmp = true,
       snacks = true,
+      noice = true,
       rainbow_delimiters = true,
     },
   })
@@ -361,6 +364,49 @@ if dropbar_ok then
       end,
       truncate = true,
     },
+  })
+end
+
+-- ====== 命令美化 (noice.nvim) ======
+local noice_ok, noice = pcall(require, 'noice')
+if noice_ok then
+  noice.setup({
+    cmdline = {
+      enabled = true,
+      view = 'cmdline_popup',
+      opts = {
+        position = { row = 6, col = 0 },
+        size = { width = 'auto', height = 'auto' },
+        border = { style = 'rounded' },
+      },
+    },
+    messages = {
+      enabled = true,
+      view = 'notify',
+    },
+    popupmenu = {
+      enabled = true,
+      backend = 'nui',
+    },
+    views = {
+      notify = { backend = 'mini', position = 'top-center' },
+    },
+    lsp = {
+      progress = { enabled = false },  -- 用我们自己的 progress handler
+      signature = { enabled = false }, -- 用 blink.cmp 的
+      override = {
+        ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+        ['vim.lsp.util.stylify_markdown'] = true,
+      },
+    },
+    presets = {
+      bottom_search = true,
+      command_palette = true,
+      long_message_to_split = true,
+      inc_rename = true,
+      lsp_doc_border = true,
+    },
+    throttle = 50,
   })
 end
 

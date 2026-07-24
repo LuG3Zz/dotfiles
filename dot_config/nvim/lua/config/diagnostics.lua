@@ -62,6 +62,4 @@ map('n', '[e', diagnostic_goto(false, 'ERROR'), { desc = 'Prev error' })
 map('n', ']w', diagnostic_goto(true, 'WARN'),  { desc = 'Next warning' })
 map('n', '[w', diagnostic_goto(false, 'WARN'), { desc = 'Prev warning' })
 
--- ====== 命令行弹出窗口美化（cmdheight=0） ======
-vim.api.nvim_set_hl(0, 'Cmdline',      { bg = '#1E2030', fg = '#A6ADC8' })
-vim.api.nvim_set_hl(0, 'CmdlineBorder', { fg = '#7AA2F7' })
+
