@@ -6,6 +6,14 @@ local autocmd = vim.api.nvim_create_autocmd
 -- 通用用户事件组
 local user_group = augroup('UserEvent', { clear = true })
 
+-- 新窗口启用 Treesitter 语法折叠
+autocmd({ 'WinNew', 'BufWinEnter' }, {
+  group = user_group,
+  callback = function()
+    vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+  end,
+})
+
 -- Insert 模式下关闭相对行号
 autocmd('InsertEnter', {
   group = user_group,

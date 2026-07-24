@@ -73,7 +73,8 @@ vim.opt.path:append('**')
 -- 性能与显示
 vim.opt.synmaxcol = 300         -- 大文件截断语法高亮
 vim.opt.smoothscroll = true     -- 平滑滚动
-vim.opt.foldlevel = 99          -- 默认展开所有折叠
+vim.opt.foldmethod = 'expr'      -- Treesitter 语法折叠
+vim.opt.foldlevel = 99           -- 默认展开所有折叠
 vim.opt.fillchars:append({
   eob = ' ',                     -- 文件末尾空白行用空格
   diff = '╱',
