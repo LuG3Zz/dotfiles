@@ -152,7 +152,7 @@ map("n", "];", function()
 end, { desc = "Select next context" })
 
 -- ====== 浮动终端 ======
-map("n", "<leader>t", function()
+map("n", "<leader>tt", function()
   require("snacks").terminal.toggle()
 end, { desc = "Toggle floating terminal" })
 
