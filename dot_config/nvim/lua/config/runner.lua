@@ -1,4 +1,5 @@
--- lua/config/runner.lua — 快速运行代码（asyncrun.vim）
+-- lua/config/runner.lua — 浮动终端运行代码
+-- 用 asyncrun.vim 获取命令，snacks.terminal 浮窗显示
 
 local M = {}
 
@@ -8,12 +9,13 @@ local runners = {
   sh         = 'bash "%s"',
   zsh        = 'zsh "%s"',
   rust       = 'cargo run',
-  c          = 'gcc "%s" -o /tmp/a.out && /tmp/a.out',
-  cpp        = 'g++ "%s" -o /tmp/a.out && /tmp/a.out',
+  c          = 'gcc "%s" -o /tmp/a.out && /tmp/a.out; echo; read -n1 -p "按任意键退出"',
+  cpp        = 'g++ "%s" -o /tmp/a.out && /tmp/a.out; echo; read -n1 -p "按任意键退出"',
   javascript = 'node "%s"',
   typescript = 'npx tsx "%s"',
   go         = 'go run "%s"',
   ruby       = 'ruby "%s"',
+  markdown   = 'glow "%s"',
 }
 
 function M.run()
@@ -31,7 +33,9 @@ function M.run()
   end
 
   local cmd = type(runner) == 'function' and runner(file) or string.format(runner, file)
-  vim.cmd('AsyncRun ' .. cmd)
+  require('snacks').terminal.toggle(cmd, {
+    cwd = vim.fn.expand('%:p:h'),
+  })
 end
 
 return M
