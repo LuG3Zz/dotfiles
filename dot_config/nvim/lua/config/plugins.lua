@@ -20,7 +20,7 @@ vim.pack.add({
   gh('stevearc/oil.nvim'),
   gh('saghen/blink.lib'),
   gh('saghen/blink.cmp'),
-  gh('nvim-mini/mini.clue'),
+  gh('folke/which-key.nvim'),
   gh('mg979/vim-visual-multi'),
   gh('mason-org/mason.nvim'),
   gh('mason-org/mason-lspconfig.nvim'),
@@ -56,7 +56,7 @@ vim.cmd.packadd('dropbar.nvim')
 vim.cmd.packadd('oil.nvim')
 vim.cmd.packadd('blink.lib')            -- blink.cmp 依赖
 vim.cmd.packadd('blink.cmp')
-vim.cmd.packadd('mini.clue')
+vim.cmd.packadd('which-key.nvim')
 vim.cmd.packadd('mason.nvim')
 vim.cmd.packadd('mason-lspconfig.nvim')
 vim.cmd.packadd('nvim-lspconfig')
@@ -87,6 +87,7 @@ if catppuccin_ok then
       snacks = true,
       noice = true,
       mini = true,
+      rainbow_delimiters = true,
     },
   })
   vim.cmd.colorscheme('catppuccin')
@@ -263,69 +264,16 @@ if oil_ok then
   })
 end
 
--- ====== 快捷键提示 (mini.clue) ======
-local clue_ok, clue = pcall(require, 'mini.clue')
-if clue_ok then
-  clue.setup({
-    clues = {
-      -- leader 前缀说明
-      { mode = 'n', keys = '<leader>', desc = 'Leader prefix' },
-      -- 搜索
-      { mode = 'n', keys = '<leader>f', desc = 'Find files' },
-      { mode = 'n', keys = '<leader>g', desc = 'Grep' },
-      { mode = 'n', keys = '<leader>b', desc = 'Buffers' },
-      { mode = 'n', keys = '<leader>h', desc = 'Help' },
-      -- 文件
-      { mode = 'n', keys = '<leader>e', desc = 'Oil explorer' },
-      { mode = 'n', keys = '<leader>fn', desc = 'New file' },
-      { mode = 'n', keys = '<leader>tw', desc = 'Toggle wrap' },
-      -- 窗口
-      { mode = 'n', keys = '<leader>|', desc = 'Split vertical' },
-      { mode = 'n', keys = '<leader>-', desc = 'Split horizontal' },
-      { mode = 'n', keys = '<leader>wq', desc = 'Close window' },
-      -- Buffer
-      { mode = 'n', keys = '<leader>q', desc = 'Close buffer' },
-      { mode = 'n', keys = '<leader>Q', desc = 'Quit all' },
-      { mode = 'n', keys = '<leader>bb', desc = 'Switch buffer' },
-      -- LSP
-      { mode = 'n', keys = '<leader>ca', desc = 'Code action' },
-      { mode = 'n', keys = '<leader>rn', desc = 'Rename' },
-      { mode = 'n', keys = '<leader>cf', desc = 'Format' },
-      { mode = 'n', keys = '<leader>li', desc = 'Inlay hints toggle' },
-      { mode = 'n', keys = '<leader>ls', desc = 'Document symbols' },
-      { mode = 'n', keys = '<leader>cw', desc = 'Workspace diagnostics' },
-      { mode = 'n', keys = '<leader>uf', desc = 'Toggle autoformat' },
-      -- Git
-      { mode = 'n', keys = '<leader>gs', desc = 'Stage hunk' },
-      { mode = 'n', keys = '<leader>gS', desc = 'Stage buffer' },
-      { mode = 'n', keys = '<leader>gR', desc = 'Reset hunk' },
-      { mode = 'n', keys = '<leader>gd', desc = 'Diff' },
-      { mode = 'n', keys = '<leader>gb', desc = 'Blame line' },
-      { mode = 'n', keys = '<leader>gB', desc = 'Blame buffer' },
-      { mode = 'n', keys = '<leader>gl', desc = 'Lazygit' },
-      -- 工具
-      { mode = 'n', keys = '<leader>z', desc = 'Zen mode' },
-      { mode = 'n', keys = '<leader>u', desc = 'Undo tree' },
-      { mode = 'n', keys = '<leader>;', desc = 'Dropbar pick' },
-      { mode = 'n', keys = '<leader>tt', desc = 'Terminal toggle' },
-      { mode = 'n', keys = '<leader>rr', desc = 'Restart' },
-      { mode = 'n', keys = '<leader>ui', desc = 'Inspect highlight' },
-      { mode = 'n', keys = '<leader>uI', desc = 'Inspect syntax tree' },
-      -- 诊断
-      { mode = 'n', keys = '<leader>cd', desc = 'Line diagnostics' },
-    },
-    triggers = {
-      { mode = 'n', keys = '<leader>' },
-    },
-    window = {
-      config = {
-        width = 'auto',
-        border = 'rounded',
-      },
+-- ====== 快捷键提示 (which-key) ======
+local wk_ok, wk = pcall(require, 'which-key')
+if wk_ok then
+  wk.setup({
+    plugins = {
+      marks = true,
+      registers = true,
+      spelling = { enabled = false },
     },
   })
-  -- 确保当前 buffer 的触发映射立即可用
-  clue.ensure_buf_triggers(0)
 end
 
 -- ====== 自动补全括号/引号 (mini.pairs) ======
