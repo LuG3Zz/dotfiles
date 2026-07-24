@@ -1,6 +1,6 @@
 -- lua/config/completion.lua — blink.cmp 补全配置
 
--- V2 原生库编译：检测 .so 不存在时自动编译
+-- V2 原生库编译
 local lib_dir = vim.fn.stdpath('data') .. '/site/pack/core/opt/blink.cmp/lib'
 local has_lib = vim.fn.glob(lib_dir .. '/*.so*') ~= ''
 if not has_lib then
@@ -29,18 +29,21 @@ blink.setup({
 
   sources = {
     default = { 'lsp', 'path', 'snippets', 'buffer' },
+    min_keyword_length = 2,   -- 输入 2 字符才触发，避免打字就弹
+    providers = {
+      buffer = { max_items = 5 },
+    },
   },
 
-  snippets = {
-    preset = 'luasnip',
-  },
+  snippets = { preset = 'luasnip' },
 
   completion = {
     documentation = {
       auto_show = true,
-      auto_show_delay_ms = 300,
+      auto_show_delay_ms = 500,
     },
     ghost_text = { enabled = true },
+    list = { max_items = 15 },
   },
 
   signature = {
