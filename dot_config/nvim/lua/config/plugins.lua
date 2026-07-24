@@ -268,8 +268,51 @@ local clue_ok, clue = pcall(require, 'mini.clue')
 if clue_ok then
   clue.setup({
     clues = {
-      -- leader 键触发提示
+      -- leader 前缀说明
       { mode = 'n', keys = '<leader>', desc = 'Leader prefix' },
+      -- 搜索
+      { mode = 'n', keys = '<leader>f', desc = 'Find files' },
+      { mode = 'n', keys = '<leader>g', desc = 'Grep' },
+      { mode = 'n', keys = '<leader>b', desc = 'Buffers' },
+      { mode = 'n', keys = '<leader>h', desc = 'Help' },
+      -- 文件
+      { mode = 'n', keys = '<leader>e', desc = 'Oil explorer' },
+      { mode = 'n', keys = '<leader>fn', desc = 'New file' },
+      { mode = 'n', keys = '<leader>tw', desc = 'Toggle wrap' },
+      -- 窗口
+      { mode = 'n', keys = '<leader>|', desc = 'Split vertical' },
+      { mode = 'n', keys = '<leader>-', desc = 'Split horizontal' },
+      { mode = 'n', keys = '<leader>wq', desc = 'Close window' },
+      -- Buffer
+      { mode = 'n', keys = '<leader>q', desc = 'Close buffer' },
+      { mode = 'n', keys = '<leader>Q', desc = 'Quit all' },
+      { mode = 'n', keys = '<leader>bb', desc = 'Switch buffer' },
+      -- LSP
+      { mode = 'n', keys = '<leader>ca', desc = 'Code action' },
+      { mode = 'n', keys = '<leader>rn', desc = 'Rename' },
+      { mode = 'n', keys = '<leader>cf', desc = 'Format' },
+      { mode = 'n', keys = '<leader>li', desc = 'Inlay hints toggle' },
+      { mode = 'n', keys = '<leader>ls', desc = 'Document symbols' },
+      { mode = 'n', keys = '<leader>cw', desc = 'Workspace diagnostics' },
+      { mode = 'n', keys = '<leader>uf', desc = 'Toggle autoformat' },
+      -- Git
+      { mode = 'n', keys = '<leader>gs', desc = 'Stage hunk' },
+      { mode = 'n', keys = '<leader>gS', desc = 'Stage buffer' },
+      { mode = 'n', keys = '<leader>gR', desc = 'Reset hunk' },
+      { mode = 'n', keys = '<leader>gd', desc = 'Diff' },
+      { mode = 'n', keys = '<leader>gb', desc = 'Blame line' },
+      { mode = 'n', keys = '<leader>gB', desc = 'Blame buffer' },
+      { mode = 'n', keys = '<leader>gl', desc = 'Lazygit' },
+      -- 工具
+      { mode = 'n', keys = '<leader>z', desc = 'Zen mode' },
+      { mode = 'n', keys = '<leader>u', desc = 'Undo tree' },
+      { mode = 'n', keys = '<leader>;', desc = 'Dropbar pick' },
+      { mode = 'n', keys = '<leader>tt', desc = 'Terminal toggle' },
+      { mode = 'n', keys = '<leader>rr', desc = 'Restart' },
+      { mode = 'n', keys = '<leader>ui', desc = 'Inspect highlight' },
+      { mode = 'n', keys = '<leader>uI', desc = 'Inspect syntax tree' },
+      -- 诊断
+      { mode = 'n', keys = '<leader>cd', desc = 'Line diagnostics' },
     },
     triggers = {
       { mode = 'n', keys = '<leader>' },
@@ -281,6 +324,8 @@ if clue_ok then
       },
     },
   })
+  -- 确保当前 buffer 的触发映射立即可用
+  clue.ensure_buf_triggers(0)
 end
 
 -- ====== 自动补全括号/引号 (mini.pairs) ======

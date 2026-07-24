@@ -3,10 +3,6 @@
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
--- Leader 键设为空格
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
-
 -- ====== 基础操作 ======
 map("n", "<C-s>", "<cmd>w<CR>", { desc = "Save file" })
 map("i", "<C-s>", "<cmd>w<CR>", { desc = "Save file" })
