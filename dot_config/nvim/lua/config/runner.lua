@@ -35,6 +35,8 @@ function M.run()
   local cmd = type(runner) == 'function' and runner(file) or string.format(runner, file)
   require('snacks').terminal.toggle(cmd, {
     cwd = vim.fn.expand('%:p:h'),
+    interactive = false,  -- 运行完不自动关闭
+    auto_close = false,
   })
 end
 
