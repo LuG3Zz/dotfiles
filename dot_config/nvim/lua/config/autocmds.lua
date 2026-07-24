@@ -157,7 +157,9 @@ autocmd('BufWritePost', {
     end
     vim.system({ 'chezmoi', 'apply' }, { text = true }, function(obj)
       if obj.code ~= 0 then
-        vim.notify('chezmoi apply: ' .. (obj.stdout or obj.stderr or ''), vim.log.levels.WARN)
+        vim.schedule(function()
+          vim.notify('chezmoi apply: ' .. (obj.stdout or obj.stderr or ''), vim.log.levels.WARN)
+        end)
       end
     end)
   end,
