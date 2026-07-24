@@ -62,6 +62,16 @@ map('n', '[e', diagnostic_goto(false, 'ERROR'), { desc = 'Prev error' })
 map('n', ']w', diagnostic_goto(true, 'WARN'),  { desc = 'Next warning' })
 map('n', '[w', diagnostic_goto(false, 'WARN'), { desc = 'Prev warning' })
 
+-- ====== Inlay hints 样式 ====
+-- 可选方案：
+--   方案 A: 斜体 + 浅色（推荐，与代码区分明显）
+--   方案 B: 更深色（更低调）
+--   方案 C: 恢复默认（注释掉即可）
+--
+-- 当前使用方案 A
 
+-- 方案 A: 斜体 + 浅灰
+vim.api.nvim_set_hl(0, 'LspInlayHint', { fg = '#6C7086', italic = true })
 
-
+-- 方案 B: 更深色（取消注释即可替换）
+-- vim.api.nvim_set_hl(0, 'LspInlayHint', { fg = '#585B70' })
