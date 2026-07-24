@@ -37,6 +37,7 @@ vim.opt.mouse = 'a'            -- 启用鼠标
 
 vim.opt.signcolumn = 'yes'     -- 始终显示符号列
 vim.opt.showmode = false       -- 状态行已显示模式，无需重复
+vim.opt.conceallevel = 2       -- Obsidian 语法特性需要 ≥1
 
 -- 隐藏缩进标记（0.12+ 内置）
 vim.opt.list = true
