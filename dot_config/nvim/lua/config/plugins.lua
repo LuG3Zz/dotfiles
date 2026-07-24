@@ -412,13 +412,24 @@ if ufo_ok then
       return { 'treesitter', 'indent' }
     end,
     fold_virt_text_handler = function(virt_text, lnum, end_lnum, width, truncate)
-      local text = vim.fn.getline(lnum):gsub('^%s+', ''):gsub('{.*', '')
-      local line_count = end_lnum - lnum
+      local text = vim.fn.getline(lnum):gsub('^%s+', '')
+      local suffix = ' …  ' .. (end_lnum - lnum)
+      if vim.fn.strdisplaywidth(text) > width - 6 then
+        text = truncate(text, width - 6)
+      end
       return {
         { text, 'NormalFloat' },
-        { '  ' .. line_count .. ' lines', 'Comment' },
+        { suffix, 'Comment' },
       }
     end,
+    open_fold_hl_timeout = 200,
+    preview = {
+      win_config = {
+        border = 'rounded',
+        winblend = 12,
+        maxheight = 15,
+      },
+    },
   })
 end
 
