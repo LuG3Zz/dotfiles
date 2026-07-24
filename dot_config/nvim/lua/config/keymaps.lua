@@ -102,8 +102,10 @@ map("n", "<leader>bb", "<cmd>e #<CR>", { desc = "Switch to other buffer" })
 map("n", "<leader>fn", "<cmd>enew<CR>", { desc = "New file" })
 map("n", "<leader>tw", "<cmd>set wrap!<CR>", { desc = "Toggle wrap", silent = true })
 
--- ====== 快速运行代码 (jaq-nvim) ======
-map("n", "<leader>x", "<cmd>Jaq<CR>", { desc = "Run file" })
+-- ====== 快速运行代码（snacks 浮动终端） ======
+map("n", "<leader>x", function()
+  require("config.runner").run()
+end, { desc = "Run file" })
 
 -- ====== 重启 Neovim（内置 0.12） ======
 map("n", "<leader>r", function()

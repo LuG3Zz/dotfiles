@@ -43,7 +43,7 @@ vim.pack.add({
   gh('rafamadriz/friendly-snippets'),
   gh('nvim-lua/plenary.nvim'),
   gh('epwalsh/obsidian.nvim'),
-  gh('is0n/jaq-nvim'),
+  -- 使用 config/runner.lua 运行代码
 })
 
 -- 显式加载需要在 init 期间配置的插件（opt/ 目录需 packadd）
@@ -87,7 +87,6 @@ vim.cmd.packadd('LuaSnip')
 vim.cmd.packadd('friendly-snippets')
 vim.cmd.packadd('plenary.nvim')
 vim.cmd.packadd('obsidian.nvim')
-vim.cmd.packadd('jaq-nvim')
 
 -- ====== 主题：Catppuccin Mocha ======
 local catppuccin_ok, catppuccin = pcall(require, 'catppuccin')
@@ -521,39 +520,6 @@ end
 -- ====== 彩虹括号 ======
 -- rainbow-delimiters.nvim: 使用 Treesitter 高亮括号层级
 -- 默认配置即可工作，无需额外 setup
-
--- ====== 快速运行代码 (jaq-nvim) ======
-local jaq_ok, jaq = pcall(require, 'jaq-nvim')
-if jaq_ok then
-  jaq.setup({
-    cmds = {
-      internal = {
-        lua = 'luafile %',
-        vim = 'source %',
-      },
-      external = {
-        python     = 'python3 "$filePath"',
-        lua        = 'lua "$filePath"',
-        sh         = 'bash "$filePath"',
-        zsh        = 'zsh "$filePath"',
-        rust       = 'cargo run',
-        c          = 'gcc "$filePath" -o /tmp/a.out && /tmp/a.out',
-        cpp        = 'g++ "$filePath" -o /tmp/a.out && /tmp/a.out',
-        cs         = 'dotnet script "$filePath"',
-        javascript = 'node "$filePath"',
-        typescript = 'npx tsx "$filePath"',
-        go         = 'go run "$filePath"',
-        ruby       = 'ruby "$filePath"',
-        markdown   = 'glow "$filePath"',
-      },
-    },
-    behavior = {
-      default     = 'terminal',
-      startinsert = false,
-      wincmd      = false,
-    },
-  })
-end
 
 -- ====== 其余插件 ======
 -- blink.cmp 配置在 completion.lua 中
