@@ -26,7 +26,7 @@ local function replace_selection(text)
   local def
   for line in result:gmatch('[^\n]+') do
     local d = line:match('^%w+%.%s*(.*)')
-    if d and d:match('[\x{4e00}-\x{9fff}]') then def = d; break end
+    if d and d:match('[\228-\233]') then def = d; break end
   end
   if not def then
     vim.notify('No Chinese definition found', vim.log.levels.WARN)
