@@ -26,6 +26,11 @@ map("n", "<C-l>", "<C-w><C-l>", { desc = "Go to right window" })
 map("n", "<leader>|", "<C-w>v", { desc = "Split vertically" })
 map("n", "<leader>-", "<C-w>s", { desc = "Split horizontally" })
 map("n", "<leader>wq", "<C-w>q", { desc = "Close window" })
+map("n", "<leader>w=", "<C-w>=", { desc = "Equalize windows" })
+map("n", "<M-Right>", "<C-w>5>", { desc = "Widen window" })
+map("n", "<M-Left>", "<C-w>5<", { desc = "Narrow window" })
+map("n", "<M-Down>", "<C-w>5+", { desc = "Increase height" })
+map("n", "<M-Up>", "<C-w>5-", { desc = "Decrease height" })
 
 -- ====== 文件浏览 (Oil) ======
 map("n", "<leader>e", function()
