@@ -16,8 +16,8 @@ local function show_result(text, result)
   local width = 60
   local height = math.min(lines, 20)
   local ui = vim.api.nvim_list_uis()[1]
-  local row = math.floor((ui.height - height) / 2)
-  local col = math.floor((ui.width - width) / 2)
+  local row = ui and math.floor((ui.height - height) / 2) or 2
+  local col = ui and math.floor((ui.width - width) / 2) or 10
 
   -- 浮动窗口
   local win = vim.api.nvim_open_win(buf, true, {
