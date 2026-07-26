@@ -248,7 +248,21 @@ if lualine_ok then
       lualine_a = { { 'mode', separator = { left = '' }, right_padding = 2 } },
       lualine_b = { 'branch', 'diff', 'diagnostics' },
       lualine_c = { { 'filename', path = 1 } },
-      lualine_x = { 'filetype', 'encoding', 'fileformat' },
+      lualine_x = {
+        'filetype', 'encoding', 'fileformat',
+        {
+          function()
+            local mode = vim.api.nvim_get_mode()
+            if mode.recording then
+              return '󰻃 ' .. mode.recording
+            end
+            return ''
+          end,
+          cond = function()
+            return vim.api.nvim_get_mode().recording ~= nil
+          end,
+        },
+      },
       lualine_y = { 'progress' },
       lualine_z = { { 'location', separator = { right = '' }, left_padding = 2 } },
     },
