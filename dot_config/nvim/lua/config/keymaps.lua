@@ -102,39 +102,8 @@ map("n", "<leader>bb", "<cmd>e #<CR>", { desc = "Switch to other buffer" })
 map("n", "<leader>fn", "<cmd>enew<CR>", { desc = "New file" })
 map("n", "<leader>tw", "<cmd>set wrap!<CR>", { desc = "Toggle wrap", silent = true })
 
--- ====== 快速运行代码 ======
-map("n", "<leader>x", function()
-  local ft = vim.bo.filetype
-  local file = vim.fn.fnameescape(vim.fn.expand('%:p'))
-  local dir = vim.fn.fnameescape(vim.fn.expand('%:p:h'))
-  local runners = {
-    python     = 'python3',
-    lua        = 'lua',
-    sh         = 'bash',
-    zsh        = 'zsh',
-    html       = 'xdg-open',
-    c          = 'cd /tmp && gcc -o a.out',
-    cpp        = 'cd /tmp && g++ -o a.out',
-    javascript = 'node',
-    typescript = 'npx tsx',
-    go         = 'go run',
-    ruby       = 'ruby',
-    markdown   = 'glow',
-  }
-  local cmd = runners[ft]
-  if not cmd then vim.notify('No runner for ' .. ft, vim.log.levels.WARN) return end
-  if ft == 'html' then
-    vim.ui.open(file)
-    return
-  elseif ft == 'c' or ft == 'cpp' then
-    cmd = cmd .. ' ' .. file .. ' && /tmp/a.out'
-  elseif ft == 'rust' then
-    cmd = 'cargo run'
-  else
-    cmd = cmd .. ' ' .. file
-  end
-  vim.cmd('AsyncRun -mode=term -pos=bottom -rows=12 -cwd=' .. dir .. ' ' .. cmd)
-end, { desc = "Run file" })
+-- ====== 快速运行代码（asynctasks） ======
+map("n", "<leader>x", "<cmd>AsyncTask file-run<CR>", { desc = "Run file" })
 
 -- ====== 重启 Neovim（内置 0.12） ======
 map("n", "<leader>r", function()
