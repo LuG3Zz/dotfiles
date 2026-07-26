@@ -112,6 +112,7 @@ map("n", "<leader>x", function()
     lua        = 'lua',
     sh         = 'bash',
     zsh        = 'zsh',
+    html       = 'xdg-open',
     c          = 'cd /tmp && gcc -o a.out',
     cpp        = 'cd /tmp && g++ -o a.out',
     javascript = 'node',
@@ -122,7 +123,10 @@ map("n", "<leader>x", function()
   }
   local cmd = runners[ft]
   if not cmd then vim.notify('No runner for ' .. ft, vim.log.levels.WARN) return end
-  if ft == 'c' or ft == 'cpp' then
+  if ft == 'html' then
+    vim.ui.open(file)
+    return
+  elseif ft == 'c' or ft == 'cpp' then
     cmd = cmd .. ' ' .. file .. ' && /tmp/a.out'
   elseif ft == 'rust' then
     cmd = 'cargo run'
