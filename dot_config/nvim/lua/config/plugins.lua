@@ -8,6 +8,7 @@ end
 
 -- 注册所有插件（已在磁盘上，仅快速注册 + 生成 lock 文件）
 vim.pack.add({
+  gh('ellisonleao/gruvbox.nvim'),
   gh('catppuccin/nvim'),
   gh('nvim-treesitter/nvim-treesitter'),
   gh('nvim-mini/mini.pick'),
@@ -51,6 +52,7 @@ vim.pack.add({
 -- 显式加载需要在 init 期间配置的插件（opt/ 目录需 packadd）
 -- chezmoi.vim 需在 filetype/syntax 之前加载，放最前
 vim.cmd.packadd('chezmoi.vim')
+vim.cmd.packadd('gruvbox.nvim')
 vim.cmd.packadd('nvim')                -- catppuccin/nvim
 vim.cmd.packadd('nvim-treesitter')
 vim.cmd.packadd('mini.pick')
@@ -93,22 +95,29 @@ vim.cmd.packadd('asyncrun.vim')
 vim.cmd.packadd('asynctasks.vim')
 vim.cmd.packadd('markview.nvim')
 
--- ====== 主题：Catppuccin Mocha ======
-local catppuccin_ok, catppuccin = pcall(require, 'catppuccin')
-if catppuccin_ok then
-  catppuccin.setup({
+-- ====== 主题：Gruvbox ======
+local gruvbox_ok, gruvbox = pcall(require, 'gruvbox')
+if gruvbox_ok then
+  gruvbox.setup({
+    transparent_mode = true,
+    contrast = 'soft',
+    italic = { strings = false, comments = false },
+    overrides = {},
+  })
+  vim.cmd.colorscheme('gruvbox')
+end
+
+-- catppuccin 备用（切换: :colorscheme catppuccin）
+local cp_ok, cp = pcall(require, 'catppuccin')
+if cp_ok then
+  cp.setup({
     flavour = 'mocha',
     transparent_background = true,
     no_italic = true,
     integrations = {
-      treesitter = true,
-      cmp = true,
-      snacks = true,
-      noice = true,
-      mini = true,
+      treesitter = true, cmp = true, snacks = true, mini = true,
     },
   })
-  vim.cmd.colorscheme('catppuccin')
 end
 
 -- ====== Treesitter ======

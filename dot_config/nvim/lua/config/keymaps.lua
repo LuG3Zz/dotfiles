@@ -127,6 +127,15 @@ map({ "n", "x" }, "<leader>kd", function()
   require("config.translate").show()
 end, { desc = "Translate word" })
 
+-- ====== 切换主题 ======
+map("n", "<leader>ut", function()
+  local themes = { 'gruvbox', 'catppuccin' }
+  local current = vim.g.colors_name or 'gruvbox'
+  local next_idx = (themes[1] == current and 2) or (themes[2] == current and 1) or 1
+  vim.cmd.colorscheme(themes[next_idx])
+  vim.notify('Theme: ' .. themes[next_idx], vim.log.levels.INFO)
+end, { desc = "Toggle theme" })
+
 -- ====== 检查工具 ======
 map("n", "<leader>ui", vim.show_pos, { desc = "Inspect highlight group" })
 map("n", "<leader>uI", "<cmd>InspectTree<CR>", { desc = "Inspect Treesitter tree" })
