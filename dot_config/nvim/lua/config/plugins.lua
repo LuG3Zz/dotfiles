@@ -14,7 +14,7 @@ vim.pack.add({
   gh('nvim-mini/mini.ai'),
   gh('nvim-mini/mini.surround'),
   gh('folke/snacks.nvim'),
-  gh('nvim-lualine/lualine.nvim'),
+  gh('nvim-mini/mini.statusline'),
   gh('HiPhish/rainbow-delimiters.nvim'),
   gh('Bekaboo/dropbar.nvim'),
   gh('stevearc/oil.nvim'),
@@ -57,7 +57,7 @@ vim.cmd.packadd('mini.pick')
 vim.cmd.packadd('mini.ai')
 vim.cmd.packadd('mini.surround')
 vim.cmd.packadd('snacks.nvim')
-vim.cmd.packadd('lualine.nvim')
+vim.cmd.packadd('mini.statusline')
 vim.cmd.packadd('rainbow-delimiters.nvim')
 vim.cmd.packadd('dropbar.nvim')
 vim.cmd.packadd('oil.nvim')
@@ -232,41 +232,12 @@ if snacks_ok then
   end
 end
 
--- ====== 状态栏 (lualine) ======
-local lualine_ok, lualine = pcall(require, 'lualine')
-if lualine_ok then
-  lualine.setup({
-    options = {
-      theme = 'catppuccin-mocha',
-      icons_enabled = true,
-      component_separators = { left = '', right = '' },
-      section_separators = { left = '', right = '' },
-      disabled_filetypes = { statusline = { 'dashboard', 'alpha', 'terminal' } },
-      globalstatus = true,
-    },
-    sections = {
-      lualine_a = { { 'mode', separator = { left = '' }, right_padding = 2 } },
-      lualine_b = { 'branch', 'diff', 'diagnostics' },
-      lualine_c = { { 'filename', path = 1 } },
-      lualine_x = {
-        'filetype', 'encoding', 'fileformat',
-        {
-          function()
-            local mode = vim.api.nvim_get_mode()
-            if mode.recording then
-              return '󰻃 ' .. mode.recording
-            end
-            return ''
-          end,
-          cond = function()
-            return vim.api.nvim_get_mode().recording ~= nil
-          end,
-        },
-      },
-      lualine_y = { 'progress' },
-      lualine_z = { { 'location', separator = { right = '' }, left_padding = 2 } },
-    },
-    extensions = { 'oil' },
+-- ====== 状态栏 (mini.statusline) ======
+local sl_ok, sl = pcall(require, 'mini.statusline')
+if sl_ok then
+  sl.setup({
+    use_icons = true,
+    set_vim_settings = false,
   })
 end
 
