@@ -493,6 +493,13 @@ if noice_ok then
       inc_rename = true,
       lsp_doc_border = true,
     },
+    routes = {
+      -- 放行录制宏提示（默认被 noice 拦截了）
+      {
+        filter = { event = 'msg_showmode' },
+        view = 'cmdline',
+      },
+    },
   })
 end
 

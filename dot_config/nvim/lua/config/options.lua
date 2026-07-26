@@ -36,7 +36,7 @@ vim.opt.cmdheight = 1           -- 底部命令行高度（noice 会浮窗替代
 vim.opt.mouse = 'a'            -- 启用鼠标
 
 vim.opt.signcolumn = 'yes'     -- 始终显示符号列
-vim.opt.showmode = false       -- 状态行已显示模式，无需重复
+vim.opt.showmode = true        -- 显示模式（含录制宏提示 "recording @a"）
 vim.opt.conceallevel = 2       -- Obsidian 语法特性需要 ≥1
 
 -- 隐藏缩进标记（0.12+ 内置）
