@@ -246,7 +246,8 @@ map("t", "<C-h>", "<cmd>wincmd h<CR>", { desc = "Terminal: Go to left window" })
 map("t", "<C-j>", "<cmd>wincmd j<CR>", { desc = "Terminal: Go to lower window" })
 map("t", "<C-k>", "<cmd>wincmd k<CR>", { desc = "Terminal: Go to upper window" })
 map("t", "<C-l>", "<cmd>wincmd l<CR>", { desc = "Terminal: Go to right window" })
--- 用 <C-\><C-n> 退出终端模式（避免与 Zsh vi-mode 的 <Esc> 冲突）
+-- 用 <M-Enter> 退出终端模式（避免与 Zsh vi-mode 的 <Esc> 冲突）
+map("t", "<C-space>", "<C-\\><C-n>", { desc = "Terminal: Enter normal mode" })
 
 -- ====== OpenCode AI Agent ======
 map({ "n", "v" }, "<leader>A", function()
