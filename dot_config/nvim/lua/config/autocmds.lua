@@ -156,21 +156,6 @@ autocmd('VimLeavePre', {
   end,
 })
 
--- norg 文件：替换 <C-Space>（输入法冲突）为 <leader>tx
-autocmd('FileType', {
-  group = user_group,
-  pattern = { 'norg' },
-  callback = function()
-    pcall(vim.keymap.del, 'n', '<C-Space>', { buffer = true })
-    pcall(vim.keymap.del, 'i', '<C-Space>', { buffer = true })
-    vim.keymap.set('n', '<leader>tx', '<Plug>(neorg.qol.todo-items.todo.task-cycle)', { buffer = true, desc = '[neorg] Cycle Task' })
-    vim.keymap.set('n', '<CR>', function()
-      local hop = require('neorg.core').modules.get_module('core.esupports.hop')
-      if hop then hop.hop_link() end
-    end, { buffer = true, desc = '[neorg] Jump to Link' })
-  end,
-})
-
 -- .env 文件设为 sh 语法
 autocmd({ 'BufRead', 'BufNewFile' }, {
   group = user_group,
