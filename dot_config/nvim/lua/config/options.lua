@@ -39,6 +39,10 @@ vim.opt.signcolumn = 'yes'     -- 始终显示符号列
 vim.opt.showmode = true        -- 显示模式（含录制宏提示 "recording @a"）
 vim.opt.conceallevel = 2       -- Obsidian 语法特性需要 ≥1
 
+-- ====== 编码设置 ======
+vim.opt.fileencoding = 'utf-8'             -- 新文件 UTF-8
+vim.opt.fileencodings = 'utf-8,gbk,gb2312,gb18030,big5,latin1'  -- 读取时自动检测编码（中文兼容）
+
 -- 隐藏缩进标记（0.12+ 内置）
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
