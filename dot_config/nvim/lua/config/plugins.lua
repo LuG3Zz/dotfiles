@@ -68,6 +68,7 @@ vim.cmd.packadd('mini.sessions')
 vim.cmd.packadd('mini.move')
 vim.cmd.packadd('mini.comment')
 vim.cmd.packadd('dial.nvim')
+-- dial.nvim 的 augends 在下面的 setup 中配置
 vim.cmd.packadd('snacks.nvim')
 vim.cmd.packadd('mini.statusline')
 vim.cmd.packadd('rainbow-delimiters.nvim')
@@ -199,6 +200,19 @@ local cm_ok, cm = pcall(require, 'mini.comment')
 if cm_ok then
   cm.setup({})
 end
+
+-- ====== 增量改值增强 (dial.nvim) ======
+-- 在默认基础上增加 boolean、字母、英式星期等
+local dial_config = require('dial.config')
+local constant = require('dial.augend.constant')
+local default_augends = dial_config.augends:get('default')
+vim.list_extend(default_augends, {
+  constant.alias.bool,
+  constant.alias.Bool,
+  constant.alias.alpha,
+  constant.alias.Alpha,
+  constant.alias.en_weekday,
+})
 
 -- ====== 文件类型图标 ======
 local icons_ok, icons = pcall(require, 'mini.icons')
