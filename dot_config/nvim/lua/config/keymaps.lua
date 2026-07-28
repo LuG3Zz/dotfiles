@@ -134,6 +134,20 @@ map("n", "<leader>ut", function()
   vim.notify('Theme: ' .. themes[next_idx], vim.log.levels.INFO)
 end, { desc = "Toggle theme" })
 
+-- ====== Session 管理 ======
+map("n", "<leader>Ss", function()
+  require('mini.sessions').write()
+  vim.notify('Session saved', vim.log.levels.INFO)
+end, { desc = "Save session" })
+map("n", "<leader>Sl", function()
+  require('mini.sessions').read()
+end, { desc = "Load session" })
+map("n", "<leader>St", function()
+  vim.g.autosave_session = not vim.g.autosave_session
+  require('mini.sessions').config.autowrite = vim.g.autosave_session
+  vim.notify('Autosave ' .. (vim.g.autosave_session and 'ON' or 'OFF'), vim.log.levels.INFO)
+end, { desc = "Toggle autosave" })
+
 -- ====== 检查工具 ======
 map("n", "<leader>ui", vim.show_pos, { desc = "Inspect highlight group" })
 map("n", "<leader>uI", "<cmd>InspectTree<CR>", { desc = "Inspect Treesitter tree" })

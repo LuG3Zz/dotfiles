@@ -165,11 +165,14 @@ end
 local s_ok, s = pcall(require, 'mini.sessions')
 if s_ok then
   s.setup({
-    autoread = true,
-    autowrite = true,
+    autoread = false,
+    autowrite = false,
     directory = vim.fn.stdpath('state') .. '/sessions',
   })
 end
+
+-- 自动保存开关
+vim.g.autosave_session = false
 
 -- ====== 文件类型图标 ======
 local icons_ok, icons = pcall(require, 'mini.icons')

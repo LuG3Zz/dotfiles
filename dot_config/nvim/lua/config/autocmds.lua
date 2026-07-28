@@ -137,6 +137,16 @@ autocmd('BufWritePre', {
   end,
 })
 
+-- 退出时自动保存 session（如果开启）
+autocmd('VimLeavePre', {
+  group = user_group,
+  callback = function()
+    if vim.g.autosave_session then
+      require('mini.sessions').write()
+    end
+  end,
+})
+
 -- .env 文件设为 sh 语法
 autocmd({ 'BufRead', 'BufNewFile' }, {
   group = user_group,
