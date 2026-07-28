@@ -378,56 +378,56 @@ if st_ok then
     items = {
       -- 搜索
       {
-        name = "  Find File",
+        name = "  [f] Find File",
         action = ":Pick files",
         section = "Search",
       },
       {
-        name = "  Grep",
+        name = "  [g] Grep",
         action = ":Pick grep",
         section = "Search",
       },
       {
-        name = "  Recent Files",
+        name = "  [r] Recent Files",
         action = ':lua require("mini.pick").start({ source = { items = vim.v.oldfiles, name = "Recent files" } })',
         section = "Search",
       },
       -- 项目
       {
-        name = "󰛓  Dotfiles",
+        name = "󰛓  [d] Dotfiles",
         action = ':lua require("mini.pick").start({ source = { items = vim.fn.systemlist({"find", vim.fn.expand("~/.local/share/chezmoi"), "-type", "f", "-not", "-path", "*/.git/*"}), name = "Dotfiles" } })',
         section = "Projects",
       },
       -- 笔记
       {
-        name = "  Obsidian",
+        name = "  [o] Obsidian",
         action = ":ObsidianQuickSwitch",
         section = "Notes",
       },
       {
-        name = "  Daily Note",
+        name = "  [n] Daily Note",
         action = ":ObsidianToday",
         section = "Notes",
       },
       -- 工具
       {
-        name = "  Terminal",
+        name = "  [t] Terminal",
         action = ':lua require("snacks").terminal.toggle(nil, { cwd = vim.fn.expand("~") })',
         section = "Tools",
       },
       {
-        name = "󰋖  Session Save",
+        name = "󰋖  [s] Session Save",
         action = ':lua require("mini.sessions").write()',
         section = "Tools",
       },
       {
-        name = "󰋕  Session Load",
+        name = "󰋕  [l] Session Load",
         action = ':lua require("mini.sessions").read()',
         section = "Tools",
       },
       -- 系统
       {
-        name = "  Quit",
+        name = "  [q] Quit",
         action = ":qa",
         section = "System",
       },
