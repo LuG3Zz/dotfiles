@@ -116,10 +116,8 @@ map("n", "<leader>rr", function()
 end, { desc = "Save session & restart" })
 
 -- ====== 增量/减量 (dial.nvim) ======
-map("n", "[+", "<Plug>(dial-increment)", { desc = "Increment value" })
-map("n", "[-", "<Plug>(dial-decrement)", { desc = "Decrement value" })
-map("v", "[+", "<Plug>(dial-increment)", { desc = "Increment values" })
-map("v", "[-", "<Plug>(dial-decrement)", { desc = "Decrement values" })
+map({ "n", "x" }, "<C-a>", "<Plug>(dial-increment)", { desc = "Increment value" })
+map({ "n", "x" }, "<C-x>", "<Plug>(dial-decrement)", { desc = "Decrement value" })
 
 -- ====== 折叠导航 ======
 map("n", "zv", "zMzvzz", { desc = "Close all folds except current" })
@@ -227,11 +225,11 @@ map("t", "<C-l>", "<cmd>wincmd l<CR>", { desc = "Terminal: Go to right window" }
 map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Terminal: Enter normal mode" })
 
 -- ====== OpenCode AI Agent ======
-map({ "n", "v" }, "<C-a>", function()
+map({ "n", "v" }, "<leader>A", function()
   require("opencode").ask()
 end, { desc = "OpenCode: Ask" })
 
-map({ "n", "v" }, "<C-x>", function()
+map({ "n", "v" }, "<leader>X", function()
   require("opencode").select()
 end, { desc = "OpenCode: Select command" })
 
