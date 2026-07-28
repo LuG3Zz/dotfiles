@@ -56,6 +56,7 @@ vim.pack.add({
   gh("skywind3000/asyncrun.vim"),
   gh("skywind3000/asynctasks.vim"),
   gh("OXY2DEV/markview.nvim"),
+  { src = gh("nvim-neorg/tree-sitter-norg"), branch = "master" },
 })
 
 -- 显式加载需要在 init 期间配置的插件（opt/ 目录需 packadd）
