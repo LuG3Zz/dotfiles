@@ -16,6 +16,7 @@ vim.pack.add({
   gh('nvim-mini/mini.surround'),
   gh('nvim-mini/mini.icons'),
   gh('nvim-mini/mini.cursorword'),
+  gh('nvim-mini/mini.sessions'),
   gh('folke/snacks.nvim'),
   gh('nvim-mini/mini.statusline'),
   gh('HiPhish/rainbow-delimiters.nvim'),
@@ -60,6 +61,7 @@ vim.cmd.packadd('mini.ai')
 vim.cmd.packadd('mini.surround')
 vim.cmd.packadd('mini.icons')
 vim.cmd.packadd('mini.cursorword')
+vim.cmd.packadd('mini.sessions')
 vim.cmd.packadd('snacks.nvim')
 vim.cmd.packadd('mini.statusline')
 vim.cmd.packadd('rainbow-delimiters.nvim')
@@ -157,6 +159,16 @@ end
 local cw_ok, cw = pcall(require, 'mini.cursorword')
 if cw_ok then
   cw.setup({})
+end
+
+-- ====== Session 管理 ======
+local s_ok, s = pcall(require, 'mini.sessions')
+if s_ok then
+  s.setup({
+    autoread = true,
+    autowrite = true,
+    directory = vim.fn.stdpath('state') .. '/sessions',
+  })
 end
 
 -- ====== 文件类型图标 ======

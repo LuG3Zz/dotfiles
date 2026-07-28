@@ -110,11 +110,9 @@ map("n", "<leader>r", function()
   require("mini.pick").start({ source = { items = vim.v.oldfiles, name = "Recent files" } })
 end, { desc = "Recent files" })
 map("n", "<leader>rr", function()
-  local session_file = vim.fn.stdpath('state') .. '/session.vim'
-  -- 关掉 outline 侧栏，避免重启后空窗口残留
   pcall(vim.cmd, 'silent! AerialClose')
-  vim.cmd('mksession! ' .. session_file)
-  vim.cmd('restart +wqa! source ' .. session_file)
+  require('mini.sessions').write(vim.fn.stdpath('state') .. '/sessions/_restart')
+  vim.cmd('restart +wqa! source ' .. vim.fn.stdpath('state') .. '/sessions/_restart')
 end, { desc = "Save session & restart" })
 
 -- ====== 折叠导航 ======
