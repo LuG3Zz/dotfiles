@@ -611,8 +611,9 @@ if obs_ok then
       },
     },
     daily_notes = {
-      folder = "Daily",
+      folder = "01-日记",
       date_format = "%Y-%m-%d",
+      template = "06-附件/模板/日记模板.md",
     },
     -- 模板（与 Templater 共用同一目录）
     templates = {
