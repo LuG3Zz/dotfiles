@@ -124,6 +124,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -- ====== Inlay Hints（默认开启） ======
 vim.lsp.inlay_hint.enable(true, nil)
 
+-- ====== On-Type Formatting（0.12 原生） ======
+-- 支持的语言（如 rust-analyzer）会在输入 ; } 等时自动格式化
+vim.lsp.on_type_formatting.enable()
+
 -- ====== Format on Save ======
 -- 用 `<leader>uf` 全局切换，`:FormatDisable!` buffer 局部切换
 local auto_format_group = vim.api.nvim_create_augroup('UserAutoFormat', { clear = true })
