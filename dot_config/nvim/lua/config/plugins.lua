@@ -15,6 +15,7 @@ vim.pack.add({
   gh("nvim-mini/mini.ai"),
   gh("nvim-mini/mini.surround"),
   gh("nvim-mini/mini.icons"),
+  gh("nvim-mini/mini.starter"),
   gh("nvim-mini/mini.cursorword"),
   gh("nvim-mini/mini.sessions"),
   gh("nvim-mini/mini.move"),
@@ -68,6 +69,7 @@ vim.cmd.packadd("mini.pick")
 vim.cmd.packadd("mini.ai")
 vim.cmd.packadd("mini.surround")
 vim.cmd.packadd("mini.icons")
+vim.cmd.packadd("mini.starter")
 vim.cmd.packadd("mini.cursorword")
 vim.cmd.packadd("mini.sessions")
 vim.cmd.packadd("mini.move")
@@ -291,32 +293,6 @@ end
 local snacks_ok, snacks = pcall(require, "snacks")
 if snacks_ok then
   snacks.setup({
-    -- 启动 Dashboard（替换 mini.starter）
-    dashboard = {
-      enabled = true,
-      preset = {
-        header = [[
-    ██████╗ ██████╗  ██████╗ ██╗    ██╗███╗   ██╗██╗     ██╗   ██╗
-    ██╔══██╗██╔══██╗██╔═══██╗██║    ██║████╗  ██║██║     ██║   ██║
-    ██████╔╝██████╔╝██║   ██║██║ █╗ ██║██╔██╗ ██║██║     ██║   ██║
-    ██╔══██╗██╔══██╗██║   ██║██║███╗██║██║╚██╗██║██║     ██║   ██║
-    ██████╔╝██║  ██║╚██████╔╝╚███╔███╔╝██║ ╚████║███████╗╚██████╔╝
-    ╚═════╝ ╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝╚══════╝ ╚═════╝
-        ]],
-        keys = {
-          { icon = " ", key = "f", desc = "Find File", action = ":Pick files" },
-          { icon = " ", key = "r", desc = "Recent Files", action = ':lua require("mini.pick").start({ source = { items = vim.v.oldfiles, name = "Recent files" } })' },
-          { icon = "󰛓 ", key = "d", desc = "Dotfiles", action = ':lua require("mini.pick").start({ source = { items = vim.fn.systemlist({"find", vim.fn.expand("~/.local/share/chezmoi"), "-type", "f", "-not", "-path", "*/.git/*"}), name = "Dotfiles" } })' },
-          { icon = " ", key = "q", desc = "Quit", action = ":qa" },
-        },
-      },
-      sections = {
-        { section = "header" },
-        { section = "keys", gap = 1, padding = 1 },
-        { section = "recent_files", limit = 10, icon = " ", title = "Recent Files", indent = 2, padding = 1 },
-        { section = "hitokoto", padding = 1 },
-      },
-    },
     -- 通知系统（替换默认 vim.notify）
     notifier = {
       enabled = true,
@@ -383,28 +359,66 @@ if snacks_ok then
     quickfile = { enabled = true },
   })
 
-  -- 注册一言格言 section（每次打开 Dashboard 时刷新）
-  local hitokoto_ok, hitokoto = pcall(require, "config.hitokoto")
-  if hitokoto_ok then
-    snacks.dashboard.sections.hitokoto = function()
-      return {
-        align = "center",
-        text = { { hitokoto.dashboard_text(), hl = "SpecialComment" } },
-      }
-    end
-  end
-  -- Dashboard buffer 禁用不必要的 UI 组件
-  vim.api.nvim_create_autocmd("FileType", {
-    group = vim.api.nvim_create_augroup("DashboardCleanup", { clear = true }),
-    pattern = { "snacks_dashboard" },
-    callback = function()
-      vim.b.snacks_indent = false
-      vim.b.snacks_scroll = false
-      vim.b.snacks_dim = false
-      vim.b.minihipatterns_disable = true
-      vim.b.minitrailspace_disable = true
-      vim.b.minicursorword_disable = true
-    end,
+end
+
+-- ====== 启动页 (mini.starter) ======
+local logo = {
+  "██████╗ ██████╗  ██████╗ ██╗    ██╗███╗   ██╗██╗     ██╗   ██╗",
+  "██╔══██╗██╔══██╗██╔═══██╗██║    ██║████╗  ██║██║     ██║   ██║",
+  "██████╔╝██████╔╝██║   ██║██║ █╗ ██║██╔██╗ ██║██║     ██║   ██║",
+  "██╔══██╗██╔══██╗██║   ██║██║███╗██║██║╚██╗██║██║     ██║   ██║",
+  "██████╔╝██║  ██║╚██████╔╝╚███╔███╔╝██║ ╚████║███████╗╚██████╔╝",
+  "╚═════╝ ╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝╚══════╝ ╚═════╝",
+}
+
+local st_ok, st = pcall(require, "mini.starter")
+if st_ok then
+  st.setup({
+    evaluate_single = true,
+    items = {
+      {
+        name = "Find File",
+        action = ":Pick files",
+        section = "Files",
+      },
+      {
+        name = "Recent Files",
+        action = ':lua require("mini.pick").start({ source = { items = vim.v.oldfiles, name = "Recent files" } })',
+        section = "Files",
+      },
+      {
+        name = "Dotfiles",
+        action = ':lua require("mini.pick").start({ source = { items = vim.fn.systemlist({"find", vim.fn.expand("~/.local/share/chezmoi"), "-type", "f", "-not", "-path", "*/.git/*"}), name = "Dotfiles" } })',
+        section = "Files",
+      },
+      {
+        name = "Quit",
+        action = ":qa",
+        section = "Actions",
+      },
+    },
+    content_hooks = {
+      -- 添加 BROWNLU logo
+      function(content, _)
+        table.insert(content, 1, { { type = "empty", string = "" } })
+        for _, line in ipairs(logo) do
+          table.insert(content, 1, { { type = "empty", string = "    " .. line } })
+        end
+        return content
+      end,
+      -- 添加一言格言
+      function(content, _)
+        local h_ok, h = pcall(require, "config.hitokoto")
+        if h_ok then
+          table.insert(content, { { type = "empty", string = "" } })
+          table.insert(content, { { type = "empty", string = "    " .. h.dashboard_text() } })
+        end
+        return content
+      end,
+      st.gen_hook.adding_bullet(),
+      st.gen_hook.indexing("all", { "Files", "Actions" }),
+      st.gen_hook.padding(1, 1),
+    },
   })
 end
 

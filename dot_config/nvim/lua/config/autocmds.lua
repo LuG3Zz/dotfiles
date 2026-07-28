@@ -6,6 +6,15 @@ local autocmd = vim.api.nvim_create_autocmd
 -- 通用用户事件组
 local user_group = augroup('UserEvent', { clear = true })
 
+-- 启动时打开 mini.starter
+autocmd("UIEnter", {
+  group = user_group,
+  callback = function()
+    local st_ok, st = pcall(require, "mini.starter")
+    if st_ok then st.open() end
+  end,
+})
+
 -- Insert 模式下关闭相对行号
 autocmd('InsertEnter', {
   group = user_group,
