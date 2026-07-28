@@ -18,6 +18,8 @@ vim.pack.add({
   gh('nvim-mini/mini.cursorword'),
   gh('nvim-mini/mini.sessions'),
   gh('nvim-mini/mini.move'),
+  gh('nvim-mini/mini.comment'),
+  gh('monaqa/dial.nvim'),
   gh('folke/snacks.nvim'),
   gh('nvim-mini/mini.statusline'),
   gh('HiPhish/rainbow-delimiters.nvim'),
@@ -64,6 +66,8 @@ vim.cmd.packadd('mini.icons')
 vim.cmd.packadd('mini.cursorword')
 vim.cmd.packadd('mini.sessions')
 vim.cmd.packadd('mini.move')
+vim.cmd.packadd('mini.comment')
+vim.cmd.packadd('dial.nvim')
 vim.cmd.packadd('snacks.nvim')
 vim.cmd.packadd('mini.statusline')
 vim.cmd.packadd('rainbow-delimiters.nvim')
@@ -188,6 +192,12 @@ if mv_ok then
       up = '<M-k>',
     },
   })
+end
+
+-- ====== 智能注释 ======
+local cm_ok, cm = pcall(require, 'mini.comment')
+if cm_ok then
+  cm.setup({})
 end
 
 -- ====== 文件类型图标 ======

@@ -115,6 +115,12 @@ map("n", "<leader>rr", function()
   vim.cmd('restart +wqa! source ' .. vim.fn.stdpath('state') .. '/sessions/_restart')
 end, { desc = "Save session & restart" })
 
+-- ====== 增量/减量 (dial.nvim) ======
+map("n", "[+", "<Plug>(dial-increment)", { desc = "Increment value" })
+map("n", "[-", "<Plug>(dial-decrement)", { desc = "Decrement value" })
+map("v", "[+", "<Plug>(dial-increment)", { desc = "Increment values" })
+map("v", "[-", "<Plug>(dial-decrement)", { desc = "Decrement values" })
+
 -- ====== 折叠导航 ======
 map("n", "zv", "zMzvzz", { desc = "Close all folds except current" })
 map("n", "zj", "zcjzOzz", { desc = "Close current fold, open next" })
