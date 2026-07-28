@@ -261,6 +261,11 @@ local wf_ok, wf = pcall(require, "wildfire")
 if wf_ok then
   wf.setup({
     filetype_exclude = { "qf", "ministarter" },
+    keymaps = {
+      init_selection = "==",
+      node_incremental = "==",
+      node_decremental = "<BS>",
+    },
   })
 end
 
