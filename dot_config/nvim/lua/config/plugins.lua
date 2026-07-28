@@ -40,6 +40,7 @@ vim.pack.add({
   -- lazygit: 使用 snacks.lazygit
   gh('rafamadriz/friendly-snippets'),
   gh('sphamba/smear-cursor.nvim'),
+  gh('rachartier/tiny-cmdline.nvim'),
   gh('nvim-lua/plenary.nvim'),
   gh('epwalsh/obsidian.nvim'),
   gh('skywind3000/asyncrun.vim'),
@@ -85,6 +86,11 @@ vim.cmd.packadd('nvim-ufo')
 vim.cmd.packadd('gitsigns.nvim')
 vim.cmd.packadd('friendly-snippets')
 vim.cmd.packadd('smear-cursor.nvim')
+vim.g.tiny_cmdline = {
+  width = { value = '70%' },
+  prompt_prefix = ' ',
+}
+vim.cmd.packadd('tiny-cmdline.nvim')
 vim.cmd.packadd('plenary.nvim')
 vim.cmd.packadd('obsidian.nvim')
 vim.cmd.packadd('asyncrun.vim')
