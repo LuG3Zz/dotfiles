@@ -219,11 +219,17 @@ if hp_ok then
       hex_color = hp.gen_highlighter.hex_color(),
     },
   })
-  -- 非代码 buffer 不启用高亮
-  vim.api.nvim_create_autocmd('FileType', {
+  -- 立即禁用 buffer 类型非空的缓冲区
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.bo[buf].buftype ~= '' or vim.bo[buf].filetype == 'snacks_dashboard' then
+      vim.b[buf].minihipatterns_disable = true
+    end
+  end
+  -- 新 buffer 创建时提前禁用（在 FileType 事件之前）
+  vim.api.nvim_create_autocmd('BufAdd', {
     group = vim.api.nvim_create_augroup('MiniHipatternsDisable', { clear = true }),
     callback = function()
-      if vim.bo.buftype ~= '' or vim.bo.filetype == 'snacks_dashboard' then
+      if vim.bo.buftype ~= '' then
         vim.b.minihipatterns_disable = true
       end
     end,
@@ -323,9 +329,12 @@ if snacks_ok then
         only_current = true,
       },
     },
-    -- 右侧滚动条
+    -- 右侧滚动条（排除非文件 buffer）
     scroll = {
       enabled = true,
+      filter = function(buf)
+        return vim.bo[buf].buftype == '' and vim.bo[buf].filetype ~= 'snacks_dashboard'
+      end,
     },
     -- 增强状态列（行号区 + fold/git/diagnostic）
     statuscolumn = {
