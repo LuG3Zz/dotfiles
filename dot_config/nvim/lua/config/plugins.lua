@@ -17,6 +17,7 @@ vim.pack.add({
   gh('nvim-mini/mini.icons'),
   gh('nvim-mini/mini.cursorword'),
   gh('nvim-mini/mini.sessions'),
+  gh('nvim-mini/mini.move'),
   gh('folke/snacks.nvim'),
   gh('nvim-mini/mini.statusline'),
   gh('HiPhish/rainbow-delimiters.nvim'),
@@ -62,6 +63,7 @@ vim.cmd.packadd('mini.surround')
 vim.cmd.packadd('mini.icons')
 vim.cmd.packadd('mini.cursorword')
 vim.cmd.packadd('mini.sessions')
+vim.cmd.packadd('mini.move')
 vim.cmd.packadd('snacks.nvim')
 vim.cmd.packadd('mini.statusline')
 vim.cmd.packadd('rainbow-delimiters.nvim')
@@ -173,6 +175,19 @@ end
 
 -- 自动保存开关
 vim.g.autosave_session = false
+
+-- ====== 行移动增强 ======
+local mv_ok, mv = pcall(require, 'mini.move')
+if mv_ok then
+  mv.setup({
+    mappings = {
+      left = '<M-h>',
+      right = '<M-l>',
+      down = '<M-j>',
+      up = '<M-k>',
+    },
+  })
+end
 
 -- ====== 文件类型图标 ======
 local icons_ok, icons = pcall(require, 'mini.icons')
