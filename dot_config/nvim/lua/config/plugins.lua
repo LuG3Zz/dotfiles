@@ -18,6 +18,9 @@ vim.pack.add({
   gh('nvim-mini/mini.cursorword'),
   gh('nvim-mini/mini.sessions'),
   gh('nvim-mini/mini.move'),
+  gh('nvim-mini/mini.trailspace'),
+  gh('nvim-mini/mini.hipatterns'),
+  gh('sustech-data/wildfire.nvim'),
   gh('nvim-mini/mini.comment'),
   gh('monaqa/dial.nvim'),
   gh('nvim-zh/colorful-winsep.nvim'),
@@ -67,6 +70,9 @@ vim.cmd.packadd('mini.icons')
 vim.cmd.packadd('mini.cursorword')
 vim.cmd.packadd('mini.sessions')
 vim.cmd.packadd('mini.move')
+vim.cmd.packadd('mini.trailspace')
+vim.cmd.packadd('mini.hipatterns')
+vim.cmd.packadd('wildfire.nvim')
 vim.cmd.packadd('mini.comment')
 vim.cmd.packadd('dial.nvim')
 vim.cmd.packadd('colorful-winsep.nvim')
@@ -193,6 +199,23 @@ if mv_ok then
       right = '<M-l>',
       down = '<M-j>',
       up = '<M-k>',
+    },
+  })
+end
+
+-- ====== 行尾空格高亮/清除 ======
+local ts_ok, ts = pcall(require, 'mini.trailspace')
+if ts_ok then
+  ts.setup({})
+end
+
+-- ====== 颜色/模式高亮 ======
+local hp_ok, hp = pcall(require, 'mini.hipatterns')
+if hp_ok then
+  hp.setup({
+    highlighters = {
+      -- 高亮 hex 颜色码并显示色块
+      hex_color = hp.gen_highlighter.hex_color(),
     },
   })
 end

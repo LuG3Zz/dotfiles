@@ -130,6 +130,12 @@ map({ "n", "x" }, "<leader>kd", function()
   require("config.translate").show()
 end, { desc = "Translate word" })
 
+-- ====== 清除行尾空格 ======
+map("n", "<leader>uT", function()
+  require('mini.trailspace').trim()
+  vim.notify('Trailing whitespace cleared', vim.log.levels.INFO)
+end, { desc = "Trim trailing whitespace" })
+
 -- ====== 切换 Dim ======
 map("n", "<leader>ud", function()
   local dim = require("snacks").dim
