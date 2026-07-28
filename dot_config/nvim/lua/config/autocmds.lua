@@ -164,6 +164,7 @@ autocmd('FileType', {
     pcall(vim.keymap.del, 'n', '<C-Space>', { buffer = true })
     pcall(vim.keymap.del, 'i', '<C-Space>', { buffer = true })
     vim.keymap.set('n', '<leader>tx', '<Plug>(neorg.qol.todo-items.todo.task-cycle)', { buffer = true, desc = '[neorg] Cycle Task' })
+    vim.keymap.set('n', '<CR>', '<Plug>(neorg.esupports.hop.hop-link)', { buffer = true, desc = '[neorg] Jump to Link' })
   end,
 })
 
