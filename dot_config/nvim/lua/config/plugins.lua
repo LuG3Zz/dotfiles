@@ -170,10 +170,14 @@ if ts_ok then
   })
 end
 
--- ====== 文件搜索 ======
+-- ====== 文件搜索及图标（mini.pick + mini.icons） ======
 local pick_ok, pick = pcall(require, "mini.pick")
+local icons_ok, icons = pcall(require, "mini.icons")
+if icons_ok then icons.setup({}) end
 if pick_ok then
-  pick.setup({})
+  pick.setup({
+    source = { show_icons = icons_ok },
+  })
 end
 
 -- ====== 文本对象增强 ======
@@ -282,12 +286,6 @@ vim.list_extend(default_augends, {
 local icons_ok, icons = pcall(require, "mini.icons")
 if icons_ok then
   icons.setup({})
-  -- mini.pick 集成
-  require("mini.pick").setup({
-    source = {
-      show_icons = true,
-    },
-  })
 end
 
 -- ====== 光标动画 (smear-cursor) ======

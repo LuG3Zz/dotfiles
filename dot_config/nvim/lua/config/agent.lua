@@ -2,9 +2,9 @@
 
 -- Config is via vim.g.opencode_opts (no setup() function)
 -- Default keymaps in keymaps.lua:
---   <C-a>  Ask
---   <C-x>  Select command menu
---   go     Operator
+--   <leader>A  Ask
+--   <leader>X  Select command menu
+--   go         Operator
 
 vim.g.opencode_opts = {
   ask = {
