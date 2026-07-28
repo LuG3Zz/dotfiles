@@ -249,6 +249,13 @@ map("t", "<C-l>", "<cmd>wincmd l<CR>", { desc = "Terminal: Go to right window" }
 -- 用 <M-Enter> 退出终端模式（避免与 Zsh vi-mode 的 <Esc> 冲突）
 map("t", "<C-\\><C-\\>", "<C-\\><C-n>", { desc = "Terminal: Enter normal mode" })
 
+map("n", "gd", function()
+  if vim.bo.filetype == 'norg' then
+    local hop = require('neorg.core').modules.get_module('core.esupports.hop')
+    if hop then hop.hop_link() end
+  end
+end, { desc = "Neorg: Follow link" })
+
 -- ====== OpenCode AI Agent ======
 map({ "n", "v" }, "<leader>A", function()
   require("opencode").ask()

@@ -716,21 +716,6 @@ if neorg_ok then
   })
 end
 
--- norg 文件：<CR> 跳转链接
-vim.api.nvim_create_autocmd('FileType', {
-  group = vim.api.nvim_create_augroup('NorgLinkJump', { clear = true }),
-  pattern = 'norg',
-  callback = function()
-    vim.keymap.set('n', '<CR>', function()
-      local neorg = require('neorg.core')
-      if neorg and neorg.modules then
-        local hop = neorg.modules.get_module('core.esupports.hop')
-        if hop then hop.hop_link() end
-      end
-    end, { buffer = true, desc = '[neorg] Jump to Link' })
-  end,
-})
-
 -- ====== 其余插件 ======
 -- blink.cmp 配置在 completion.lua 中
 -- Mason + lspconfig 配置在 lsp.lua 中
