@@ -37,7 +37,7 @@ vim.opt.mouse = 'a'            -- 启用鼠标
 
 vim.opt.signcolumn = 'yes'     -- 始终显示符号列
 vim.opt.showmode = true        -- 显示模式（含录制宏提示 "recording @a"）
-vim.opt.conceallevel = 2       -- Obsidian 语法特性需要 ≥1
+vim.opt.conceallevel = 2       -- Markdown/语法特性需要 ≥1
 
 -- ====== 编码设置 ======
 vim.opt.fileencoding = 'utf-8'             -- 新文件 UTF-8

@@ -52,8 +52,7 @@ vim.pack.add({
   gh("rafamadriz/friendly-snippets"),
   gh("sphamba/smear-cursor.nvim"),
   gh("rachartier/tiny-cmdline.nvim"),
-  gh("nvim-lua/plenary.nvim"),
-  gh("epwalsh/obsidian.nvim"),
+  gh("nvim-neorg/neorg"),
   gh("skywind3000/asyncrun.vim"),
   gh("skywind3000/asynctasks.vim"),
   gh("OXY2DEV/markview.nvim"),
@@ -115,8 +114,8 @@ vim.g.tiny_cmdline = {
   position = { y = "25%" },
 }
 vim.cmd.packadd("tiny-cmdline.nvim")
-vim.cmd.packadd("plenary.nvim")
-vim.cmd.packadd("obsidian.nvim")
+-- vim.cmd.packadd("plenary.nvim")  -- 已移除
+vim.cmd.packadd("neorg")
 vim.cmd.packadd("asyncrun.vim")
 vim.cmd.packadd("asynctasks.vim")
 vim.cmd.packadd("markview.nvim")
@@ -163,7 +162,7 @@ pcall(vim.cmd.colorscheme, saved)
 local ts_ok, ts = pcall(require, "nvim-treesitter.configs")
 if ts_ok then
   ts.setup({
-    ensure_installed = { "lua", "python", "rust", "c", "cpp", "markdown" },
+    ensure_installed = { "lua", "python", "rust", "c", "cpp", "markdown", "norg" },
     auto_install = true,
     highlight = { enable = true },
     indent = { enable = true },
@@ -408,17 +407,6 @@ if st_ok then
         action = ':lua require("mini.pick").start({ source = { items = vim.fn.systemlist({"find", vim.fn.expand("~/.local/share/chezmoi"), "-type", "f", "-not", "-path", "*/.git/*"}), name = "Dotfiles" } })',
         section = "Projects",
       },
-      -- 笔记
-      {
-        name = "o    Obsidian",
-        action = ":ObsidianQuickSwitch",
-        section = "Notes",
-      },
-      {
-        name = "n    Daily Note",
-        action = ":ObsidianToday",
-        section = "Notes",
-      },
       -- 工具
       {
         name = "t    Terminal",
@@ -592,55 +580,6 @@ if gs_ok then
   })
 end
 
--- ====== Obsidian 笔记集成 ======
-local obs_ok, obs = pcall(require, "obsidian")
-if obs_ok then
-  obs.setup({
-    -- 动态检测 vault：从当前文件向上找 .obsidian 目录
-    workspaces = {
-      {
-        name = "auto",
-        path = function()
-          local f = vim.fn.expand("%:p")
-          if f == "" then
-            return "~/Documents/OB/ALL-IN-ONE"
-          end
-          local root = vim.fs.root(f, ".obsidian")
-          return root or "~/Documents/OB/ALL-IN-ONE"
-        end,
-      },
-    },
-    daily_notes = {
-      folder = "01-日记",
-      date_format = "%Y-%m/%Y-%m-%d",
-      template = "06-附件/模板/日记模板.md",
-    },
-    -- 模板（与 Templater 共用同一目录）
-    templates = {
-      folder = "06-附件/模板",
-      date_format = "%Y-%m-%d",
-      time_format = "%H:%M",
-      substitutions = {},
-    },
-    completion = {
-      nvim_cmp = false, -- 用 blink.cmp
-    },
-    picker = {
-      name = "mini.pick",
-    },
-    ui = { enable = true },
-    new_notes_location = "current_dir",
-    mappings = {
-      ["<leader>ch"] = {
-        action = function()
-          return require("obsidian").util.toggle_checkbox()
-        end,
-        opts = { buffer = true },
-      },
-    },
-  })
-end
-
 -- ====== 多光标 (yaocccc/visual-multi.nvim) ======
 -- <C-n> 选词，<C-d> 全选，<C-Up/Down> 行光标，q 跳过
 
@@ -719,6 +658,38 @@ end
 local ws_ok, ws = pcall(require, "colorful-winsep")
 if ws_ok then
   ws.setup({})
+end
+
+-- ====== Neorg 笔记 ======
+local neorg_ok, neorg = pcall(require, "neorg")
+if neorg_ok then
+  neorg.setup({
+    load = {
+      ["core.defaults"] = {},
+      ["core.concealer"] = {},
+      ["core.dirman"] = {
+        config = {
+          workspaces = {
+            notes = "~/Documents/OB/ALL-IN-ONE",
+          },
+          default_workspace = "notes",
+        },
+      },
+      ["core.journal"] = {
+        config = {
+          journal_folder = "01-日记",
+          strategy = "nested",
+        },
+      },
+      ["core.keybinds"] = {
+        config = {
+          default_keybinds = true,
+          neorg_leader = "<leader><leader>",
+        },
+      },
+      ["core.completion"] = {},
+    },
+  })
 end
 
 -- ====== 其余插件 ======
