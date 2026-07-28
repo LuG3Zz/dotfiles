@@ -415,6 +415,7 @@ if st_ok then
         end
         return content
       end,
+      st.gen_hook.aligning("center", "center"),
       st.gen_hook.adding_bullet(),
       st.gen_hook.indexing("all", { "Files", "Actions" }),
       st.gen_hook.padding(1, 1),
