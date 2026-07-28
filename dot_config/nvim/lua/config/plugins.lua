@@ -376,25 +376,60 @@ if st_ok then
   st.setup({
     evaluate_single = true,
     items = {
+      -- 搜索
       {
         name = "  Find File",
         action = ":Pick files",
-        section = "Files",
+        section = "Search",
+      },
+      {
+        name = "  Grep",
+        action = ":Pick grep",
+        section = "Search",
       },
       {
         name = "  Recent Files",
         action = ':lua require("mini.pick").start({ source = { items = vim.v.oldfiles, name = "Recent files" } })',
-        section = "Files",
+        section = "Search",
       },
+      -- 项目
       {
         name = "󰛓  Dotfiles",
         action = ':lua require("mini.pick").start({ source = { items = vim.fn.systemlist({"find", vim.fn.expand("~/.local/share/chezmoi"), "-type", "f", "-not", "-path", "*/.git/*"}), name = "Dotfiles" } })',
-        section = "Files",
+        section = "Projects",
       },
+      -- 笔记
+      {
+        name = "  Obsidian",
+        action = ":ObsidianQuickSwitch",
+        section = "Notes",
+      },
+      {
+        name = "  Daily Note",
+        action = ":ObsidianToday",
+        section = "Notes",
+      },
+      -- 工具
+      {
+        name = "  Terminal",
+        action = ':lua require("snacks").terminal.toggle(nil, { cwd = vim.fn.expand("~") })',
+        section = "Tools",
+      },
+      {
+        name = "󰋖  Session Save",
+        action = ':lua require("mini.sessions").write()',
+        section = "Tools",
+      },
+      {
+        name = "󰋕  Session Load",
+        action = ':lua require("mini.sessions").read()',
+        section = "Tools",
+      },
+      -- 系统
       {
         name = "  Quit",
         action = ":qa",
-        section = "Actions",
+        section = "System",
       },
     },
     content_hooks = {
@@ -422,7 +457,7 @@ if st_ok then
       end,
       st.gen_hook.aligning("center", "center"),
       st.gen_hook.adding_bullet(),
-      st.gen_hook.indexing("all", { "Files", "Actions" }),
+      st.gen_hook.indexing("all", { "Search", "Projects", "Notes", "Tools", "System" }),
       st.gen_hook.padding(1, 1),
     },
   })
