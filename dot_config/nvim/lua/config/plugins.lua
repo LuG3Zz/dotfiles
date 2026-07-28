@@ -220,6 +220,12 @@ if hp_ok then
   })
 end
 
+-- ====== 选区火焰扩散 (wildfire) ======
+local wf_ok, wf = pcall(require, 'wildfire')
+if wf_ok then
+  wf.setup({})
+end
+
 -- ====== 智能注释 ======
 local cm_ok, cm = pcall(require, 'mini.comment')
 if cm_ok then
