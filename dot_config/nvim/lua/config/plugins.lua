@@ -15,6 +15,7 @@ vim.pack.add({
   gh('nvim-mini/mini.ai'),
   gh('nvim-mini/mini.surround'),
   gh('nvim-mini/mini.icons'),
+  gh('nvim-mini/mini.cursorword'),
   gh('folke/snacks.nvim'),
   gh('nvim-mini/mini.statusline'),
   gh('HiPhish/rainbow-delimiters.nvim'),
@@ -58,6 +59,7 @@ vim.cmd.packadd('mini.pick')
 vim.cmd.packadd('mini.ai')
 vim.cmd.packadd('mini.surround')
 vim.cmd.packadd('mini.icons')
+vim.cmd.packadd('mini.cursorword')
 vim.cmd.packadd('snacks.nvim')
 vim.cmd.packadd('mini.statusline')
 vim.cmd.packadd('rainbow-delimiters.nvim')
@@ -149,6 +151,12 @@ end
 local surround_ok, surround = pcall(require, 'mini.surround')
 if surround_ok then
   surround.setup({})
+end
+
+-- ====== 光标下单词高亮 ======
+local cw_ok, cw = pcall(require, 'mini.cursorword')
+if cw_ok then
+  cw.setup({})
 end
 
 -- ====== 文件类型图标 ======
