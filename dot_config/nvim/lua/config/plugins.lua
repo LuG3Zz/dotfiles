@@ -21,6 +21,7 @@ vim.pack.add({
   gh('nvim-mini/mini.trailspace'),
   gh('nvim-mini/mini.hipatterns'),
   gh('sustech-data/wildfire.nvim'),
+  gh('Eandrju/cellular-automaton.nvim'),
   gh('nvim-mini/mini.comment'),
   gh('monaqa/dial.nvim'),
   gh('nvim-zh/colorful-winsep.nvim'),
@@ -73,6 +74,7 @@ vim.cmd.packadd('mini.move')
 vim.cmd.packadd('mini.trailspace')
 vim.cmd.packadd('mini.hipatterns')
 vim.cmd.packadd('wildfire.nvim')
+vim.cmd.packadd('cellular-automaton.nvim')
 vim.cmd.packadd('mini.comment')
 vim.cmd.packadd('dial.nvim')
 vim.cmd.packadd('colorful-winsep.nvim')
