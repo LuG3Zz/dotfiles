@@ -3,152 +3,155 @@
 
 -- Helper: 返回完整 GitHub URL
 local gh = function(repo)
-  return 'https://github.com/' .. repo
+  return "https://github.com/" .. repo
 end
 
 -- 注册所有插件（已在磁盘上，仅快速注册 + 生成 lock 文件）
 vim.pack.add({
-  gh('ellisonleao/gruvbox.nvim'),
-  gh('catppuccin/nvim'),
-  gh('nvim-treesitter/nvim-treesitter'),
-  gh('nvim-mini/mini.pick'),
-  gh('nvim-mini/mini.ai'),
-  gh('nvim-mini/mini.surround'),
-  gh('nvim-mini/mini.icons'),
-  gh('nvim-mini/mini.cursorword'),
-  gh('nvim-mini/mini.sessions'),
-  gh('nvim-mini/mini.move'),
-  gh('nvim-mini/mini.trailspace'),
-  gh('nvim-mini/mini.hipatterns'),
-  gh('sustech-data/wildfire.nvim'),
-  gh('Eandrju/cellular-automaton.nvim'),
-  gh('nvim-mini/mini.comment'),
-  gh('monaqa/dial.nvim'),
-  gh('nvim-zh/colorful-winsep.nvim'),
-  gh('folke/snacks.nvim'),
-  gh('nvim-mini/mini.statusline'),
-  gh('HiPhish/rainbow-delimiters.nvim'),
-  gh('Bekaboo/dropbar.nvim'),
-  gh('stevearc/oil.nvim'),
-  gh('stevearc/aerial.nvim'),
-  gh('saghen/blink.lib'),
-  gh('saghen/blink.cmp'),
-  gh('folke/which-key.nvim'),
-  { src = gh('kkew3/jieba.vim'), branch = 'release' },
-  gh('yaocccc/visual-multi.nvim'),
-  gh('mason-org/mason.nvim'),
-  gh('mason-org/mason-lspconfig.nvim'),
-  gh('neovim/nvim-lspconfig'),
-  gh('alker0/chezmoi.vim'),
-  gh('nickjvandyke/opencode.nvim'),
-  gh('nvim-mini/mini.pairs'),
-  gh('folke/flash.nvim'),
-  gh('mbbill/undotree'),
-  gh('kevinhwang91/nvim-ufo'),
-  gh('kevinhwang91/promise-async'),
-  gh('lewis6991/gitsigns.nvim'),
+  gh("ellisonleao/gruvbox.nvim"),
+  gh("catppuccin/nvim"),
+  gh("nvim-treesitter/nvim-treesitter"),
+  gh("nvim-mini/mini.pick"),
+  gh("nvim-mini/mini.ai"),
+  gh("nvim-mini/mini.surround"),
+  gh("nvim-mini/mini.icons"),
+  gh("nvim-mini/mini.cursorword"),
+  gh("nvim-mini/mini.sessions"),
+  gh("nvim-mini/mini.move"),
+  gh("nvim-mini/mini.trailspace"),
+  gh("nvim-mini/mini.hipatterns"),
+  gh("sustech-data/wildfire.nvim"),
+  gh("Eandrju/cellular-automaton.nvim"),
+  gh("nvim-mini/mini.comment"),
+  gh("monaqa/dial.nvim"),
+  gh("nvim-zh/colorful-winsep.nvim"),
+  gh("folke/snacks.nvim"),
+  gh("nvim-mini/mini.statusline"),
+  gh("HiPhish/rainbow-delimiters.nvim"),
+  gh("Bekaboo/dropbar.nvim"),
+  gh("stevearc/oil.nvim"),
+  gh("stevearc/aerial.nvim"),
+  gh("saghen/blink.lib"),
+  gh("saghen/blink.cmp"),
+  gh("folke/which-key.nvim"),
+  { src = gh("kkew3/jieba.vim"), branch = "release" },
+  gh("yaocccc/visual-multi.nvim"),
+  gh("mason-org/mason.nvim"),
+  gh("mason-org/mason-lspconfig.nvim"),
+  gh("neovim/nvim-lspconfig"),
+  gh("alker0/chezmoi.vim"),
+  gh("nickjvandyke/opencode.nvim"),
+  gh("nvim-mini/mini.pairs"),
+  gh("folke/flash.nvim"),
+  gh("mbbill/undotree"),
+  gh("kevinhwang91/nvim-ufo"),
+  gh("kevinhwang91/promise-async"),
+  gh("lewis6991/gitsigns.nvim"),
   -- lazygit: 使用 snacks.lazygit
-  gh('rafamadriz/friendly-snippets'),
-  gh('sphamba/smear-cursor.nvim'),
-  gh('rachartier/tiny-cmdline.nvim'),
-  gh('nvim-lua/plenary.nvim'),
-  gh('epwalsh/obsidian.nvim'),
-  gh('skywind3000/asyncrun.vim'),
-  gh('skywind3000/asynctasks.vim'),
-  gh('OXY2DEV/markview.nvim'),
+  gh("rafamadriz/friendly-snippets"),
+  gh("sphamba/smear-cursor.nvim"),
+  gh("rachartier/tiny-cmdline.nvim"),
+  gh("nvim-lua/plenary.nvim"),
+  gh("epwalsh/obsidian.nvim"),
+  gh("skywind3000/asyncrun.vim"),
+  gh("skywind3000/asynctasks.vim"),
+  gh("OXY2DEV/markview.nvim"),
 })
 
 -- 显式加载需要在 init 期间配置的插件（opt/ 目录需 packadd）
 -- chezmoi.vim 需在 filetype/syntax 之前加载，放最前
-vim.cmd.packadd('chezmoi.vim')
-vim.cmd.packadd('gruvbox.nvim')
-vim.cmd.packadd('nvim')                -- catppuccin/nvim
-vim.cmd.packadd('nvim-treesitter')
-vim.cmd.packadd('mini.pick')
-vim.cmd.packadd('mini.ai')
-vim.cmd.packadd('mini.surround')
-vim.cmd.packadd('mini.icons')
-vim.cmd.packadd('mini.cursorword')
-vim.cmd.packadd('mini.sessions')
-vim.cmd.packadd('mini.move')
-vim.cmd.packadd('mini.trailspace')
-vim.cmd.packadd('mini.hipatterns')
-vim.cmd.packadd('wildfire.nvim')
-vim.cmd.packadd('cellular-automaton.nvim')
-vim.cmd.packadd('mini.comment')
-vim.cmd.packadd('dial.nvim')
-vim.cmd.packadd('colorful-winsep.nvim')
+vim.cmd.packadd("chezmoi.vim")
+vim.cmd.packadd("gruvbox.nvim")
+vim.cmd.packadd("nvim") -- catppuccin/nvim
+vim.cmd.packadd("nvim-treesitter")
+vim.cmd.packadd("mini.pick")
+vim.cmd.packadd("mini.ai")
+vim.cmd.packadd("mini.surround")
+vim.cmd.packadd("mini.icons")
+vim.cmd.packadd("mini.cursorword")
+vim.cmd.packadd("mini.sessions")
+vim.cmd.packadd("mini.move")
+vim.cmd.packadd("mini.trailspace")
+vim.cmd.packadd("mini.hipatterns")
+vim.cmd.packadd("wildfire.nvim")
+vim.cmd.packadd("cellular-automaton.nvim")
+vim.cmd.packadd("mini.comment")
+vim.cmd.packadd("dial.nvim")
+vim.cmd.packadd("colorful-winsep.nvim")
 -- dial.nvim 的 augends 在下面的 setup 中配置
-vim.cmd.packadd('snacks.nvim')
-vim.cmd.packadd('mini.statusline')
-vim.cmd.packadd('rainbow-delimiters.nvim')
-vim.cmd.packadd('dropbar.nvim')
-vim.cmd.packadd('oil.nvim')
-vim.cmd.packadd('aerial.nvim')
-vim.cmd.packadd('blink.lib')            -- blink.cmp 依赖
-vim.cmd.packadd('blink.cmp')
+vim.cmd.packadd("snacks.nvim")
+vim.cmd.packadd("mini.statusline")
+vim.cmd.packadd("rainbow-delimiters.nvim")
+vim.cmd.packadd("dropbar.nvim")
+vim.cmd.packadd("oil.nvim")
+vim.cmd.packadd("aerial.nvim")
+vim.cmd.packadd("blink.lib") -- blink.cmp 依赖
+vim.cmd.packadd("blink.cmp")
 -- jieba.vim 需要先设配置再 packadd，否则 g: 变量读不到
 vim.g.jieba_vim_lazy = 1
 vim.g.jieba_vim_keymap = 1
 
-vim.cmd.packadd('jieba.vim')
+vim.cmd.packadd("jieba.vim")
 
-vim.cmd.packadd('visual-multi.nvim')
-vim.cmd.packadd('which-key.nvim')
-vim.cmd.packadd('mason.nvim')
-vim.cmd.packadd('mason-lspconfig.nvim')
-vim.cmd.packadd('nvim-lspconfig')
-vim.cmd.packadd('opencode.nvim')
-vim.cmd.packadd('mini.pairs')
-vim.cmd.packadd('flash.nvim')
-vim.cmd.packadd('undotree')
-vim.cmd.packadd('promise-async')
-vim.cmd.packadd('nvim-ufo')
-vim.cmd.packadd('gitsigns.nvim')
-vim.cmd.packadd('friendly-snippets')
-vim.cmd.packadd('smear-cursor.nvim')
+vim.cmd.packadd("visual-multi.nvim")
+vim.cmd.packadd("which-key.nvim")
+vim.cmd.packadd("mason.nvim")
+vim.cmd.packadd("mason-lspconfig.nvim")
+vim.cmd.packadd("nvim-lspconfig")
+vim.cmd.packadd("opencode.nvim")
+vim.cmd.packadd("mini.pairs")
+vim.cmd.packadd("flash.nvim")
+vim.cmd.packadd("undotree")
+vim.cmd.packadd("promise-async")
+vim.cmd.packadd("nvim-ufo")
+vim.cmd.packadd("gitsigns.nvim")
+vim.cmd.packadd("friendly-snippets")
+vim.cmd.packadd("smear-cursor.nvim")
 vim.g.tiny_cmdline = {
-  width = { value = '70%' },
-  prompt_prefix = ' ',
-  position = { y = '25%' },
+  width = { value = "70%" },
+  prompt_prefix = " ",
+  position = { y = "25%" },
 }
-vim.cmd.packadd('tiny-cmdline.nvim')
-vim.cmd.packadd('plenary.nvim')
-vim.cmd.packadd('obsidian.nvim')
-vim.cmd.packadd('asyncrun.vim')
-vim.cmd.packadd('asynctasks.vim')
-vim.cmd.packadd('markview.nvim')
+vim.cmd.packadd("tiny-cmdline.nvim")
+vim.cmd.packadd("plenary.nvim")
+vim.cmd.packadd("obsidian.nvim")
+vim.cmd.packadd("asyncrun.vim")
+vim.cmd.packadd("asynctasks.vim")
+vim.cmd.packadd("markview.nvim")
 
 -- ====== 主题：Gruvbox ======
-local gruvbox_ok, gruvbox = pcall(require, 'gruvbox')
+local gruvbox_ok, gruvbox = pcall(require, "gruvbox")
 if gruvbox_ok then
   gruvbox.setup({
     transparent_mode = true,
-    contrast = 'soft',
+    contrast = "soft",
     italic = { strings = false, comments = false },
     overrides = {},
   })
-  vim.cmd.colorscheme('gruvbox')
+  vim.cmd.colorscheme("gruvbox")
 end
 
 -- catppuccin 备用（切换: :colorscheme catppuccin）
-local cp_ok, cp = pcall(require, 'catppuccin')
+local cp_ok, cp = pcall(require, "catppuccin")
 if cp_ok then
   cp.setup({
-    flavour = 'mocha',
+    flavour = "mocha",
     transparent_background = true,
     no_italic = true,
     integrations = {
-      treesitter = true, cmp = true, snacks = true, mini = true,
+      treesitter = true,
+      cmp = true,
+      snacks = true,
+      mini = true,
     },
   })
 end
 
 -- ====== Treesitter ======
-local ts_ok, ts = pcall(require, 'nvim-treesitter.configs')
+local ts_ok, ts = pcall(require, "nvim-treesitter.configs")
 if ts_ok then
   ts.setup({
-    ensure_installed = { 'lua', 'python', 'rust', 'c', 'cpp', 'markdown' },
+    ensure_installed = { "lua", "python", "rust", "c", "cpp", "markdown" },
     auto_install = true,
     highlight = { enable = true },
     indent = { enable = true },
@@ -156,36 +159,36 @@ if ts_ok then
 end
 
 -- ====== 文件搜索 ======
-local pick_ok, pick = pcall(require, 'mini.pick')
+local pick_ok, pick = pcall(require, "mini.pick")
 if pick_ok then
   pick.setup({})
 end
 
 -- ====== 文本对象增强 ======
-local ai_ok, ai = pcall(require, 'mini.ai')
+local ai_ok, ai = pcall(require, "mini.ai")
 if ai_ok then
   ai.setup({})
 end
 
 -- ====== 环绕编辑 ======
-local surround_ok, surround = pcall(require, 'mini.surround')
+local surround_ok, surround = pcall(require, "mini.surround")
 if surround_ok then
   surround.setup({})
 end
 
 -- ====== 光标下单词高亮 ======
-local cw_ok, cw = pcall(require, 'mini.cursorword')
+local cw_ok, cw = pcall(require, "mini.cursorword")
 if cw_ok then
   cw.setup({})
 end
 
 -- ====== Session 管理 ======
-local s_ok, s = pcall(require, 'mini.sessions')
+local s_ok, s = pcall(require, "mini.sessions")
 if s_ok then
   s.setup({
     autoread = false,
     autowrite = false,
-    directory = vim.fn.stdpath('state') .. '/sessions',
+    directory = vim.fn.stdpath("state") .. "/sessions",
   })
 end
 
@@ -193,26 +196,26 @@ end
 vim.g.autosave_session = false
 
 -- ====== 行移动增强 ======
-local mv_ok, mv = pcall(require, 'mini.move')
+local mv_ok, mv = pcall(require, "mini.move")
 if mv_ok then
   mv.setup({
     mappings = {
-      left = '<M-h>',
-      right = '<M-l>',
-      down = '<M-j>',
-      up = '<M-k>',
+      left = "<M-h>",
+      right = "<M-l>",
+      down = "<M-j>",
+      up = "<M-k>",
     },
   })
 end
 
 -- ====== 行尾空格高亮/清除 ======
-local ts_ok, ts = pcall(require, 'mini.trailspace')
+local ts_ok, ts = pcall(require, "mini.trailspace")
 if ts_ok then
   ts.setup({})
 end
 
 -- ====== 颜色/模式高亮 ======
-local hp_ok, hp = pcall(require, 'mini.hipatterns')
+local hp_ok, hp = pcall(require, "mini.hipatterns")
 if hp_ok then
   hp.setup({
     highlighters = {
@@ -221,15 +224,15 @@ if hp_ok then
   })
   -- 立即禁用 buffer 类型非空的缓冲区
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-    if vim.bo[buf].buftype ~= '' or vim.bo[buf].filetype == 'snacks_dashboard' then
+    if vim.bo[buf].buftype ~= "" or vim.bo[buf].filetype == "snacks_dashboard" then
       vim.b[buf].minihipatterns_disable = true
     end
   end
   -- 新 buffer 创建时提前禁用（在 FileType 事件之前）
-  vim.api.nvim_create_autocmd('BufAdd', {
-    group = vim.api.nvim_create_augroup('MiniHipatternsDisable', { clear = true }),
+  vim.api.nvim_create_autocmd("BufAdd", {
+    group = vim.api.nvim_create_augroup("MiniHipatternsDisable", { clear = true }),
     callback = function()
-      if vim.bo.buftype ~= '' then
+      if vim.bo.buftype ~= "" then
         vim.b.minihipatterns_disable = true
       end
     end,
@@ -237,22 +240,22 @@ if hp_ok then
 end
 
 -- ====== 选区火焰扩散 (wildfire) ======
-local wf_ok, wf = pcall(require, 'wildfire')
+local wf_ok, wf = pcall(require, "wildfire")
 if wf_ok then
   wf.setup({})
 end
 
 -- ====== 智能注释 ======
-local cm_ok, cm = pcall(require, 'mini.comment')
+local cm_ok, cm = pcall(require, "mini.comment")
 if cm_ok then
   cm.setup({})
 end
 
 -- ====== 增量改值增强 (dial.nvim) ======
 -- 在默认基础上增加 boolean、字母、英式星期等
-local dial_config = require('dial.config')
-local constant = require('dial.augend.constant')
-local default_augends = dial_config.augends:get('default')
+local dial_config = require("dial.config")
+local constant = require("dial.augend.constant")
+local default_augends = dial_config.augends:get("default")
 vim.list_extend(default_augends, {
   constant.alias.bool,
   constant.alias.Bool,
@@ -262,11 +265,11 @@ vim.list_extend(default_augends, {
 })
 
 -- ====== 文件类型图标 ======
-local icons_ok, icons = pcall(require, 'mini.icons')
+local icons_ok, icons = pcall(require, "mini.icons")
 if icons_ok then
   icons.setup({})
   -- mini.pick 集成
-  require('mini.pick').setup({
+  require("mini.pick").setup({
     source = {
       show_icons = true,
     },
@@ -274,7 +277,7 @@ if icons_ok then
 end
 
 -- ====== 光标动画 (smear-cursor) ======
-local smear_ok, smear = pcall(require, 'smear_cursor')
+local smear_ok, smear = pcall(require, "smear_cursor")
 if smear_ok then
   smear.setup({
     stiffness = 0.7,
@@ -285,7 +288,7 @@ end
 
 -- ====== snacks.nvim 一体化增强 ======
 -- 提供 UI 增强：Dashboard、通知、缩进线、滚动条、状态列
-local snacks_ok, snacks = pcall(require, 'snacks')
+local snacks_ok, snacks = pcall(require, "snacks")
 if snacks_ok then
   snacks.setup({
     -- 启动 Dashboard（替换 mini.starter）
@@ -301,16 +304,17 @@ if snacks_ok then
     ╚═════╝ ╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝╚══════╝ ╚═════╝
         ]],
         keys = {
-          { icon = '󰛓 ', key = 'd', desc = 'Dotfiles (chezmoi)', action = ':lua require("mini.pick").start({ source = { items = vim.fn.systemlist({"find", vim.fn.expand("~/.local/share/chezmoi"), "-type", "f", "-not", "-path", "*/.git/*"}), name = "Dotfiles" } })' },
-          { icon = ' ', key = 'f', desc = 'Find File',          action = ':Pick files' },
-          { icon = ' ', key = 'r', desc = 'Recent Files',       action = ':lua require("mini.pick").start({ source = { items = vim.v.oldfiles, name = "Recent files" } })' },
-          { icon = ' ', key = 'q', desc = 'Quit',               action = ':qa' },
+          { icon = " ", key = "f", desc = "Find File", action = ":Pick files" },
+          { icon = " ", key = "r", desc = "Recent Files", action = ':lua require("mini.pick").start({ source = { items = vim.v.oldfiles, name = "Recent files" } })' },
+          { icon = "󰛓 ", key = "d", desc = "Dotfiles", action = ':lua require("mini.pick").start({ source = { items = vim.fn.systemlist({"find", vim.fn.expand("~/.local/share/chezmoi"), "-type", "f", "-not", "-path", "*/.git/*"}), name = "Dotfiles" } })' },
+          { icon = " ", key = "q", desc = "Quit", action = ":qa" },
         },
       },
       sections = {
-        { section = 'header' },
-        { section = 'keys', gap = 1, padding = 1 },
-        { section = 'hitokoto' },
+        { section = "header" },
+        { section = "keys", gap = 1, padding = 1 },
+        { section = "recent_files", limit = 10, icon = " ", title = "Recent Files", indent = 2, padding = 1 },
+        { section = "hitokoto", padding = 1 },
       },
     },
     -- 通知系统（替换默认 vim.notify）
@@ -341,7 +345,7 @@ if snacks_ok then
     input = {
       enabled = true,
       win = {
-        border = 'rounded',
+        border = "rounded",
         width = 0.5,
       },
     },
@@ -349,11 +353,11 @@ if snacks_ok then
     terminal = {
       enabled = true,
       win = {
-        style = 'float',
-        relative = 'editor',
+        style = "float",
+        relative = "editor",
         width = 0.8,
         height = 0.8,
-        border = 'rounded',
+        border = "rounded",
       },
     },
     -- 动画效果
@@ -369,25 +373,25 @@ if snacks_ok then
     zen = { enabled = true },
     -- 禁用不需要的组件
     bigfile = { enabled = true },
-    picker = { enabled = false },    -- 使用 mini.pick
-    words = { enabled = false },     -- 使用 LSP
+    picker = { enabled = false }, -- 使用 mini.pick
+    words = { enabled = false }, -- 使用 LSP
     quickfile = { enabled = true },
   })
 
   -- 注册一言格言 section（每次打开 Dashboard 时刷新）
-  local hitokoto_ok, hitokoto = pcall(require, 'config.hitokoto')
+  local hitokoto_ok, hitokoto = pcall(require, "config.hitokoto")
   if hitokoto_ok then
     snacks.dashboard.sections.hitokoto = function()
       return {
-        align = 'center',
-        text = { { hitokoto.dashboard_text(), hl = 'SpecialComment' } },
+        align = "center",
+        text = { { hitokoto.dashboard_text(), hl = "SpecialComment" } },
       }
     end
   end
   -- Dashboard buffer 禁用不必要的 UI 组件
-  vim.api.nvim_create_autocmd('FileType', {
-    group = vim.api.nvim_create_augroup('DashboardCleanup', { clear = true }),
-    pattern = { 'snacks_dashboard' },
+  vim.api.nvim_create_autocmd("FileType", {
+    group = vim.api.nvim_create_augroup("DashboardCleanup", { clear = true }),
+    pattern = { "snacks_dashboard" },
     callback = function()
       vim.b.snacks_indent = false
       vim.b.snacks_scroll = false
@@ -399,7 +403,7 @@ if snacks_ok then
 end
 
 -- ====== 状态栏 (mini.statusline) ======
-local sl_ok, sl = pcall(require, 'mini.statusline')
+local sl_ok, sl = pcall(require, "mini.statusline")
 if sl_ok then
   sl.setup({
     use_icons = true,
@@ -408,48 +412,57 @@ if sl_ok then
 end
 
 -- ====== 文件浏览 ======
-local oil_ok, oil = pcall(require, 'oil')
+local oil_ok, oil = pcall(require, "oil")
 if oil_ok then
   oil.setup({
     default_file_explorer = true,
     preview_win = {
       update_on_cursor_moved = true,
-      preview_method = 'fast_scratch',
+      preview_method = "fast_scratch",
       win_options = {
-        winhl = 'Normal:NormalFloat',
+        winhl = "Normal:NormalFloat",
       },
     },
     float = {
       max_width = 0.6,
       max_height = 0.8,
-      border = 'rounded',
-      preview_split = 'auto',
+      border = "rounded",
+      preview_split = "auto",
     },
     keymaps = {
-      ['q'] = 'actions.close',
-      ['<C-h>'] = false,
-      ['<M-h>'] = 'actions.select_split',
+      ["q"] = "actions.close",
+      ["<C-h>"] = false,
+      ["<M-h>"] = "actions.select_split",
     },
   })
 end
 
 -- ====== 代码大纲 (aerial) ======
-local aerial_ok, aerial = pcall(require, 'aerial')
+local aerial_ok, aerial = pcall(require, "aerial")
 if aerial_ok then
   aerial.setup({
     -- 右侧纵向分割窗口
-    layout = { width = 35, default_direction = 'prefer_right' },
+    layout = { width = 35, default_direction = "prefer_right" },
     -- 显示所有符号（函数、变量、类等）
-    filter_kind = { 'Class', 'Constructor', 'Enum', 'Function', 'Interface', 'Method', 'Struct', 'Variable' },
+    filter_kind = {
+      "Class",
+      "Constructor",
+      "Enum",
+      "Function",
+      "Interface",
+      "Method",
+      "Struct",
+      "Variable",
+    },
     -- 关闭其他大纲视图（单例模式）
-    close_behavior = 'auto',
+    close_behavior = "auto",
     -- 使用优先级：LSP > Treesitter
-    sources = { 'lsp', 'treesitter' },
+    sources = { "lsp", "treesitter" },
   })
 end
 
 -- ====== 快捷键提示 (which-key) ======
-local wk_ok, wk = pcall(require, 'which-key')
+local wk_ok, wk = pcall(require, "which-key")
 if wk_ok then
   wk.setup({
     plugins = {
@@ -461,13 +474,13 @@ if wk_ok then
 end
 
 -- ====== 自动补全括号/引号 (mini.pairs) ======
-local pairs_ok, pairs = pcall(require, 'mini.pairs')
+local pairs_ok, pairs = pcall(require, "mini.pairs")
 if pairs_ok then
   pairs.setup({})
 end
 
 -- ====== 增强字符跳转 (f/t) ======
-local flash_ok, flash = pcall(require, 'flash')
+local flash_ok, flash = pcall(require, "flash")
 if flash_ok then
   flash.setup({
     modes = {
@@ -477,8 +490,8 @@ if flash_ok then
       },
     },
     highlight = {
-        backdrop = true,
-        groups = { match = 'DiffAdd', label = 'String' },
+      backdrop = true,
+      groups = { match = "DiffAdd", label = "String" },
     },
   })
 end
@@ -491,17 +504,17 @@ end
 -- <leader>z 触发，已集成在 snacks 中
 
 -- ====== Git 标记 (gitsigns) ======
-local gs_ok, gs = pcall(require, 'gitsigns')
+local gs_ok, gs = pcall(require, "gitsigns")
 if gs_ok then
   gs.setup({
     signs = {
-      add = { text = '│' },
-      change = { text = '│' },
-      delete = { text = '_' },
-      topdelete = { text = '‾' },
-      changedelete = { text = '~' },
+      add = { text = "│" },
+      change = { text = "│" },
+      delete = { text = "_" },
+      topdelete = { text = "‾" },
+      changedelete = { text = "~" },
     },
-    current_line_blame = false,       -- 用 <leader>gb 触发
+    current_line_blame = false, -- 用 <leader>gb 触发
     signcolumn = true,
     numhl = false,
     watch_gitdir = { interval = 1000 },
@@ -509,43 +522,47 @@ if gs_ok then
 end
 
 -- ====== Obsidian 笔记集成 ======
-local obs_ok, obs = pcall(require, 'obsidian')
+local obs_ok, obs = pcall(require, "obsidian")
 if obs_ok then
   obs.setup({
     -- 动态检测 vault：从当前文件向上找 .obsidian 目录
     workspaces = {
       {
-        name = 'auto',
+        name = "auto",
         path = function()
-          local f = vim.fn.expand('%:p')
-          if f == '' then return '~/Documents/OB/ALL-IN-ONE' end
-          local root = vim.fs.root(f, '.obsidian')
-          return root or '~/Documents/OB/ALL-IN-ONE'
+          local f = vim.fn.expand("%:p")
+          if f == "" then
+            return "~/Documents/OB/ALL-IN-ONE"
+          end
+          local root = vim.fs.root(f, ".obsidian")
+          return root or "~/Documents/OB/ALL-IN-ONE"
         end,
       },
     },
     daily_notes = {
-      folder = 'Daily',
-      date_format = '%Y-%m-%d',
+      folder = "Daily",
+      date_format = "%Y-%m-%d",
     },
     -- 模板（与 Templater 共用同一目录）
     templates = {
-      folder = '06-附件/模板',
-      date_format = '%Y-%m-%d',
-      time_format = '%H:%M',
+      folder = "06-附件/模板",
+      date_format = "%Y-%m-%d",
+      time_format = "%H:%M",
       substitutions = {},
     },
     completion = {
-      nvim_cmp = false,  -- 用 blink.cmp
+      nvim_cmp = false, -- 用 blink.cmp
     },
     picker = {
-      name = 'mini.pick',
+      name = "mini.pick",
     },
     ui = { enable = true },
-    new_notes_location = 'current_dir',
+    new_notes_location = "current_dir",
     mappings = {
-      ['<leader>ch'] = {
-        action = function() return require('obsidian').util.toggle_checkbox() end,
+      ["<leader>ch"] = {
+        action = function()
+          return require("obsidian").util.toggle_checkbox()
+        end,
         opts = { buffer = true },
       },
     },
@@ -556,15 +573,17 @@ end
 -- <C-n> 选词，<C-d> 全选，<C-Up/Down> 行光标，q 跳过
 
 -- ====== 代码结构导航栏 (dropbar) ======
-local dropbar_ok, dropbar = pcall(require, 'dropbar')
+local dropbar_ok, dropbar = pcall(require, "dropbar")
 if dropbar_ok then
   dropbar.setup({
     bar = {
       sources = function(buf, _)
         -- 终端缓冲区不显示 winbar
-        if vim.bo[buf].buftype == 'terminal' then return {} end
-        local sources = require('dropbar.sources')
-        local utils = require('dropbar.utils')
+        if vim.bo[buf].buftype == "terminal" then
+          return {}
+        end
+        local sources = require("dropbar.sources")
+        local utils = require("dropbar.utils")
         return {
           utils.source.fallback({ sources.lsp, sources.treesitter, sources.path }),
         }
@@ -575,27 +594,27 @@ if dropbar_ok then
 end
 
 -- ====== 折叠增强 (nvim-ufo) ======
-local ufo_ok, ufo = pcall(require, 'ufo')
+local ufo_ok, ufo = pcall(require, "ufo")
 if ufo_ok then
   ufo.setup({
     provider_selector = function()
-      return { 'treesitter', 'indent' }
+      return { "treesitter", "indent" }
     end,
     fold_virt_text_handler = function(virt_text, lnum, end_lnum, width, truncate)
-      local text = vim.fn.getline(lnum):gsub('^%s+', '')
-      local suffix = ' …  ' .. (end_lnum - lnum)
+      local text = vim.fn.getline(lnum):gsub("^%s+", "")
+      local suffix = " …  " .. (end_lnum - lnum)
       if vim.fn.strdisplaywidth(text) > width - 6 then
         text = truncate(text, width - 6)
       end
       return {
-        { text, 'NormalFloat' },
-        { suffix, 'Comment' },
+        { text, "NormalFloat" },
+        { suffix, "Comment" },
       }
     end,
     open_fold_hl_timeout = 200,
     preview = {
       win_config = {
-        border = 'rounded',
+        border = "rounded",
         winblend = 12,
         maxheight = 15,
       },
@@ -608,24 +627,24 @@ end
 -- 默认配置即可工作，无需额外 setup
 
 -- ====== AsyncRun + AsyncTasks 配置 ======
-vim.g.asyncrun_open = 0     -- 不自动打开 quickfix（由 asynctasks 控制）
-vim.g.asynctasks_term_pos = 'bottom'  -- 终端模式默认位置
-vim.g.asynctasks_term_rows = 12       -- 终端高度
-vim.g.asynctasks_term_reuse = 1       -- 复用已有终端窗口
+vim.g.asyncrun_open = 0 -- 不自动打开 quickfix（由 asynctasks 控制）
+vim.g.asynctasks_term_pos = "bottom" -- 终端模式默认位置
+vim.g.asynctasks_term_rows = 12 -- 终端高度
+vim.g.asynctasks_term_reuse = 1 -- 复用已有终端窗口
 
 -- ====== Markdown 预览 (markview.nvim) ======
-local mv_ok, mv = pcall(require, 'markview')
+local mv_ok, mv = pcall(require, "markview")
 if mv_ok then
   mv.setup({
     preview = {
       enable = true,
-      filetypes = { 'markdown', 'md' },
+      filetypes = { "markdown", "md" },
     },
   })
 end
 
 -- ====== 彩色窗口分隔线 ======
-local ws_ok, ws = pcall(require, 'colorful-winsep')
+local ws_ok, ws = pcall(require, "colorful-winsep")
 if ws_ok then
   ws.setup({})
 end
