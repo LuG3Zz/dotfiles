@@ -670,14 +670,14 @@ if neorg_ok then
       ["core.dirman"] = {
         config = {
           workspaces = {
-            notes = "~/Documents/OB/ALL-IN-ONE",
+            mynotes = "~/Documents/norg",
           },
-          default_workspace = "notes",
+          default_workspace = "mynotes",
         },
       },
       ["core.journal"] = {
         config = {
-          journal_folder = "01-日记",
+          journal_folder = "journal",
           strategy = "nested",
         },
       },
