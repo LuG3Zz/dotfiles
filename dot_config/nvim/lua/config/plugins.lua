@@ -414,7 +414,7 @@ if st_ok then
       -- 工具
       {
         name = "t    Terminal",
-        action = ':lua require("snacks").terminal.toggle(nil, { cwd = vim.fn.expand("~") })',
+        action = ':lua require("snacks").terminal.toggle()',
         section = "Tools",
       },
       {
