@@ -40,7 +40,7 @@ vim.pack.add({
   gh('kevinhwang91/promise-async'),
   gh('lewis6991/gitsigns.nvim'),
   gh('kdheepak/lazygit.nvim'),
-  -- 使用 Neovim 原生 vim.snippet
+  gh('rafamadriz/friendly-snippets'),
   gh('nvim-lua/plenary.nvim'),
   gh('epwalsh/obsidian.nvim'),
   gh('skywind3000/asyncrun.vim'),
@@ -86,7 +86,7 @@ vim.cmd.packadd('promise-async')
 vim.cmd.packadd('nvim-ufo')
 vim.cmd.packadd('gitsigns.nvim')
 vim.cmd.packadd('lazygit.nvim')
--- 原生 vim.snippet 无需额外加载
+vim.cmd.packadd('friendly-snippets')
 vim.cmd.packadd('plenary.nvim')
 vim.cmd.packadd('obsidian.nvim')
 vim.cmd.packadd('asyncrun.vim')
