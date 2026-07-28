@@ -216,9 +216,17 @@ local hp_ok, hp = pcall(require, 'mini.hipatterns')
 if hp_ok then
   hp.setup({
     highlighters = {
-      -- 高亮 hex 颜色码并显示色块
       hex_color = hp.gen_highlighter.hex_color(),
     },
+  })
+  -- 非普通 buffer 不启用高亮（dashboard、通知等）
+  vim.api.nvim_create_autocmd('BufAdd', {
+    group = vim.api.nvim_create_augroup('MiniHipatternsDisable', { clear = true }),
+    callback = function()
+      if vim.bo.buftype ~= '' then
+        vim.b.minihipatterns_disable = true
+      end
+    end,
   })
 end
 
