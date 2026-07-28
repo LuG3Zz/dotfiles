@@ -31,7 +31,7 @@ vim.opt.completeopt = 'menuone,noselect'  -- 补全行为
 vim.opt.pumblend = 10          -- 弹出菜单透明度
 vim.opt.pumheight = 10         -- 弹出菜单最大行数
 vim.opt.wildoptions = 'pum'    -- cmdline 补全弹出菜单（而非滚屏）
-vim.opt.cmdheight = 1           -- 底部命令行高度（noice 会浮窗替代）
+vim.opt.cmdheight = 0           -- 实验性: 隐藏底部命令行，按 : 时弹出单行输入
 
 vim.opt.mouse = 'a'            -- 启用鼠标
 
