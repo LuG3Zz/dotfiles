@@ -250,10 +250,8 @@ map("t", "<C-l>", "<cmd>wincmd l<CR>", { desc = "Terminal: Go to right window" }
 map("t", "<C-\\><C-\\>", "<C-\\><C-n>", { desc = "Terminal: Enter normal mode" })
 
 map("n", "gd", function()
-  if vim.bo.filetype == 'norg' then
-    local hop = require('neorg.core').modules.get_module('core.esupports.hop')
-    if hop then hop.hop_link() end
-  end
+  local hop = require('neorg.core').modules.get_module('core.esupports.hop')
+  if hop then hop.hop_link() end
 end, { desc = "Neorg: Follow link" })
 
 -- ====== OpenCode AI Agent ======
