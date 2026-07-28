@@ -130,6 +130,17 @@ map({ "n", "x" }, "<leader>kd", function()
   require("config.translate").show()
 end, { desc = "Translate word" })
 
+-- ====== 细胞自动机动画 ======
+map("n", "<leader>cr", function()
+  vim.cmd("CellularAutomaton make_it_rain")
+end, { desc = "Cellular automaton: rain" })
+map("n", "<leader>cg", function()
+  vim.cmd("CellularAutomaton game_of_life")
+end, { desc = "Cellular automaton: game of life" })
+map("n", "<leader>cs", function()
+  vim.cmd("CellularAutomaton scramble")
+end, { desc = "Cellular automaton: scramble" })
+
 -- ====== 清除行尾空格 ======
 map("n", "<leader>uT", function()
   require('mini.trailspace').trim()

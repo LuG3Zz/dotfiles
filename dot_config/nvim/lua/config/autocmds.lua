@@ -6,6 +6,15 @@ local autocmd = vim.api.nvim_create_autocmd
 -- 通用用户事件组
 local user_group = augroup('UserEvent', { clear = true })
 
+-- Dashboard/通知等特殊 buffer 禁用 hipatterns
+autocmd('FileType', {
+  group = user_group,
+  pattern = { 'snacks_dashboard', 'snacks_notify', 'noice', 'Jaq' },
+  callback = function()
+    vim.b.minihipatterns_disable = true
+  end,
+})
+
 -- Insert 模式下关闭相对行号
 autocmd('InsertEnter', {
   group = user_group,
