@@ -329,12 +329,9 @@ if snacks_ok then
         only_current = true,
       },
     },
-    -- 右侧滚动条（排除非文件 buffer）
+    -- 右侧滚动条
     scroll = {
       enabled = true,
-      filter = function(buf)
-        return vim.bo[buf].buftype == '' and vim.bo[buf].filetype ~= 'snacks_dashboard'
-      end,
     },
     -- 增强状态列（行号区 + fold/git/diagnostic）
     statuscolumn = {
@@ -387,6 +384,17 @@ if snacks_ok then
       }
     end
   end
+  -- Dashboard buffer 禁用不必要的 UI 组件
+  vim.api.nvim_create_autocmd('FileType', {
+    group = vim.api.nvim_create_augroup('DashboardCleanup', { clear = true }),
+    pattern = { 'snacks_dashboard' },
+    callback = function()
+      vim.b.snacks_indent = false
+      vim.b.snacks_scroll = false
+      vim.b.snacks_dim = false
+      vim.b.minihipatterns_disable = true
+    end,
+  })
 end
 
 -- ====== 状态栏 (mini.statusline) ======
