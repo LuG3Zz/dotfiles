@@ -24,7 +24,7 @@ vim.pack.add({
   gh('saghen/blink.cmp'),
   gh('folke/which-key.nvim'),
   { src = gh('kkew3/jieba.vim'), branch = 'release' },
-  gh('mg979/vim-visual-multi'),
+  gh('yaocccc/visual-multi.nvim'),
   gh('mason-org/mason.nvim'),
   gh('mason-org/mason-lspconfig.nvim'),
   gh('neovim/nvim-lspconfig'),
@@ -71,6 +71,7 @@ vim.g.jieba_vim_keymap = 1
 
 vim.cmd.packadd('jieba.vim')
 
+vim.cmd.packadd('visual-multi.nvim')
 vim.cmd.packadd('which-key.nvim')
 vim.cmd.packadd('mason.nvim')
 vim.cmd.packadd('mason-lspconfig.nvim')
@@ -417,9 +418,8 @@ if obs_ok then
   })
 end
 
--- ====== 多光标 ======
--- vim-visual-multi: 使用默认键位
--- <C-n> 选词，<C-x> 跳过，<C-p> 移除
+-- ====== 多光标 (yaocccc/visual-multi.nvim) ======
+-- <C-n> 选词，<C-d> 全选，<C-Up/Down> 行光标，q 跳过
 
 -- ====== 代码结构导航栏 (dropbar) ======
 local dropbar_ok, dropbar = pcall(require, 'dropbar')
