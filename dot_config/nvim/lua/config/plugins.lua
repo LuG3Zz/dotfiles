@@ -377,22 +377,22 @@ if st_ok then
     evaluate_single = true,
     items = {
       {
-        name = "Find File",
+        name = "  Find File",
         action = ":Pick files",
         section = "Files",
       },
       {
-        name = "Recent Files",
+        name = "  Recent Files",
         action = ':lua require("mini.pick").start({ source = { items = vim.v.oldfiles, name = "Recent files" } })',
         section = "Files",
       },
       {
-        name = "Dotfiles",
+        name = "󰛓  Dotfiles",
         action = ':lua require("mini.pick").start({ source = { items = vim.fn.systemlist({"find", vim.fn.expand("~/.local/share/chezmoi"), "-type", "f", "-not", "-path", "*/.git/*"}), name = "Dotfiles" } })',
         section = "Files",
       },
       {
-        name = "Quit",
+        name = "  Quit",
         action = ":qa",
         section = "Actions",
       },
