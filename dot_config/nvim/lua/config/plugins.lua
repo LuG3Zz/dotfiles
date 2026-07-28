@@ -39,6 +39,7 @@ vim.pack.add({
   gh('lewis6991/gitsigns.nvim'),
   -- lazygit: 使用 snacks.lazygit
   gh('rafamadriz/friendly-snippets'),
+  gh('sphamba/smear-cursor.nvim'),
   gh('nvim-lua/plenary.nvim'),
   gh('epwalsh/obsidian.nvim'),
   gh('skywind3000/asyncrun.vim'),
@@ -83,6 +84,7 @@ vim.cmd.packadd('promise-async')
 vim.cmd.packadd('nvim-ufo')
 vim.cmd.packadd('gitsigns.nvim')
 vim.cmd.packadd('friendly-snippets')
+vim.cmd.packadd('smear-cursor.nvim')
 vim.cmd.packadd('plenary.nvim')
 vim.cmd.packadd('obsidian.nvim')
 vim.cmd.packadd('asyncrun.vim')
@@ -152,6 +154,16 @@ if icons_ok then
     source = {
       show_icons = true,
     },
+  })
+end
+
+-- ====== 光标动画 (smear-cursor) ======
+local smear_ok, smear = pcall(require, 'smear_cursor')
+if smear_ok then
+  smear.setup({
+    stiffness = 0.7,
+    trailing_stiffness = 0.5,
+    distance_stop_animating = 0.5,
   })
 end
 
