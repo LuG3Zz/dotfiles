@@ -20,6 +20,7 @@ vim.pack.add({
   gh('nvim-mini/mini.move'),
   gh('nvim-mini/mini.comment'),
   gh('monaqa/dial.nvim'),
+  gh('nvim-zh/colorful-winsep.nvim'),
   gh('folke/snacks.nvim'),
   gh('nvim-mini/mini.statusline'),
   gh('HiPhish/rainbow-delimiters.nvim'),
@@ -68,6 +69,7 @@ vim.cmd.packadd('mini.sessions')
 vim.cmd.packadd('mini.move')
 vim.cmd.packadd('mini.comment')
 vim.cmd.packadd('dial.nvim')
+vim.cmd.packadd('colorful-winsep.nvim')
 -- dial.nvim 的 augends 在下面的 setup 中配置
 vim.cmd.packadd('snacks.nvim')
 vim.cmd.packadd('mini.statusline')
@@ -311,6 +313,8 @@ if snacks_ok then
     },
     -- 动画效果
     animate = { enabled = true },
+    -- 焦点区域暗化
+    dim = { enabled = true },
     -- Zen 模式（替代 folke/zen-mode.nvim）
     zen = { enabled = true },
     -- 禁用不需要的组件
@@ -556,6 +560,12 @@ if mv_ok then
       filetypes = { 'markdown', 'md' },
     },
   })
+end
+
+-- ====== 彩色窗口分隔线 ======
+local ws_ok, ws = pcall(require, 'colorful-winsep')
+if ws_ok then
+  ws.setup({})
 end
 
 -- ====== 其余插件 ======
