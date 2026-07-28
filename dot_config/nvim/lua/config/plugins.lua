@@ -49,7 +49,7 @@ vim.pack.add({
   gh('lewis6991/gitsigns.nvim'),
   -- lazygit: 使用 snacks.lazygit
   gh('rafamadriz/friendly-snippets'),
-  -- gh('sphamba/smear-cursor.nvim'),
+  gh('sphamba/smear-cursor.nvim'),
   gh('rachartier/tiny-cmdline.nvim'),
   gh('nvim-lua/plenary.nvim'),
   gh('epwalsh/obsidian.nvim'),
