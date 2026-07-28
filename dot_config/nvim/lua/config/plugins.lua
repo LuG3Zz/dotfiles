@@ -515,7 +515,6 @@ end
 -- ====== 代码片段 (LuaSnip) ======
 local luasnip_ok, luasnip = pcall(require, 'luasnip')
 if luasnip_ok then
-  -- 加载 friendly-snippets
   require('luasnip.loaders.from_vscode').lazy_load()
   luasnip.setup({
     history = true,

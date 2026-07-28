@@ -36,7 +36,7 @@ blink.setup({
     },
   },
 
-  snippets = { preset = 'luasnip' },
+  snippets = { preset = 'default' },    -- 使用 Neovim 原生 vim.snippet
 
   completion = {
     documentation = {
