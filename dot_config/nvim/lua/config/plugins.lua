@@ -693,6 +693,7 @@ if neorg_ok then
             mynotes = "~/Documents/norg",
           },
           default_workspace = "mynotes",
+          open_last_workspace = true,
         },
       },
       ["core.journal"] = {
