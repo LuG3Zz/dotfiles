@@ -14,6 +14,7 @@ vim.pack.add({
   gh('nvim-mini/mini.pick'),
   gh('nvim-mini/mini.ai'),
   gh('nvim-mini/mini.surround'),
+  gh('nvim-mini/mini.icons'),
   gh('folke/snacks.nvim'),
   gh('nvim-mini/mini.statusline'),
   gh('HiPhish/rainbow-delimiters.nvim'),
@@ -33,13 +34,10 @@ vim.pack.add({
   gh('nvim-mini/mini.pairs'),
   gh('folke/flash.nvim'),
   gh('mbbill/undotree'),
-  gh('folke/zen-mode.nvim'),
-  gh('folke/noice.nvim'),
-  gh('MunifTanjim/nui.nvim'),
   gh('kevinhwang91/nvim-ufo'),
   gh('kevinhwang91/promise-async'),
   gh('lewis6991/gitsigns.nvim'),
-  gh('kdheepak/lazygit.nvim'),
+  -- lazygit: 使用 snacks.lazygit
   gh('rafamadriz/friendly-snippets'),
   gh('nvim-lua/plenary.nvim'),
   gh('epwalsh/obsidian.nvim'),
@@ -57,6 +55,7 @@ vim.cmd.packadd('nvim-treesitter')
 vim.cmd.packadd('mini.pick')
 vim.cmd.packadd('mini.ai')
 vim.cmd.packadd('mini.surround')
+vim.cmd.packadd('mini.icons')
 vim.cmd.packadd('snacks.nvim')
 vim.cmd.packadd('mini.statusline')
 vim.cmd.packadd('rainbow-delimiters.nvim')
@@ -80,13 +79,9 @@ vim.cmd.packadd('opencode.nvim')
 vim.cmd.packadd('mini.pairs')
 vim.cmd.packadd('flash.nvim')
 vim.cmd.packadd('undotree')
-vim.cmd.packadd('zen-mode.nvim')
-vim.cmd.packadd('noice.nvim')
-vim.cmd.packadd('nui.nvim')
 vim.cmd.packadd('promise-async')
 vim.cmd.packadd('nvim-ufo')
 vim.cmd.packadd('gitsigns.nvim')
-vim.cmd.packadd('lazygit.nvim')
 vim.cmd.packadd('friendly-snippets')
 vim.cmd.packadd('plenary.nvim')
 vim.cmd.packadd('obsidian.nvim')
@@ -146,6 +141,18 @@ end
 local surround_ok, surround = pcall(require, 'mini.surround')
 if surround_ok then
   surround.setup({})
+end
+
+-- ====== 文件类型图标 ======
+local icons_ok, icons = pcall(require, 'mini.icons')
+if icons_ok then
+  icons.setup({})
+  -- mini.pick 集成
+  require('mini.pick').setup({
+    source = {
+      show_icons = true,
+    },
+  })
 end
 
 -- ====== snacks.nvim 一体化增强 ======
@@ -221,6 +228,10 @@ if snacks_ok then
         border = 'rounded',
       },
     },
+    -- 动画效果
+    animate = { enabled = true },
+    -- Zen 模式（替代 folke/zen-mode.nvim）
+    zen = { enabled = true },
     -- 禁用不需要的组件
     bigfile = { enabled = true },
     picker = { enabled = false },    -- 使用 mini.pick
@@ -329,28 +340,8 @@ end
 -- mbbill/undotree: `<leader>u` 切换撤销树
 -- 已通过 pcall 安全加载，无需额外 setup
 
--- ====== 无干扰写作模式 ======
-local zen_ok, zen = pcall(require, 'zen-mode')
-if zen_ok then
-  zen.setup({
-    window = {
-      options = {
-        number = true,
-        relativenumber = true,
-      },
-    },
-    plugins = {
-      options = {
-        enabled = true,
-        ruler = false,
-        showcmd = false,
-      },
-      tmux = { enabled = false }, -- 未使用 tmux
-      kitty = { enabled = false },
-      alacritty = { enabled = false },
-    },
-  })
-end
+-- ====== Zen 模式 (snacks.zen) ======
+-- <leader>z 触发，已集成在 snacks 中
 
 -- ====== Git 标记 (gitsigns) ======
 local gs_ok, gs = pcall(require, 'gitsigns')
@@ -369,10 +360,6 @@ if gs_ok then
     watch_gitdir = { interval = 1000 },
   })
 end
-
--- ====== Lazygit 集成 ======
--- kdheepak/lazygit.nvim 无需 setup，直接调用
--- require('lazygit').lazygit() 或 require('lazygit').lazygitcurrentfile()
 
 -- ====== Obsidian 笔记集成 ======
 local obs_ok, obs = pcall(require, 'obsidian')
@@ -436,47 +423,6 @@ if dropbar_ok then
         }
       end,
       truncate = true,
-    },
-  })
-end
-
--- ====== 命令美化 (noice.nvim) ======
-local noice_ok, noice = pcall(require, 'noice')
-if noice_ok then
-  noice.setup({
-    cmdline = {
-      enabled = true,
-      view = 'cmdline_popup',
-    },
-    messages = {
-      enabled = true,
-      view = 'notify',
-    },
-    popupmenu = {
-      enabled = true,
-      backend = 'nui',
-    },
-    lsp = {
-      progress = { enabled = false },
-      signature = { enabled = false },
-      override = {
-        ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
-        ['vim.lsp.util.stylify_markdown'] = true,
-      },
-    },
-    presets = {
-      bottom_search = true,
-      command_palette = true,
-      long_message_to_split = true,
-      inc_rename = true,
-      lsp_doc_border = true,
-    },
-    routes = {
-      -- 放行录制宏提示（默认被 noice 拦截了）
-      {
-        filter = { event = 'msg_showmode' },
-        view = 'cmdline',
-      },
     },
   })
 end

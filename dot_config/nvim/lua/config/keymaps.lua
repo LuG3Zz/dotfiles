@@ -69,7 +69,7 @@ map("n", "<leader>u", "<cmd>UndotreeToggle<CR>", { desc = "Toggle undo tree" })
 
 -- ====== 无干扰写作 ======
 map("n", "<leader>z", function()
-  require("zen-mode").toggle()
+  require("snacks").zen()
 end, { desc = "Toggle zen mode" })
 
 -- ====== 文本操作 ======
@@ -166,7 +166,7 @@ map("n", "<leader>gB", function()
   pcall(require("gitsigns").blame)
 end, { desc = "Blame buffer" })
 map("n", "<leader>gl", function()
-  pcall(require("lazygit").lazygit)
+  require("snacks").lazygit()
 end, { desc = "Open lazygit" })
 
 -- ====== 代码结构导航 (dropbar) ======
