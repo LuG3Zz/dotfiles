@@ -111,8 +111,9 @@ map("n", "<leader>r", function()
 end, { desc = "Recent files" })
 map("n", "<leader>rr", function()
   pcall(vim.cmd, 'silent! AerialClose')
-  require('mini.sessions').write(vim.fn.stdpath('state') .. '/sessions/_restart')
-  vim.cmd('restart +wqa! source ' .. vim.fn.stdpath('state') .. '/sessions/_restart')
+  require('mini.sessions').write('_restart')
+  local session_dir = vim.fn.stdpath('state') .. '/sessions'
+  vim.cmd('restart +wqa! source ' .. session_dir .. '/_restart')
 end, { desc = "Save session & restart" })
 
 -- ====== 增量/减量 (dial.nvim) ======
