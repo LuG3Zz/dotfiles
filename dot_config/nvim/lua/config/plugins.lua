@@ -700,7 +700,6 @@ if neorg_ok then
       ["core.keybinds"] = {
         config = {
           default_keybinds = true,
-          neorg_leader = "<leader><leader>",
         },
       },
     },
