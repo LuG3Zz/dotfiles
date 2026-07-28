@@ -393,6 +393,7 @@ if snacks_ok then
       vim.b.snacks_scroll = false
       vim.b.snacks_dim = false
       vim.b.minihipatterns_disable = true
+      vim.b.minitrailspace_disable = true
     end,
   })
 end
