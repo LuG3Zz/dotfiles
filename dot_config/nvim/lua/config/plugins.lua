@@ -313,8 +313,13 @@ if snacks_ok then
     },
     -- 动画效果
     animate = { enabled = true },
+    -- 作用域检测（dim 依赖）
+    scope = { enabled = true },
     -- 焦点区域暗化
-    dim = { enabled = true },
+    dim = {
+      enabled = true,
+      scope = { enabled = true },
+    },
     -- Zen 模式（替代 folke/zen-mode.nvim）
     zen = { enabled = true },
     -- 禁用不需要的组件

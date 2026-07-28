@@ -130,6 +130,12 @@ map({ "n", "x" }, "<leader>kd", function()
   require("config.translate").show()
 end, { desc = "Translate word" })
 
+-- ====== 切换 Dim ======
+map("n", "<leader>ud", function()
+  local dim = require("snacks").dim
+  if dim.enabled then dim.disable() else dim.enable() end
+end, { desc = "Toggle dim" })
+
 -- ====== 切换主题 ======
 map("n", "<leader>ut", function()
   local themes = { 'gruvbox', 'catppuccin' }
