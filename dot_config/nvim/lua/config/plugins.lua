@@ -679,6 +679,8 @@ if ws_ok then
 end
 
 -- ====== Neorg 笔记 ======
+-- 清空 Neovim 0.12 内置的 gO（document_symbol），让 neorg 绑定 TOC
+pcall(vim.keymap.del, "n", "gO")
 local neorg_ok, neorg = pcall(require, "neorg")
 if neorg_ok then
   neorg.setup({
