@@ -121,7 +121,18 @@ vim.cmd.packadd("asyncrun.vim")
 vim.cmd.packadd("asynctasks.vim")
 vim.cmd.packadd("markview.nvim")
 
--- ====== 主题：Gruvbox ======
+-- ====== 主题：Gruvbox（默认） ======
+-- 从持久化文件读取上次使用的主题，没有则用 gruvbox
+local function get_saved_theme()
+  local f = vim.fn.stdpath('state') .. '/theme'
+  local ok, lines = pcall(vim.fn.readfile, f)
+  if ok and lines and #lines > 0 and lines[1] ~= '' then
+    return lines[1]
+  end
+  return 'gruvbox'
+end
+
+local saved = get_saved_theme()
 local gruvbox_ok, gruvbox = pcall(require, "gruvbox")
 if gruvbox_ok then
   gruvbox.setup({
@@ -130,24 +141,23 @@ if gruvbox_ok then
     italic = { strings = false, comments = false },
     overrides = {},
   })
-  vim.cmd.colorscheme("gruvbox")
 end
 
--- catppuccin 备用（切换: :colorscheme catppuccin）
+-- catppuccin 也配置好供切换
 local cp_ok, cp = pcall(require, "catppuccin")
 if cp_ok then
   cp.setup({
-    flavour = "mocha",
+    flavour = 'mocha',
     transparent_background = true,
     no_italic = true,
     integrations = {
-      treesitter = true,
-      cmp = true,
-      snacks = true,
-      mini = true,
+      treesitter = true, cmp = true, snacks = true, mini = true,
     },
   })
 end
+
+-- 应用持久化的主题
+pcall(vim.cmd.colorscheme, saved)
 
 -- ====== Treesitter ======
 local ts_ok, ts = pcall(require, "nvim-treesitter.configs")
