@@ -322,7 +322,7 @@ if snacks_ok then
       enabled = true,
       timeout = 3000,
     },
-    -- 缩进指示线（替代 indent-blankline）
+    -- 缩进指示线（Dashboard 已排除，不会显示）
     indent = {
       enabled = true,
       indent = {
@@ -332,6 +332,11 @@ if snacks_ok then
         enabled = true,
         only_current = true,
       },
+      filter = function(buf)
+        if vim.bo[buf].buftype ~= "" then return false end
+        if vim.bo[buf].filetype == "snacks_dashboard" then return false end
+        return true
+      end,
     },
     -- 右侧滚动条
     scroll = {
@@ -398,6 +403,7 @@ if snacks_ok then
       vim.b.snacks_dim = false
       vim.b.minihipatterns_disable = true
       vim.b.minitrailspace_disable = true
+      vim.b.minicursorword_disable = true
     end,
   })
 end
