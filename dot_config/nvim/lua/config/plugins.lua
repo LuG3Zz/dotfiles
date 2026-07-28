@@ -219,11 +219,11 @@ if hp_ok then
       hex_color = hp.gen_highlighter.hex_color(),
     },
   })
-  -- 非普通 buffer 不启用高亮（dashboard、通知等）
-  vim.api.nvim_create_autocmd('BufAdd', {
+  -- 非代码 buffer 不启用高亮
+  vim.api.nvim_create_autocmd('FileType', {
     group = vim.api.nvim_create_augroup('MiniHipatternsDisable', { clear = true }),
     callback = function()
-      if vim.bo.buftype ~= '' then
+      if vim.bo.buftype ~= '' or vim.bo.filetype == 'snacks_dashboard' then
         vim.b.minihipatterns_disable = true
       end
     end,
