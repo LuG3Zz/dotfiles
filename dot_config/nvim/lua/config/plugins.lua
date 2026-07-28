@@ -40,8 +40,7 @@ vim.pack.add({
   gh('kevinhwang91/promise-async'),
   gh('lewis6991/gitsigns.nvim'),
   gh('kdheepak/lazygit.nvim'),
-  gh('L3MON4D3/LuaSnip'),
-  gh('rafamadriz/friendly-snippets'),
+  -- 使用 Neovim 原生 vim.snippet
   gh('nvim-lua/plenary.nvim'),
   gh('epwalsh/obsidian.nvim'),
   gh('skywind3000/asyncrun.vim'),
@@ -87,8 +86,7 @@ vim.cmd.packadd('promise-async')
 vim.cmd.packadd('nvim-ufo')
 vim.cmd.packadd('gitsigns.nvim')
 vim.cmd.packadd('lazygit.nvim')
-vim.cmd.packadd('LuaSnip')
-vim.cmd.packadd('friendly-snippets')
+-- 原生 vim.snippet 无需额外加载
 vim.cmd.packadd('plenary.nvim')
 vim.cmd.packadd('obsidian.nvim')
 vim.cmd.packadd('asyncrun.vim')
@@ -509,17 +507,6 @@ if ufo_ok then
         maxheight = 15,
       },
     },
-  })
-end
-
--- ====== 代码片段 (LuaSnip) ======
-local luasnip_ok, luasnip = pcall(require, 'luasnip')
-if luasnip_ok then
-  require('luasnip.loaders.from_vscode').lazy_load()
-  luasnip.setup({
-    history = true,
-    update_events = 'TextChanged,TextChangedI',
-    enable_autosnippets = true,
   })
 end
 
