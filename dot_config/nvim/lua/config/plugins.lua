@@ -407,6 +407,22 @@ if st_ok then
         action = ':lua require("mini.pick").start({ source = { items = vim.fn.systemlist({"find", vim.fn.expand("~/.local/share/chezmoi"), "-type", "f", "-not", "-path", "*/.git/*"}), name = "Dotfiles" } })',
         section = "Projects",
       },
+      -- 笔记
+      {
+        name = "o    Open Workspace",
+        action = ':lua require("neorg.core").modules.get_module("core.dirman").open_workspace("mynotes")',
+        section = "Notes",
+      },
+      {
+        name = "n    New Note",
+        action = ':lua require("neorg.core").modules.get_module("core.dirman").new_note()',
+        section = "Notes",
+      },
+      {
+        name = "j    Daily Journal",
+        action = ':lua require("neorg.core").modules.get_module("core.journal").diary_today()',
+        section = "Notes",
+      },
       -- 工具
       {
         name = "t    Terminal",
@@ -687,7 +703,6 @@ if neorg_ok then
           neorg_leader = "<leader><leader>",
         },
       },
-      ["core.completion"] = {},
     },
   })
 end
