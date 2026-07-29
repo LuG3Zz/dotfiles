@@ -413,6 +413,17 @@ if st_ok then
         action = ':lua require("mini.pick").start({ source = { items = vim.fn.systemlist({"find", vim.fn.expand("~/.local/share/chezmoi"), "-type", "f", "-not", "-path", "*/.git/*"}), name = "Dotfiles" } })',
         section = "Projects",
       },
+      -- 笔记
+      {
+        name = "w    Vimwiki",
+        action = ":VimwikiIndex",
+        section = "Notes",
+      },
+      {
+        name = "d    Today's Diary",
+        action = ":VimwikiMakeDiaryNote",
+        section = "Notes",
+      },
       -- 工具
       {
         name = "t    Terminal",
@@ -461,7 +472,7 @@ if st_ok then
       end,
       st.gen_hook.aligning("center", "center"),
       st.gen_hook.adding_bullet(),
-      st.gen_hook.indexing("all", { "Search", "Projects", "Tools", "System" }),
+      st.gen_hook.indexing("all", { "Search", "Projects", "Notes", "Tools", "System" }),
       st.gen_hook.padding(1, 1),
     },
   })
