@@ -115,7 +115,7 @@ vim.g.tiny_cmdline = {
 }
 vim.cmd.packadd("tiny-cmdline.nvim")
 -- vim.cmd.packadd("plenary.nvim")  -- 已移除
-vim.g.vimwiki_list = { { path = '~/Documents/vimwiki', syntax = 'markdown', ext = '.md' } }
+vim.g.vimwiki_list = { { path = '~/Documents/vimwiki', syntax = 'markdown', ext = '.md', auto_diary_index = 1 } }
 vim.cmd.packadd("vimwiki")
 vim.cmd.packadd("asyncrun.vim")
 vim.cmd.packadd("asynctasks.vim")
