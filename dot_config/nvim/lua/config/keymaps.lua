@@ -255,7 +255,13 @@ map("n", "gd", function()
 end, { desc = "Neorg: Follow link" })
 
 map("n", "<leader>nc", function()
-  require("neorg.core").modules.get_module("core.ui.calendar").open({})
+  require("neorg.core").modules.get_module("core.ui.calendar").open({
+    mode = "select_date",
+    callback = function(date)
+      local journal = require("neorg.core").modules.get_module("core.journal")
+      if journal then journal.open_diary(os.time(date), nil) end
+    end,
+  })
 end, { desc = "Neorg: Calendar" })
 
 map("n", "<leader>np", function()
