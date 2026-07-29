@@ -52,12 +52,9 @@ vim.pack.add({
   gh("rafamadriz/friendly-snippets"),
   gh("sphamba/smear-cursor.nvim"),
   gh("rachartier/tiny-cmdline.nvim"),
-  gh("nvim-neorg/neorg"),
   gh("skywind3000/asyncrun.vim"),
   gh("skywind3000/asynctasks.vim"),
   gh("OXY2DEV/markview.nvim"),
-  { src = gh("nvim-neorg/tree-sitter-norg"), branch = "master" },
-  { src = gh("nvim-neorg/tree-sitter-norg-meta"), branch = "main" },
 })
 
 -- 显式加载需要在 init 期间配置的插件（opt/ 目录需 packadd）
@@ -117,7 +114,6 @@ vim.g.tiny_cmdline = {
 }
 vim.cmd.packadd("tiny-cmdline.nvim")
 -- vim.cmd.packadd("plenary.nvim")  -- 已移除
-vim.cmd.packadd("neorg")
 vim.cmd.packadd("asyncrun.vim")
 vim.cmd.packadd("asynctasks.vim")
 vim.cmd.packadd("markview.nvim")
@@ -164,7 +160,7 @@ pcall(vim.cmd.colorscheme, saved)
 local ts_ok, ts = pcall(require, "nvim-treesitter.configs")
 if ts_ok then
   ts.setup({
-    ensure_installed = { "lua", "python", "rust", "c", "cpp", "markdown", "norg" },
+    ensure_installed = { "lua", "python", "rust", "c", "cpp", "markdown" },
     auto_install = true,
     highlight = { enable = true },
     indent = { enable = true },
@@ -414,22 +410,6 @@ if st_ok then
         action = ':lua require("mini.pick").start({ source = { items = vim.fn.systemlist({"find", vim.fn.expand("~/.local/share/chezmoi"), "-type", "f", "-not", "-path", "*/.git/*"}), name = "Dotfiles" } })',
         section = "Projects",
       },
-      -- 笔记
-      {
-        name = "o    Open Workspace",
-        action = ':lua require("neorg.core").modules.get_module("core.dirman").open_workspace("mynotes")',
-        section = "Notes",
-      },
-      {
-        name = "n    New Note",
-        action = ':lua require("neorg.core").modules.get_module("core.dirman").new_note()',
-        section = "Notes",
-      },
-      {
-        name = "j    Daily Journal",
-        action = ':lua require("neorg.core").modules.get_module("core.journal").diary_today()',
-        section = "Notes",
-      },
       -- 工具
       {
         name = "t    Terminal",
@@ -478,7 +458,7 @@ if st_ok then
       end,
       st.gen_hook.aligning("center", "center"),
       st.gen_hook.adding_bullet(),
-      st.gen_hook.indexing("all", { "Search", "Projects", "Notes", "Tools", "System" }),
+      st.gen_hook.indexing("all", { "Search", "Projects", "Tools", "System" }),
       st.gen_hook.padding(1, 1),
     },
   })
@@ -684,38 +664,6 @@ if ws_ok then
 end
 
 -- ====== Neorg 笔记 ======
--- 清空 Neovim 0.12 内置的 gO（document_symbol），让 neorg 绑定 TOC
-pcall(vim.keymap.del, "n", "gO")
-local neorg_ok, neorg = pcall(require, "neorg")
-if neorg_ok then
-  neorg.setup({
-    load = {
-      ["core.defaults"] = {},
-      ["core.concealer"] = {},
-      ["core.dirman"] = {
-        config = {
-          workspaces = {
-            mynotes = "~/Documents/norg",
-          },
-          default_workspace = "mynotes",
-          open_last_workspace = true,
-        },
-      },
-      ["core.journal"] = {
-        config = {
-          journal_folder = "journal",
-          strategy = "nested",
-        },
-      },
-      ["core.keybinds"] = {
-        config = {
-          default_keybinds = true,
-        },
-      },
-    },
-  })
-end
-
 -- ====== 其余插件 ======
 -- blink.cmp 配置在 completion.lua 中
 -- Mason + lspconfig 配置在 lsp.lua 中

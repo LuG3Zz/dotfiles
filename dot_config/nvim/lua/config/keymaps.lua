@@ -249,26 +249,6 @@ map("t", "<C-l>", "<cmd>wincmd l<CR>", { desc = "Terminal: Go to right window" }
 -- 用 <M-Enter> 退出终端模式（避免与 Zsh vi-mode 的 <Esc> 冲突）
 map("t", "<C-\\><C-\\>", "<C-\\><C-n>", { desc = "Terminal: Enter normal mode" })
 
-map("n", "gd", function()
-  local hop = require('neorg.core').modules.get_module('core.esupports.hop')
-  if hop then hop.hop_link() end
-end, { desc = "Neorg: Follow link" })
-
-map("n", "<leader>nc", function()
-  require("neorg.core").modules.get_module("core.ui.calendar").select_date({
-    callback = function(date)
-      vim.schedule(function()
-        local journal = require("neorg.core").modules.get_module("core.journal")
-        if journal then journal.open_diary(os.time(date), nil) end
-      end)
-    end,
-  })
-end, { desc = "Neorg: Calendar" })
-
-map("n", "<leader>np", function()
-  vim.cmd("Neorg presenter start")
-end, { desc = "Neorg: Presenter start" })
-
 -- ====== OpenCode AI Agent ======
 map({ "n", "v" }, "<leader>A", function()
   require("opencode").ask()

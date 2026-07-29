@@ -4,12 +4,6 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- 添加 luarocks 路径
-local lr_path = vim.fn.expand('~/.luarocks/share/lua/5.1')
-local lr_cpath = vim.fn.expand('~/.luarocks/lib/lua/5.1')
-package.path = lr_path .. '/?.lua;' .. lr_path .. '/?/init.lua;' .. package.path
-package.cpath = lr_cpath .. '/?.so;' .. package.cpath
-
 -- 启用 ui2（tiny-cmdline.nvim 依赖）
 local ui2_ok, ui2 = pcall(require, 'vim._core.ui2')
 if ui2_ok then ui2.enable({}) end
