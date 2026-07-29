@@ -52,6 +52,7 @@ vim.pack.add({
   gh("rafamadriz/friendly-snippets"),
   gh("sphamba/smear-cursor.nvim"),
   gh("rachartier/tiny-cmdline.nvim"),
+  gh("vimwiki/vimwiki"),
   gh("skywind3000/asyncrun.vim"),
   gh("skywind3000/asynctasks.vim"),
   gh("OXY2DEV/markview.nvim"),
@@ -114,6 +115,8 @@ vim.g.tiny_cmdline = {
 }
 vim.cmd.packadd("tiny-cmdline.nvim")
 -- vim.cmd.packadd("plenary.nvim")  -- 已移除
+vim.g.vimwiki_list = { { path = '~/Documents/vimwiki', syntax = 'markdown', ext = '.md' } }
+vim.cmd.packadd("vimwiki")
 vim.cmd.packadd("asyncrun.vim")
 vim.cmd.packadd("asynctasks.vim")
 vim.cmd.packadd("markview.nvim")
