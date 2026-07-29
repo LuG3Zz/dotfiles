@@ -105,6 +105,11 @@ map("n", "<leader>tw", "<cmd>set wrap!<CR>", { desc = "Toggle wrap", silent = tr
 -- ====== 快速运行代码（asynctasks） ======
 map("n", "<leader>x", "<cmd>AsyncTask file-run<CR>", { desc = "Run file" })
 
+-- ====== 返回 Dashboard ======
+map("n", "<leader>db", function()
+  require("mini.starter").open()
+end, { desc = "Open dashboard" })
+
 -- ====== 重启 Neovim（内置 0.12） ======
 map("n", "<leader>r", function()
   require("mini.pick").start({ source = { items = vim.v.oldfiles, name = "Recent files" } })
