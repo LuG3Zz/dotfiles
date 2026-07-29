@@ -255,16 +255,12 @@ map("n", "gd", function()
 end, { desc = "Neorg: Follow link" })
 
 map("n", "<leader>nc", function()
-  local cal = require("neorg.core").modules.get_module("core.ui.calendar")
-  local ui = require("neorg.core").modules.get_module("core.ui")
-  local prev_win = vim.api.nvim_get_current_win()
-  local buf, win = ui.create_split("neorg-calendar", {}, 14)
-  cal.create_calendar(buf, win, {
-    mode = "select_date",
+  require("neorg.core").modules.get_module("core.ui.calendar").select_date({
     callback = function(date)
-      vim.api.nvim_set_current_win(prev_win)
-      local journal = require("neorg.core").modules.get_module("core.journal")
-      if journal then journal.open_diary(os.time(date), nil) end
+      vim.schedule(function()
+        local journal = require("neorg.core").modules.get_module("core.journal")
+        if journal then journal.open_diary(os.time(date), nil) end
+      end)
     end,
   })
 end, { desc = "Neorg: Calendar" })
