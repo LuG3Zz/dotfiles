@@ -255,7 +255,10 @@ map("n", "gd", function()
 end, { desc = "Neorg: Follow link" })
 
 map("n", "<leader>nc", function()
-  require("neorg.core").modules.get_module("core.ui.calendar").open({
+  local cal = require("neorg.core").modules.get_module("core.ui.calendar")
+  local ui = require("neorg.core").modules.get_module("core.ui")
+  local buf, win = ui.create_split("neorg-calendar", {}, 14)
+  cal.create_calendar(buf, win, {
     mode = "select_date",
     callback = function(date)
       local journal = require("neorg.core").modules.get_module("core.journal")
