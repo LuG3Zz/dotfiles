@@ -254,6 +254,14 @@ map("n", "gd", function()
   if hop then hop.hop_link() end
 end, { desc = "Neorg: Follow link" })
 
+map("n", "<leader>nc", function()
+  require("neorg.core").modules.get_module("core.ui.calendar").open()
+end, { desc = "Neorg: Calendar" })
+
+map("n", "<leader>np", function()
+  vim.cmd("Neorg presenter start")
+end, { desc = "Neorg: Presenter start" })
+
 -- ====== OpenCode AI Agent ======
 map({ "n", "v" }, "<leader>A", function()
   require("opencode").ask()
