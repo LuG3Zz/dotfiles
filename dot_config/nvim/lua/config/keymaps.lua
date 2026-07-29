@@ -255,7 +255,7 @@ map("n", "gd", function()
 end, { desc = "Neorg: Follow link" })
 
 map("n", "<leader>nc", function()
-  require("neorg.core").modules.get_module("core.ui.calendar").open()
+  require("neorg.core").modules.get_module("core.ui.calendar").open({})
 end, { desc = "Neorg: Calendar" })
 
 map("n", "<leader>np", function()
