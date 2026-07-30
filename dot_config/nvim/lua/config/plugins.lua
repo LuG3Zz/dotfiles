@@ -48,6 +48,7 @@ vim.pack.add({
   gh("kevinhwang91/nvim-ufo"),
   gh("kevinhwang91/promise-async"),
   gh("lewis6991/gitsigns.nvim"),
+  gh("h-hg/fcitx.nvim"),
   -- lazygit: 使用 snacks.lazygit
   gh("rafamadriz/friendly-snippets"),
   gh("sphamba/smear-cursor.nvim"),
@@ -117,6 +118,7 @@ vim.cmd.packadd("tiny-cmdline.nvim")
 -- vim.cmd.packadd("plenary.nvim")  -- 已移除
 vim.g.vimwiki_list = { { path = '~/Documents/vimwiki', syntax = 'markdown', ext = '.md', auto_diary_index = 1 } }
 vim.cmd.packadd("vimwiki")
+vim.cmd.packadd("fcitx.nvim")
 vim.cmd.packadd("asyncrun.vim")
 vim.cmd.packadd("asynctasks.vim")
 vim.cmd.packadd("markview.nvim")
