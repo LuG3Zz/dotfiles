@@ -112,7 +112,7 @@ vim.cmd.packadd("smear-cursor.nvim")
 vim.g.tiny_cmdline = {
   width = { value = "70%" },
   prompt_prefix = " ",
-  position = { y = "25%" },
+  position = { y = "1%" },
   native_types = {},
 }
 vim.cmd.packadd("tiny-cmdline.nvim")
