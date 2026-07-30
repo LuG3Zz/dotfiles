@@ -113,6 +113,7 @@ vim.g.tiny_cmdline = {
   width = { value = "70%" },
   prompt_prefix = " ",
   position = { y = "25%" },
+  native_types = {},
 }
 vim.cmd.packadd("tiny-cmdline.nvim")
 -- vim.cmd.packadd("plenary.nvim")  -- 已移除
