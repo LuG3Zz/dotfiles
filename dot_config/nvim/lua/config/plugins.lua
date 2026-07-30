@@ -180,6 +180,11 @@ if icons_ok then icons.setup({}) end
 if pick_ok then
   pick.setup({
     source = { show_icons = icons_ok },
+    window = {
+      config = {
+        border = 'rounded',
+      },
+    },
     mappings = {
       delete_buffer = {
         char = 'D',
