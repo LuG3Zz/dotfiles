@@ -118,8 +118,12 @@ vim.g.tiny_cmdline = {
 vim.cmd.packadd("tiny-cmdline.nvim")
 -- vim.cmd.packadd("plenary.nvim")  -- 已移除
 vim.g.vimwiki_global_ext = 0
-vim.g.vimwiki_list = { { path = '~/Documents/vimwiki', syntax = 'markdown', ext = '.md', auto_diary_index = 1 } }
+vim.g.vimwiki_list =
+  { { path = "~/Documents/vimwiki", syntax = "markdown", ext = ".md", auto_diary_index = 1 } }
 vim.cmd.packadd("vimwiki")
+vim.cmd([[
+  let g:vimwiki_global_vars.key_mappings.lists_return = 0
+]])
 vim.cmd.packadd("fcitx.nvim")
 vim.cmd.packadd("asyncrun.vim")
 vim.cmd.packadd("asynctasks.vim")
@@ -128,12 +132,12 @@ vim.cmd.packadd("markview.nvim")
 -- ====== 主题：Gruvbox（默认） ======
 -- 从持久化文件读取上次使用的主题，没有则用 gruvbox
 local function get_saved_theme()
-  local f = vim.fn.stdpath('state') .. '/theme'
+  local f = vim.fn.stdpath("state") .. "/theme"
   local ok, lines = pcall(vim.fn.readfile, f)
-  if ok and lines and #lines > 0 and lines[1] ~= '' then
+  if ok and lines and #lines > 0 and lines[1] ~= "" then
     return lines[1]
   end
-  return 'gruvbox'
+  return "gruvbox"
 end
 
 local saved = get_saved_theme()
@@ -151,11 +155,14 @@ end
 local cp_ok, cp = pcall(require, "catppuccin")
 if cp_ok then
   cp.setup({
-    flavour = 'mocha',
+    flavour = "mocha",
     transparent_background = true,
     no_italic = true,
     integrations = {
-      treesitter = true, cmp = true, snacks = true, mini = true,
+      treesitter = true,
+      cmp = true,
+      snacks = true,
+      mini = true,
     },
   })
 end
@@ -177,18 +184,20 @@ end
 -- ====== 文件搜索及图标（mini.pick + mini.icons） ======
 local pick_ok, pick = pcall(require, "mini.pick")
 local icons_ok, icons = pcall(require, "mini.icons")
-if icons_ok then icons.setup({}) end
+if icons_ok then
+  icons.setup({})
+end
 if pick_ok then
   pick.setup({
     source = { show_icons = icons_ok },
     window = {
       config = {
-        border = 'rounded',
+        border = "rounded",
       },
     },
     mappings = {
       delete_buffer = {
-        char = 'D',
+        char = "D",
         func = function()
           local current = pick.get_picker_matches().current
           if current then
@@ -344,8 +353,12 @@ if snacks_ok then
         only_current = true,
       },
       filter = function(buf)
-        if vim.bo[buf].buftype ~= "" then return false end
-        if vim.bo[buf].filetype == "snacks_dashboard" then return false end
+        if vim.bo[buf].buftype ~= "" then
+          return false
+        end
+        if vim.bo[buf].filetype == "snacks_dashboard" then
+          return false
+        end
         return true
       end,
     },
@@ -393,7 +406,6 @@ if snacks_ok then
     words = { enabled = false }, -- 使用 LSP
     quickfile = { enabled = true },
   })
-
 end
 
 -- ====== 启动页 (mini.starter) ======
@@ -451,11 +463,6 @@ if st_ok then
         section = "Tools",
       },
       {
-        name = "s  󰋖  Session Save",
-        action = ':lua require("mini.sessions").write()',
-        section = "Tools",
-      },
-      {
         name = "l  󰋕  Session Load",
         action = ':lua require("mini.sessions").read()',
         section = "Tools",
@@ -468,19 +475,19 @@ if st_ok then
       },
     },
     content_hooks = {
-  -- 添加 BROWNLU logo（按顺序从顶部开始）
-  function(content, _)
-    local header = {
-      { { type = "empty", string = "" } },
-    }
-    for _, line in ipairs(logo) do
-      table.insert(header, { { type = "empty", string = "    " .. line } })
-    end
-    for i = #header, 1, -1 do
-      table.insert(content, 1, header[i])
-    end
-    return content
-  end,
+      -- 添加 BROWNLU logo（按顺序从顶部开始）
+      function(content, _)
+        local header = {
+          { { type = "empty", string = "" } },
+        }
+        for _, line in ipairs(logo) do
+          table.insert(header, { { type = "empty", string = "    " .. line } })
+        end
+        for i = #header, 1, -1 do
+          table.insert(content, 1, header[i])
+        end
+        return content
+      end,
       -- 添加一言格言
       function(content, _)
         local h_ok, h = pcall(require, "config.hitokoto")
