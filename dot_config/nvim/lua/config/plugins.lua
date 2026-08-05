@@ -704,7 +704,6 @@ if ws_ok then
   ws.setup({})
 end
 
--- ====== Neorg 笔记 ======
 -- ====== 其余插件 ======
 -- blink.cmp 配置在 completion.lua 中
 -- Mason + lspconfig 配置在 lsp.lua 中
