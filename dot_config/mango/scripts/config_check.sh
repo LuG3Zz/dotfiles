@@ -11,10 +11,9 @@ output=$(mango -p 2>&1 | sed -r '
 # 设置通知图标
 icon="$HOME/.config/mango/wallpaper/mango.png"
 
-# 如果没有输出或输出为空，则退出
+# 根据是否有错误发送不同通知
 if [[ -z "$output" ]]; then
-    exit 0
+    notify-send --urgency=low --icon="$icon" "Mango Status" "配置检查通过，无错误"
+else
+    notify-send --urgency=critical --icon="$icon" "Mango Status" "$output"
 fi
-
-# 发送通知
-notify-send --urgency=critical --icon="$icon" "Mango Status" "$output"
