@@ -11,9 +11,12 @@ output=$(mango -p 2>&1 | sed -r '
 # 设置通知图标
 icon="$HOME/.config/mango/wallpaper/mango.png"
 
+# 重载配置
+mmsg dispatch reload_config
+
 # 根据是否有错误发送不同通知
 if [[ -z "$output" ]]; then
-    notify-send --urgency=low --icon="$icon" "Mango Status" "配置检查通过，无错误"
+    notify-send --urgency=low --icon="$icon" "Mango Status" "配置检查通过，已重载"
 else
     notify-send --urgency=critical --icon="$icon" "Mango Status" "$output"
 fi
