@@ -34,4 +34,4 @@ export STARSHIP_CONFIG="$XDG_CONFIG_HOME/zshrc/starship.toml"
 # -----------------------------------------------------
 # MANPAGER — render man pages with bat
 # -----------------------------------------------------
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export MANPAGER="bat -l man -p"
