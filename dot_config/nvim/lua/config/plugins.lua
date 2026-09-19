@@ -57,6 +57,7 @@ vim.pack.add({
   gh("skywind3000/asyncrun.vim"),
   gh("skywind3000/asynctasks.vim"),
   gh("OXY2DEV/markview.nvim"),
+  gh("monkoose/neocodeium"),
 })
 
 -- 显式加载需要在 init 期间配置的插件（opt/ 目录需 packadd）
@@ -128,6 +129,7 @@ vim.cmd.packadd("fcitx.nvim")
 vim.cmd.packadd("asyncrun.vim")
 vim.cmd.packadd("asynctasks.vim")
 vim.cmd.packadd("markview.nvim")
+vim.cmd.packadd("neocodeium")
 
 -- ====== 主题：Gruvbox（默认） ======
 -- 从持久化文件读取上次使用的主题，没有则用 gruvbox
@@ -702,6 +704,28 @@ end
 local ws_ok, ws = pcall(require, "colorful-winsep")
 if ws_ok then
   ws.setup({})
+end
+
+-- ====== AI 补全 (neocodeium / Windsurf) ======
+-- 打开后需运行 :NeoCodeium auth 认证
+local nc_ok, neocodeium = pcall(require, "neocodeium")
+if nc_ok then
+  neocodeium.setup({
+    enabled = true,
+    manual = false,            -- 自动弹出建议
+    debounce = false,          -- 打字时实时出建议，不延迟
+    show_label = true,         -- 行号列显示建议数量
+    max_lines = 10000,         -- 读取当前 buffer + 上下文
+    silent = false,
+    -- 与 blink.cmp 配合：blink 菜单打开时禁用 neocodeium
+    filter = function()
+      local blink_ok, blink = pcall(require, "blink.cmp")
+      if blink_ok then
+        return not blink.is_visible()
+      end
+      return true
+    end,
+  })
 end
 
 -- ====== 其余插件 ======

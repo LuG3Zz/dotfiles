@@ -45,10 +45,25 @@ blink.setup({
     },
     ghost_text = { enabled = true },
     list = { max_items = 15 },
+    -- neocodeium 集成：默认模式不弹菜单，避免和 AI ghost text 冲突
+    menu = {
+      auto_show = function(ctx)
+        return ctx.mode ~= "default"
+      end,
+    },
   },
 
   signature = {
     enabled = true,
     window = { border = 'rounded' },
   },
+})
+
+-- neocodeium 协作：blink 菜单打开时清除 AI ghost text
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'BlinkCmpMenuOpen',
+  callback = function()
+    local ok, neocodeium = pcall(require, 'neocodeium')
+    if ok then neocodeium.clear() end
+  end,
 })
