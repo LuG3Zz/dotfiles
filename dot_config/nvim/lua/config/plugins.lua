@@ -709,7 +709,7 @@ end
 -- ====== AI 补全 (minuet-ai.nvim + DeepSeek) ======
 -- 从 opencode auth.json 读取 DeepSeek API Key（国内稳定、极低延迟）
 local function get_deepseek_key()
-  local auth_path = vim.fn.stdpath("data") .. "/opencode/auth.json"
+  local auth_path = vim.fn.expand("~/.local/share/opencode/auth.json")
   local f = io.open(auth_path, "r")
   if not f then return nil end
   local content = f:read("*a")
