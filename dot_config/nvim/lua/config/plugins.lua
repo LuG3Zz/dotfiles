@@ -735,12 +735,26 @@ if minuet_ok and deepseek_key then
         api_key = "DEEPSEEK_API_KEY",
         name = "deepseek",
         optional = {
-          max_tokens = 256,
+          max_tokens = 512,
           top_p = 0.9,
         },
       },
     },
-    auto_trigger = true,
+    -- Virtual Text 模式（类 Copilot ghost text）
+    virtualtext = {
+      auto_trigger_ft = { "*" },  -- 所有文件类型自动触发
+      keymap = {
+        accept = "<A-A>",       -- 接受整段补全
+        accept_line = "<A-a>",  -- 接受一行
+        accept_n_lines = "<A-z>", -- 接受 N 行
+        prev = "<A-[>",         -- 上一个候选项
+        next = "<A-]>",         -- 下一个候选项
+        dismiss = "<A-e>",      -- 取消补全
+      },
+    },
+    -- 不用 blink/cmp 前端
+    add_single_line_entry = false,
+    n_completions = 3,
     fetching_timeout = 2000,
   })
 elseif minuet_ok then

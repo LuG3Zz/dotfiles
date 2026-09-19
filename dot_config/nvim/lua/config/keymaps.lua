@@ -267,10 +267,5 @@ map("n", "go", function()
   require("opencode").operator()
 end, { desc = "OpenCode: Operator" })
 
--- ====== AI 补全 (minuet-ai.nvim + blink.cmp) ======
-map("i", "<A-y>", function()
-  local ok, blink = pcall(require, "blink.cmp")
-  if ok then
-    blink.show({ providers = { "minuet" } })
-  end
-end, { desc = "Minuet: Manual trigger AI completion" })
+-- ====== AI 补全 (minuet-ai.nvim virtualtext) ======
+-- 按键由 minuet virtualtext keymap 自动配置（<A-A> 接受，<A-a> 接受一行等）
