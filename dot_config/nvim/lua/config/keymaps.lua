@@ -267,15 +267,8 @@ map("n", "go", function()
   require("opencode").operator()
 end, { desc = "OpenCode: Operator" })
 
--- ====== AI 补全 (neocodeium) ======
-local function nc(action)
-  return function()
-    local ok, neocodeium = pcall(require, "neocodeium")
-    if ok then neocodeium[action]() end
-  end
-end
-map("i", "<A-f>", nc("accept"), { desc = "NeoCodeium: Accept suggestion" })
-map("i", "<A-w>", nc("accept_word"), { desc = "NeoCodeium: Accept word" })
-map("i", "<A-a>", nc("accept_line"), { desc = "NeoCodeium: Accept line" })
-map("i", "<A-e>", nc("cycle_or_complete"), { desc = "NeoCodeium: Cycle/complete" })
-map("i", "<A-c>", nc("clear"), { desc = "NeoCodeium: Clear suggestion" })
+-- ====== AI 补全 (minuet-ai.nvim) ======
+map("i", "<A-y>", function()
+  local ok, minuet = pcall(require, "minuet")
+  if ok then minuet.trigger() end
+end, { desc = "Minuet: Manual trigger AI completion" })

@@ -29,10 +29,15 @@ blink.setup({
   },
 
   sources = {
-    default = { 'lsp', 'path', 'snippets', 'buffer' },
+    default = { 'lsp', 'path', 'snippets', 'buffer', 'minuet' },
     min_keyword_length = 2,   -- 输入 2 字符才触发，避免打字就弹
     providers = {
       buffer = { max_items = 5 },
+      minuet = {
+        name = 'minuet',
+        module = 'minuet.blink',
+        score_offset = 8,     -- AI 建议优先级更高
+      },
     },
   },
 
@@ -57,13 +62,4 @@ blink.setup({
     enabled = true,
     window = { border = 'rounded' },
   },
-})
-
--- neocodeium 协作：blink 菜单打开时清除 AI ghost text
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'BlinkCmpMenuOpen',
-  callback = function()
-    local ok, neocodeium = pcall(require, 'neocodeium')
-    if ok then neocodeium.clear() end
-  end,
 })
