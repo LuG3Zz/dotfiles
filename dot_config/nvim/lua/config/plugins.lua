@@ -742,7 +742,7 @@ if minuet_ok and deepseek_key then
     },
     -- Virtual Text 模式（类 Copilot ghost text）
     virtualtext = {
-      auto_trigger_ft = { "*" },  -- 所有文件类型自动触发
+      auto_trigger_ft = {},  -- 默认关闭，用 <A-m> 手动开启
       keymap = {
         accept = "<A-A>",       -- 接受整段补全
         accept_line = "<A-a>",  -- 接受一行

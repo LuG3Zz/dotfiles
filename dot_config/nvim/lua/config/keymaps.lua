@@ -268,4 +268,10 @@ map("n", "go", function()
 end, { desc = "OpenCode: Operator" })
 
 -- ====== AI 补全 (minuet-ai.nvim virtualtext) ======
--- 按键由 minuet virtualtext keymap 自动配置（<A-A> 接受，<A-a> 接受一行等）
+-- <A-m> 开关 ghost text，按键由 minuet virtualtext keymap 自动配置（<A-A> 接受，<A-a> 接受一行等）
+map("n", "<A-m>", function()
+  vim.cmd("Minuet virtualtext toggle")
+end, { desc = "Minuet: Toggle ghost text" })
+map("i", "<A-m>", function()
+  vim.cmd("Minuet virtualtext toggle")
+end, { desc = "Minuet: Toggle ghost text" })
