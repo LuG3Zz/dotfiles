@@ -707,7 +707,7 @@ if ws_ok then
 end
 
 -- ====== AI 补全 (minuet-ai.nvim + DeepSeek) ======
--- 从 opencode auth.json 读取 DeepSeek API Key（国内稳定、极低延迟）
+-- 从 opencode auth.json 读取 DeepSeek Key，写入临时环境变量供 minuet 使用
 local function get_deepseek_key()
   local auth_path = vim.fn.expand("~/.local/share/opencode/auth.json")
   local f = io.open(auth_path, "r")
@@ -722,13 +722,17 @@ local function get_deepseek_key()
 end
 
 local deepseek_key = get_deepseek_key()
+if deepseek_key then
+  vim.env.DEEPSEEK_API_KEY = deepseek_key
+end
+
 local minuet_ok, minuet = pcall(require, "minuet")
 if minuet_ok and deepseek_key then
   minuet.setup({
     provider = "openai_fim_compatible",
     provider_options = {
       openai_fim_compatible = {
-        api_key = deepseek_key,
+        api_key = "DEEPSEEK_API_KEY",
         name = "deepseek",
         optional = {
           max_tokens = 256,
