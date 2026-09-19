@@ -707,28 +707,40 @@ if ws_ok then
 end
 
 -- ====== AI 补全 (minuet-ai.nvim + DeepSeek) ======
--- 使用 DeepSeek V4-Flash（国内稳定、极低延迟）
+-- 从 opencode auth.json 读取 DeepSeek API Key（国内稳定、极低延迟）
+local function get_deepseek_key()
+  local auth_path = vim.fn.stdpath("data") .. "/opencode/auth.json"
+  local f = io.open(auth_path, "r")
+  if not f then return nil end
+  local content = f:read("*a")
+  f:close()
+  local ok, data = pcall(vim.json.decode, content)
+  if ok and data and data.deepseek and data.deepseek.key then
+    return data.deepseek.key
+  end
+  return nil
+end
+
+local deepseek_key = get_deepseek_key()
 local minuet_ok, minuet = pcall(require, "minuet")
-if minuet_ok then
+if minuet_ok and deepseek_key then
   minuet.setup({
     provider = "openai_fim_compatible",
     provider_options = {
       openai_fim_compatible = {
-        api_key = "DEEPSEEK_API_KEY", -- 从环境变量读取
+        api_key = deepseek_key,
         name = "deepseek",
         optional = {
           max_tokens = 256,
           top_p = 0.9,
-          -- 禁用 thinking 以避免首 token 延迟
-          thinking = { type = "disabled" },
         },
       },
     },
-    -- 自动触发补全
     auto_trigger = true,
-    -- 减少延迟
     fetching_timeout = 2000,
   })
+elseif minuet_ok then
+  vim.notify("minuet: DeepSeek key not found in auth.json", vim.log.levels.WARN)
 end
 
 -- ====== 其余插件 ======
