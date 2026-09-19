@@ -267,8 +267,10 @@ map("n", "go", function()
   require("opencode").operator()
 end, { desc = "OpenCode: Operator" })
 
--- ====== AI 补全 (minuet-ai.nvim) ======
+-- ====== AI 补全 (minuet-ai.nvim + blink.cmp) ======
 map("i", "<A-y>", function()
-  local ok, minuet = pcall(require, "minuet")
-  if ok then minuet.trigger() end
+  local ok, blink = pcall(require, "blink.cmp")
+  if ok then
+    blink.show({ providers = { "minuet" } })
+  end
 end, { desc = "Minuet: Manual trigger AI completion" })
