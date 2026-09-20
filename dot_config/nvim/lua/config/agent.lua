@@ -13,9 +13,19 @@ vim.g.opencode_opts = {
       vim.fn.system({ "opencode", "service", "start" })
       return true
     end,
-    -- 服务认证（从 opencode pair 获取）
+    -- 动态读取服务认证（从 ~/.config/opencode/service.json）
     username = "opencode",
-    password = "2Thc0XjaFQRrlfGpJGCXueNYo9gTdK4jK7LNIVIrU9I",
+    password = (function()
+      local f = io.open(vim.fn.expand("~/.config/opencode/service.json"), "r")
+      if f then
+        local content = f:read("*a")
+        f:close()
+        -- 简单 JSON 解析（只取 password 字段）
+        local pw = content:match('"password"%s*:%s*"([^"]+)"')
+        return pw or ""
+      end
+      return ""
+    end)(),
   },
   ask = {
     snacks = {
