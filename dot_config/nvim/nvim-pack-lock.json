@@ -161,7 +161,7 @@
       "src": "https://github.com/stevearc/oil.nvim"
     },
     "opencode.nvim": {
-      "rev": "84eabfbe65a44f452ee302fe360cea9fd9939f31",
+      "rev": "71fb506ef1898048bc548668f31f495ad6c29453",
       "src": "https://github.com/nickjvandyke/opencode.nvim"
     },
     "promise-async": {
