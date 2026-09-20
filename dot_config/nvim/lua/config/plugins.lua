@@ -768,6 +768,8 @@ local r_ok, rlg = pcall(require, "r")
 if r_ok then
   rlg.setup({
     R_args = { "--quiet", "--no-save" },
+    -- 编辑 R 文件时自动启动 R 会话（否则按 Enter 会提示 "Did you start R?"）
+    auto_start = "always",
     min_editor_width = 72,
     rconsole_width = 78,
     hook = {
