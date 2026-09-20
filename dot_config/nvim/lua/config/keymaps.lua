@@ -254,10 +254,19 @@ map("t", "<C-l>", "<cmd>wincmd l<CR>", { desc = "Terminal: Go to right window" }
 -- 用 <M-Enter> 退出终端模式（避免与 Zsh vi-mode 的 <Esc> 冲突）
 map("t", "<C-\\><C-\\>", "<C-\\><C-n>", { desc = "Terminal: Enter normal mode" })
 
--- ====== CodeCompanion AI Chat (opencode ACP) ======
-map({ "n", "v" }, "<leader>A", "<cmd>CodeCompanionChat Toggle<cr>", { desc = "AI: Toggle chat" })
-map({ "n", "v" }, "<leader>X", "<cmd>CodeCompanionActions<cr>", { desc = "AI: Actions" })
-map("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { desc = "AI: Add selection to chat" })
+-- ====== OpenCode 浮动终端 ======
+map("n", "<leader>A", function()
+  local file = vim.fn.expand("%:p")
+  local cmd = vim.fn.filereadable(file) == 1
+    and { "opencode", file }
+    or { "opencode" }
+  vim.cmd("botright 15split")
+  vim.fn.jobstart(cmd, {
+    term = true,
+    cwd = vim.fn.getcwd(),
+  })
+  vim.cmd("startinsert")
+end, { desc = "OpenCode: Open in floating terminal" })
 
 -- ====== AI 补全 (minuet-ai.nvim virtualtext) ======
 -- <A-m> 开关 ghost text，按键由 minuet virtualtext keymap 自动配置（<A-A> 接受，<A-a> 接受一行等）
