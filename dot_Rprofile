@@ -1,0 +1,9 @@
+# 用户 R 库（pacman 的系统库不可写）
+.libPaths(c("~/R/library", .libPaths()))
+
+# CRAN 清华镜像（加速国内下载）
+local({
+  r <- getOption("repos")
+  r["CRAN"] <- "https://mirrors.tuna.tsinghua.edu.cn/CRAN/"
+  options(repos = r)
+})
