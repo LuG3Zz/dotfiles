@@ -7,6 +7,19 @@
 --   go         Operator
 
 vim.g.opencode_opts = {
+  server = {
+    -- opencode v2.0.8 需要 `opencode serve --port` 而不是 `opencode --port`
+    start = function()
+      local port = 13337
+      local cmd = { "opencode", "serve", "--port", tostring(port) }
+      vim.fn.jobstart(cmd, {
+        detach = true,
+        on_exit = function(_, code) end,
+      })
+      return true
+    end,
+    url = "http://localhost:13337",
+  },
   ask = {
     snacks = {
       win = {
