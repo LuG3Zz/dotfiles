@@ -277,18 +277,23 @@ map("n", "<leader>A", function()
     border = "rounded",
   })
 
-  vim.fn.jobstart(cmd, {
-    term = true,
+  vim.bo[buf].buftype = "terminal"
+  vim.bo[buf].bufhidden = "wipe"
+
+  local job_id = vim.fn.termopen(cmd, {
     cwd = vim.fn.getcwd(),
     on_exit = function()
-      if vim.api.nvim_win_is_valid(win) then
-        vim.api.nvim_win_close(win, true)
-      end
+      vim.schedule(function()
+        if vim.api.nvim_win_is_valid(win) then
+          vim.api.nvim_win_close(win, true)
+        end
+      end)
     end,
   })
+
   vim.cmd("startinsert")
 
-  -- q 关闭浮动窗口
+  -- Esc Esc 关闭
   vim.keymap.set("t", "<Esc><Esc>", function()
     if vim.api.nvim_win_is_valid(win) then
       vim.api.nvim_win_close(win, true)
