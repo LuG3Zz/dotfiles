@@ -8,17 +8,11 @@
 
 vim.g.opencode_opts = {
   server = {
-    -- opencode v2.0.8 需要 `opencode serve --port` 而不是 `opencode --port`
+    -- 确保后台服务运行（opencode v2.0.8 使用 service 模式）
     start = function()
-      local port = 13337
-      local cmd = { "opencode", "serve", "--port", tostring(port) }
-      vim.fn.jobstart(cmd, {
-        detach = true,
-        on_exit = function(_, code) end,
-      })
+      vim.fn.system({ "opencode", "service", "start" })
       return true
     end,
-    url = "http://localhost:13337",
   },
   ask = {
     snacks = {
