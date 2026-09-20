@@ -254,19 +254,6 @@ map("t", "<C-l>", "<cmd>wincmd l<CR>", { desc = "Terminal: Go to right window" }
 -- 用 <M-Enter> 退出终端模式（避免与 Zsh vi-mode 的 <Esc> 冲突）
 map("t", "<C-\\><C-\\>", "<C-\\><C-n>", { desc = "Terminal: Enter normal mode" })
 
--- ====== OpenCode AI Agent ======
-map({ "n", "v" }, "<leader>A", function()
-  require("opencode").ask()
-end, { desc = "OpenCode: Ask" })
-
-map({ "n", "v" }, "<leader>X", function()
-  require("opencode").select()
-end, { desc = "OpenCode: Select command" })
-
-map("n", "go", function()
-  require("opencode").operator()
-end, { desc = "OpenCode: Operator" })
-
 -- ====== AI 补全 (minuet-ai.nvim virtualtext) ======
 -- <A-m> 开关 ghost text，按键由 minuet virtualtext keymap 自动配置（<A-A> 接受，<A-a> 接受一行等）
 map("n", "<A-m>", function()

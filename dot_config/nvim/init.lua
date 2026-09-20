@@ -15,4 +15,3 @@ require('config.diagnostics')   -- 4. 诊断显示与导航
 require('config.autocmds')     -- 5. 自动命令
 require('config.lsp')          -- 6. Mason + LSP 配置
 require('config.completion')   -- 7. blink.cmp 补全
-require('config.agent')        -- 8. opencode.nvim AI Agent

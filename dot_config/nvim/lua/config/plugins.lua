@@ -41,7 +41,6 @@ vim.pack.add({
   gh("mason-org/mason-lspconfig.nvim"),
   gh("neovim/nvim-lspconfig"),
   gh("alker0/chezmoi.vim"),
-  gh("nickjvandyke/opencode.nvim"),
   gh("nvim-mini/mini.pairs"),
   gh("folke/flash.nvim"),
   gh("mbbill/undotree"),
@@ -102,7 +101,6 @@ vim.cmd.packadd("which-key.nvim")
 vim.cmd.packadd("mason.nvim")
 vim.cmd.packadd("mason-lspconfig.nvim")
 vim.cmd.packadd("nvim-lspconfig")
-vim.cmd.packadd("opencode.nvim")
 vim.cmd.packadd("mini.pairs")
 vim.cmd.packadd("flash.nvim")
 vim.cmd.packadd("undotree")
@@ -792,4 +790,3 @@ end
 -- ====== 其余插件 ======
 -- blink.cmp 配置在 completion.lua 中
 -- Mason + lspconfig 配置在 lsp.lua 中
--- opencode.nvim 配置在 agent.lua 中
