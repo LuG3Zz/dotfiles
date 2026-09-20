@@ -58,6 +58,8 @@ vim.pack.add({
   gh("OXY2DEV/markview.nvim"),
   gh("milanglacier/minuet-ai.nvim"),
   gh("R-nvim/R.nvim"),
+  gh("nvim-lua/plenary.nvim"),
+  gh("olimorris/codecompanion.nvim"),
 })
 
 -- 显式加载需要在 init 期间配置的插件（opt/ 目录需 packadd）
@@ -116,7 +118,6 @@ vim.g.tiny_cmdline = {
   native_types = {},
 }
 vim.cmd.packadd("tiny-cmdline.nvim")
--- vim.cmd.packadd("plenary.nvim")  -- 已移除
 vim.g.vimwiki_global_ext = 0
 vim.g.vimwiki_list =
   { { path = "~/Documents/vimwiki", syntax = "markdown", ext = ".md", auto_diary_index = 1 } }
@@ -130,6 +131,8 @@ vim.cmd.packadd("asynctasks.vim")
 vim.cmd.packadd("markview.nvim")
 vim.cmd.packadd("minuet-ai.nvim")
 vim.cmd.packadd("R.nvim")
+vim.cmd.packadd("plenary.nvim")
+vim.cmd.packadd("codecompanion.nvim")
 
 -- ====== 主题：Gruvbox（默认） ======
 -- 从持久化文件读取上次使用的主题，没有则用 gruvbox
@@ -783,6 +786,25 @@ if r_ok then
       "RCustomStart",
       "RSPlot",
       "RSaveClose",
+    },
+  })
+end
+
+-- ====== CodeCompanion (AI Chat, ACP: opencode) ======
+local cc_ok, codecompanion = pcall(require, "codecompanion")
+if cc_ok then
+  codecompanion.setup({
+    interactions = {
+      chat = {
+        -- opencode 官方 ACP 适配器（`opencode acp` 子进程，无需端口/密码）
+        adapter = { name = "opencode" },
+      },
+    },
+    display = {
+      action_palette = {
+        -- 用户使用 mini.pick 作为主 picker
+        provider = "mini_pick",
+      },
     },
   })
 end

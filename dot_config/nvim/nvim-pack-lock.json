@@ -32,6 +32,10 @@
       "rev": "73b30df35c6b645ebd2e6a440eea8463ef3c3f47",
       "src": "https://github.com/alker0/chezmoi.vim.git"
     },
+    "codecompanion.nvim": {
+      "rev": "5f8841d9ddc8cfdb202f84ae26b704beb4e14ce8",
+      "src": "https://gh-proxy.com/https://github.com/olimorris/codecompanion.nvim.git"
+    },
     "colorful-winsep.nvim": {
       "rev": "6134b5cd4a38990c7b720adc90973ed32f726179",
       "src": "https://ghproxy.net/https://github.com/nvim-zh/colorful-winsep.nvim.git"
@@ -159,6 +163,10 @@
     "oil.nvim": {
       "rev": "b73018b75affd13fa38e2fc94ef753b465f770d7",
       "src": "https://github.com/stevearc/oil.nvim"
+    },
+    "plenary.nvim": {
+      "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
+      "src": "https://gh-proxy.com/https://github.com/nvim-lua/plenary.nvim.git"
     },
     "promise-async": {
       "rev": "119e8961014c9bfaf1487bf3c2a393d254f337e2",
