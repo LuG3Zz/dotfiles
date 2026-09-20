@@ -260,12 +260,40 @@ map("n", "<leader>A", function()
   local cmd = vim.fn.filereadable(file) == 1
     and { "opencode", file }
     or { "opencode" }
-  vim.cmd("botright 15split")
+
+  local width = math.floor(vim.o.columns * 0.8)
+  local height = math.floor(vim.o.lines * 0.8)
+  local row = math.floor((vim.o.lines - height) / 2)
+  local col = math.floor((vim.o.columns - width) / 2)
+
+  local buf = vim.api.nvim_create_buf(false, true)
+  local win = vim.api.nvim_open_win(buf, true, {
+    relative = "editor",
+    width = width,
+    height = height,
+    row = row,
+    col = col,
+    style = "minimal",
+    border = "rounded",
+  })
+
   vim.fn.jobstart(cmd, {
     term = true,
     cwd = vim.fn.getcwd(),
+    on_exit = function()
+      if vim.api.nvim_win_is_valid(win) then
+        vim.api.nvim_win_close(win, true)
+      end
+    end,
   })
   vim.cmd("startinsert")
+
+  -- q 关闭浮动窗口
+  vim.keymap.set("t", "<Esc><Esc>", function()
+    if vim.api.nvim_win_is_valid(win) then
+      vim.api.nvim_win_close(win, true)
+    end
+  end, { buffer = buf, desc = "Close opencode float" })
 end, { desc = "OpenCode: Open in floating terminal" })
 
 -- ====== AI 补全 (minuet-ai.nvim virtualtext) ======
