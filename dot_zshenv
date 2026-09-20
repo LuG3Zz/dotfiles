@@ -35,3 +35,8 @@ export STARSHIP_CONFIG="$XDG_CONFIG_HOME/zshrc/starship.toml"
 # MANPAGER — render man pages with bat
 # -----------------------------------------------------
 export MANPAGER="bat -l man -p"
+
+# -----------------------------------------------------
+# R — 用户级 R 库（pacman 系统库不可写）
+# -----------------------------------------------------
+export R_LIBS_USER="$HOME/R/library"

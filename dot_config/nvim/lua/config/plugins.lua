@@ -58,6 +58,7 @@ vim.pack.add({
   gh("skywind3000/asynctasks.vim"),
   gh("OXY2DEV/markview.nvim"),
   gh("milanglacier/minuet-ai.nvim"),
+  gh("R-nvim/R.nvim"),
 })
 
 -- 显式加载需要在 init 期间配置的插件（opt/ 目录需 packadd）
@@ -130,6 +131,7 @@ vim.cmd.packadd("asyncrun.vim")
 vim.cmd.packadd("asynctasks.vim")
 vim.cmd.packadd("markview.nvim")
 vim.cmd.packadd("minuet-ai.nvim")
+vim.cmd.packadd("R.nvim")
 
 -- ====== 主题：Gruvbox（默认） ======
 -- 从持久化文件读取上次使用的主题，没有则用 gruvbox
@@ -176,7 +178,7 @@ pcall(vim.cmd.colorscheme, saved)
 local ts_ok, ts = pcall(require, "nvim-treesitter.configs")
 if ts_ok then
   ts.setup({
-    ensure_installed = { "lua", "python", "rust", "c", "cpp", "markdown" },
+    ensure_installed = { "lua", "python", "rust", "c", "cpp", "markdown", "r", "rnoweb", "csv" },
     auto_install = true,
     highlight = { enable = true },
     indent = { enable = true },
@@ -759,6 +761,30 @@ if minuet_ok and deepseek_key then
   })
 elseif minuet_ok then
   vim.notify("minuet: DeepSeek key not found in auth.json", vim.log.levels.WARN)
+end
+
+-- ====== R 语言开发 (R.nvim) ======
+local r_ok, rlg = pcall(require, "r")
+if r_ok then
+  rlg.setup({
+    R_args = { "--quiet", "--no-save" },
+    min_editor_width = 72,
+    rconsole_width = 78,
+    hook = {
+      on_filetype = function()
+        -- 发送当前行 / 选中代码到 R 终端
+        vim.keymap.set("n", "<CR>", "<Plug>RDSendLine", { buffer = true })
+        vim.keymap.set("v", "<CR>", "<Plug>RSendSelection", { buffer = true })
+      end,
+    },
+    -- 禁止自动打开窗口
+    disable_cmds = {
+      "RClearConsole",
+      "RCustomStart",
+      "RSPlot",
+      "RSaveClose",
+    },
+  })
 end
 
 -- ====== 其余插件 ======
