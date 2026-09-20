@@ -13,6 +13,9 @@ vim.g.opencode_opts = {
       vim.fn.system({ "opencode", "service", "start" })
       return true
     end,
+    -- 服务认证（从 opencode pair 获取）
+    username = "opencode",
+    password = "2Thc0XjaFQRrlfGpJGCXueNYo9gTdK4jK7LNIVIrU9I",
   },
   ask = {
     snacks = {
