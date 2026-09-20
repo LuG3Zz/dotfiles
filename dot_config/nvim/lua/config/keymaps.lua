@@ -277,8 +277,8 @@ map("n", "<leader>A", function()
     border = "rounded",
   })
 
-  vim.bo[buf].buftype = "terminal"
-  vim.bo[buf].bufhidden = "wipe"
+  vim.api.nvim_buf_set_option(buf, "buftype", "terminal")
+  vim.api.nvim_buf_set_option(buf, "bufhidden", "wipe")
 
   local job_id = vim.fn.termopen(cmd, {
     cwd = vim.fn.getcwd(),
