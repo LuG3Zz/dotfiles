@@ -58,7 +58,6 @@ vim.pack.add({
   gh("OXY2DEV/markview.nvim"),
   gh("milanglacier/minuet-ai.nvim"),
   gh("R-nvim/R.nvim"),
-  gh("sudo-tee/opencode.nvim"),
 })
 
 -- 显式加载需要在 init 期间配置的插件（opt/ 目录需 packadd）
@@ -130,7 +129,6 @@ vim.cmd.packadd("asynctasks.vim")
 vim.cmd.packadd("markview.nvim")
 vim.cmd.packadd("minuet-ai.nvim")
 vim.cmd.packadd("R.nvim")
-vim.cmd.packadd("opencode.nvim")
 
 
 -- ====== 主题：Gruvbox（默认） ======
@@ -785,53 +783,6 @@ if r_ok then
       "RCustomStart",
       "RSPlot",
       "RSaveClose",
-    },
-  })
-end
-
--- ====== opencode.nvim (AI Chat 前端) ======
-do
-  local oc = require("opencode")
-  -- 从 service.json 动态读取密码
-  local function get_server_password()
-    local f = io.open(vim.fn.expand("~/.config/opencode/service.json"), "r")
-    if f then
-      local ok, data = pcall(vim.json.decode, f:read("*a"))
-      f:close()
-      if ok and data and data.password then
-        return data.password
-      end
-    end
-    return nil
-  end
-
-  -- 动态获取 opencode 服务端口
-  local function get_server_port()
-    local handle = io.popen("opencode service status 2>/dev/null")
-    if handle then
-      local result = handle:read("*a")
-      handle:close()
-      local port = result:match("127%.0%.0%.1:(%d+)")
-      if port then return tonumber(port) end
-    end
-    return nil
-  end
-
-  local port = get_server_port()
-  oc.setup({
-    preferred_picker = "snacks",
-    default_global_keymaps = true,
-    default_mode = "build",
-    server = {
-      url = "127.0.0.1",
-      port = port,
-      auto_kill = false,
-      password = get_server_password(),
-      username = "opencode",
-    },
-    ui = {
-      position = "right",
-      window_width = 0.40,
     },
   })
 end
