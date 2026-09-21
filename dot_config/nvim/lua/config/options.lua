@@ -62,6 +62,7 @@ vim.opt.shiftround = true
 vim.opt.splitkeep = 'screen'
 
 -- 行为增强
+vim.opt.autoread = true          -- 0.12+: 文件系统监视器实时检测外部更改（不再依赖 FocusGained）
 vim.opt.confirm = true          -- 退出时确认保存
 vim.opt.hidden = true           -- 允许隐藏 buffer
 vim.opt.showmatch = true        -- 输入括号时短暂高亮匹配
