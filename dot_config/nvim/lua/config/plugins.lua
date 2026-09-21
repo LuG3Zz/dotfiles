@@ -805,11 +805,26 @@ do
     return nil
   end
 
+  -- 动态获取 opencode 服务端口
+  local function get_server_port()
+    local handle = io.popen("opencode service status 2>/dev/null")
+    if handle then
+      local result = handle:read("*a")
+      handle:close()
+      local port = result:match("127%.0%.0%.1:(%d+)")
+      if port then return tonumber(port) end
+    end
+    return nil
+  end
+
+  local port = get_server_port()
   oc.setup({
     preferred_picker = "snacks",
     default_global_keymaps = true,
     default_mode = "build",
     server = {
+      url = "127.0.0.1",
+      port = port,
       auto_kill = false,
       password = get_server_password(),
       username = "opencode",
