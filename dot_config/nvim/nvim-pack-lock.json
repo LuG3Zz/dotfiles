@@ -160,6 +160,10 @@
       "rev": "b73018b75affd13fa38e2fc94ef753b465f770d7",
       "src": "https://github.com/stevearc/oil.nvim"
     },
+    "pi.nvim": {
+      "rev": "0f9f015433404da949c2e8388842c1449e88f793",
+      "src": "https://gh-proxy.com/https://github.com/alex35mil/pi.nvim.git"
+    },
     "promise-async": {
       "rev": "119e8961014c9bfaf1487bf3c2a393d254f337e2",
       "src": "https://ghproxy.net/https://github.com/kevinhwang91/promise-async.git"

@@ -58,6 +58,7 @@ vim.pack.add({
   gh("OXY2DEV/markview.nvim"),
   gh("milanglacier/minuet-ai.nvim"),
   gh("R-nvim/R.nvim"),
+  gh("alex35mil/pi.nvim"),
 })
 
 -- 显式加载需要在 init 期间配置的插件（opt/ 目录需 packadd）
@@ -129,6 +130,7 @@ vim.cmd.packadd("asynctasks.vim")
 vim.cmd.packadd("markview.nvim")
 vim.cmd.packadd("minuet-ai.nvim")
 vim.cmd.packadd("R.nvim")
+vim.cmd.packadd("pi.nvim")
 
 
 -- ====== 主题：Gruvbox（默认） ======
@@ -785,6 +787,35 @@ if r_ok then
       "RSaveClose",
     },
   })
+end
+
+-- ====== pi.nvim (π coding agent 聊天面板) ======
+-- 基于已安装的 pi CLI（默认 provider: deepseek，免费、国内可用）
+-- RPC 模式后台运行，侧边栏/浮动窗聊天，@提及文件，diff 审查
+local pi_ok, pi = pcall(require, "pi")
+if pi_ok then
+  pi.setup({
+    layout = {
+      default = "side",
+      side = {
+        position = "right",
+        width = 72,
+      },
+    },
+    show_thinking = true,
+    models = {
+      "deepseek-flash",
+      "deepseek-v4-pro",
+    },
+  })
+
+  -- 全局键位：打开/切换/续接/提及
+  vim.keymap.set({ "n", "v" }, "<leader>pi", function() vim.cmd("Pi layout=side") end, { desc = "Pi 侧边栏" })
+  vim.keymap.set({ "n", "v" }, "<leader>pf", function() vim.cmd("Pi layout=float") end, { desc = "Pi 浮动窗" })
+  vim.keymap.set({ "n", "v" }, "<leader>pc", "<Cmd>PiContinue<CR>", { desc = "Pi 续接上次会话" })
+  vim.keymap.set({ "n", "v" }, "<leader>pr", "<Cmd>PiResume<CR>", { desc = "Pi 恢复历史会话" })
+  vim.keymap.set({ "n", "v" }, "<leader>pm", "<Cmd>PiSendMention<CR>", { desc = "Pi 提及文件/选区" })
+  vim.keymap.set({ "n", "v" }, "<leader>pa", "<Cmd>PiAttention<CR>", { desc = "Pi 待处理请求" })
 end
 
 -- ====== 其余插件 ======
