@@ -1,5 +1,12 @@
 {
   "catWidget": {
     "enabled": true
+  },
+  "intelGpuMonitor": {
+    "enabled": true
+  },
+  "wallpaperBing": {
+    "enabled": false,
+    "notifications": false
   }
 }
