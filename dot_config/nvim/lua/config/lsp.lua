@@ -107,13 +107,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
 
     -- Inlay hints: Insert 模式暂时关闭，Leave 恢复
+    -- 注意不要加 once=true：那会让开关只在第一次插入时生效，
+    -- 之后进插入模式就不再隐藏了
     if client.server_capabilities.inlayHintProvider and not vim.b[buf].inlay_hints_ready then
       vim.api.nvim_create_autocmd('InsertEnter', {
-        buffer = buf, once = true,
+        buffer = buf,
         callback = function() vim.lsp.inlay_hint.enable(false, { bufnr = buf }) end,
       })
       vim.api.nvim_create_autocmd('InsertLeave', {
-        buffer = buf, once = true,
+        buffer = buf,
         callback = function() vim.lsp.inlay_hint.enable(true, { bufnr = buf }) end,
       })
       vim.b[buf].inlay_hints_ready = true

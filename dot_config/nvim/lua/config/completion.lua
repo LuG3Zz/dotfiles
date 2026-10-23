@@ -45,11 +45,13 @@ blink.setup({
     },
     ghost_text = { enabled = true },
     list = { max_items = 15 },
-    -- neocodeium 集成：默认模式不弹菜单，避免和 AI ghost text 冲突
     menu = {
-      auto_show = function(ctx)
-        return ctx.mode ~= "default"
-      end,
+      -- 自动弹出补全菜单。
+      -- 原来这里有个 `auto_show = function(ctx) return ctx.mode ~= "default" end`，
+      -- 是为旧的 neocodeium 集成留的绕过配置（避免和 AI ghost text 抢位置）。
+      -- neocodeium 已废弃，AI 补全改用 minuet-ai（独立 virtualtext，<A-m> 开关），
+      -- 留着它会导致 default 模式下打字永远不弹菜单。
+      auto_show = true,
     },
   },
 

@@ -38,19 +38,46 @@ function M.write_cache(text)
   pcall(vim.fn.writefile, { data }, cache_file)
 end
 
---- 从一言 API 获取随机句子
----@return table|nil data { hitokoto, from, from_who, ... }
----@return string|nil err
-function M.fetch()
-  local ok, result = pcall(vim.fn.system, { 'curl', '-s', '--max-time', '5', 'https://v1.hitokoto.cn' })
-  if not ok or result == nil or result == '' then
-    return nil, 'Network error'
-  end
-  local parsed, data = pcall(vim.json.decode, result)
-  if not parsed or not data.hitokoto then
-    return nil, 'Parse error'
-  end
-  return data, nil
+--- 一言还没拿到时 dashboard 上显示的占位文本
+local PLACEHOLDER = '󰋞  …'
+
+--- 异步获取一言：成功后写缓存，并把 dashboard 上的占位文本换成真格言。
+--- 用 vim.system 异步执行 curl，主线程不再阻塞（旧版用 vim.fn.system
+--- 同步 curl，网络慢时会卡住 dashboard 最长 5 秒）。
+function M.fetch_async()
+  pcall(vim.system, { 'curl', '-s', '--max-time', '5', 'https://v1.hitokoto.cn' }, { text = true }, function(result)
+    if not result or not result.stdout or result.stdout == '' then
+      return
+    end
+    local parsed, data = pcall(vim.json.decode, result.stdout)
+    if not parsed or type(data) ~= 'table' or not data.hitokoto then
+      return
+    end
+    local text = '󰋞  ' .. M.format(data)
+    M.write_cache(text)
+    M._refresh_dashboard(text)
+  end)
+end
+
+--- 把 dashboard 中的占位文本替换为最新格言
+---@param text string
+function M._refresh_dashboard(text)
+  vim.schedule(function()
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+      if not vim.api.nvim_buf_is_loaded(buf) then goto continue end
+      if vim.bo[buf].filetype ~= 'ministarter' then goto continue end
+      local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+      for i, line in ipairs(lines) do
+        if line:find(PLACEHOLDER, 1, true) then
+          local indent = line:match('^%s*') or ''
+          vim.bo[buf].modifiable = true
+          vim.api.nvim_buf_set_lines(buf, i - 1, i, false, { indent .. text })
+          vim.bo[buf].modifiable = false
+        end
+      end
+      ::continue::
+    end
+  end)
 end
 
 --- 格式化为可读字符串
@@ -79,15 +106,10 @@ function M.get_daily()
     return cached
   end
 
-  -- 缓存过期或不存在，调 API 获取
-  local data, err = M.fetch()
-  if not data then
-    return '󰋞  ⚡ ' .. (err or 'unknown error')
-  end
-
-  local text = '󰋞  ' .. M.format(data)
-  M.write_cache(text)
-  return text
+  -- 缓存过期或不存在：异步获取，先返回占位文本，
+  -- 拿到结果后由 M._refresh_dashboard 自动替换
+  M.fetch_async()
+  return PLACEHOLDER
 end
 
 --- Dashboard 显示

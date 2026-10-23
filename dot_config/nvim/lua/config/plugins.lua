@@ -173,13 +173,43 @@ end
 pcall(vim.cmd.colorscheme, saved)
 
 -- ====== Treesitter ======
-local ts_ok, ts = pcall(require, "nvim-treesitter.configs")
+-- 注意：nvim-treesitter 使用的是 main 分支（重写版）。
+-- 旧 API `nvim-treesitter.configs` 已被移除，ensure_installed/highlight/
+-- indent 等配置项全部失效（pcall 吞错导致无声失败），必须改用新写法：
+--   1. require("nvim-treesitter").install(...)  安装 parser（异步，已装的为 no-op）
+--   2. 自己用 FileType autocmd 调 vim.treesitter.start() 开启高亮
+--   3. indent 用 indentexpr 开启
+local ts_ok, tsmod = pcall(require, "nvim-treesitter")
 if ts_ok then
-  ts.setup({
-    ensure_installed = { "lua", "python", "rust", "c", "cpp", "markdown", "r", "rnoweb", "csv" },
-    auto_install = true,
-    highlight = { enable = true },
-    indent = { enable = true },
+  tsmod.setup({}) -- install_dir 默认 stdpath("data")/site（已在 rtp 上）
+
+  tsmod.install({
+    "lua",
+    "markdown",
+    "markdown_inline",
+    "python",
+    "rust",
+    "c",
+    "cpp",
+    "bash",
+    "r",
+    "rnoweb",
+    "csv",
+  }) -- 异步安装，缺的会补，已有的跳过
+
+  vim.api.nvim_create_autocmd("FileType", {
+    group = vim.api.nvim_create_augroup("UserTreesitter", { clear = true }),
+    callback = function(args)
+      local buf = args.buf
+      local lang = vim.treesitter.language.get_lang(vim.bo[buf].filetype)
+      -- 没有对应 parser 的文件类型不动
+      -- （get_parser 太宽松，无 parser 时也可能返回 true，用 add 严格判断）
+      if not lang or not pcall(vim.treesitter.language.add, lang) then
+        return
+      end
+      pcall(vim.treesitter.start, buf)
+      vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    end,
   })
 end
 
