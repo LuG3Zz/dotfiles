@@ -58,6 +58,12 @@ vim.pack.add({
   gh("OXY2DEV/markview.nvim"),
   gh("milanglacier/minuet-ai.nvim"),
   gh("R-nvim/R.nvim"),
+}, {
+  -- 关键：vim.pack.add() 默认在 init 阶段等价于执行 `:packadd!`，会把所有插件
+  -- 加进 rtp；随后 `packloadall` 照样 source 每个 plugin/ 文件，懒加载完全失效。
+  -- 用 no-op load 让插件只做“登记/安装”，不进 rtp；真正加载交给下面显式的
+  -- packadd 列表（dial.nvim / vimwiki 故意不在此列表，改为首次使用时加载）。
+  load = function() end,
 })
 
 -- 显式加载需要在 init 期间配置的插件（opt/ 目录需 packadd）
@@ -79,9 +85,8 @@ vim.cmd.packadd("mini.hipatterns")
 vim.cmd.packadd("wildfire.nvim")
 vim.cmd.packadd("cellular-automaton.nvim")
 vim.cmd.packadd("mini.comment")
-vim.cmd.packadd("dial.nvim")
+-- dial.nvim 懒加载：见 config/dial.lua（首次 <C-a>/<C-x> 时 packadd，省约 100ms 启动）
 vim.cmd.packadd("colorful-winsep.nvim")
--- dial.nvim 的 augends 在下面的 setup 中配置
 vim.cmd.packadd("snacks.nvim")
 vim.cmd.packadd("mini.statusline")
 vim.cmd.packadd("rainbow-delimiters.nvim")
@@ -116,19 +121,34 @@ vim.g.tiny_cmdline = {
   native_types = {},
 }
 vim.cmd.packadd("tiny-cmdline.nvim")
+-- vimwiki：g: 变量必须在大加载前设置，插件本体延后到 VimEnter 之后再
+-- packadd（省约 30ms 启动）。交互使用时一定已经加载完成；
+-- 若启动参数直接带 :Vimwiki* 命令，则用 CmdUndefined 兜底加载。
 vim.g.vimwiki_global_ext = 0
 vim.g.vimwiki_list =
   { { path = "~/Documents/vimwiki", syntax = "markdown", ext = ".md", auto_diary_index = 1 } }
-vim.cmd.packadd("vimwiki")
-vim.cmd([[
-  let g:vimwiki_global_vars.key_mappings.lists_return = 0
-]])
+
+local vimwiki_loaded = false
+local function load_vimwiki()
+  if vimwiki_loaded then return end
+  vimwiki_loaded = true
+  vim.cmd.packadd("vimwiki")
+  vim.cmd([[let g:vimwiki_global_vars.key_mappings.lists_return = 0]])
+end
+
+vim.api.nvim_create_autocmd("VimEnter", {
+  once = true,
+  callback = function() vim.schedule(load_vimwiki) end,
+})
+vim.api.nvim_create_autocmd("CmdUndefined", {
+  pattern = "Vimwiki*",
+  callback = load_vimwiki,
+})
 vim.cmd.packadd("fcitx.nvim")
 vim.cmd.packadd("asyncrun.vim")
 vim.cmd.packadd("asynctasks.vim")
 vim.cmd.packadd("markview.nvim")
-vim.cmd.packadd("minuet-ai.nvim")
-vim.cmd.packadd("R.nvim")
+-- R.nvim 不在启动时加载：按文件类型懒加载（见下方 setup_r，省约 15ms）
 
 
 -- ====== 主题：Gruvbox（默认） ======
@@ -336,33 +356,21 @@ if cm_ok then
 end
 
 -- ====== 增量改值增强 (dial.nvim) ======
--- 在默认基础上增加 boolean、字母、英式星期等
-local dial_config = require("dial.config")
-local constant = require("dial.augend.constant")
-local default_augends = dial_config.augends:get("default")
-vim.list_extend(default_augends, {
-  constant.alias.bool,
-  constant.alias.Bool,
-  constant.alias.alpha,
-  constant.alias.Alpha,
-  constant.alias.en_weekday,
-})
-
--- ====== 文件类型图标 ======
-local icons_ok, icons = pcall(require, "mini.icons")
-if icons_ok then
-  icons.setup({})
-end
+-- dial 改为懒加载，augends 配置移到了 config/dial.lua 的 ensure() 中
+-- （首次按 <C-a>/<C-x> 时加载，避免 ~100ms 启动开销）
 
 -- ====== 光标动画 (smear-cursor) ======
-local smear_ok, smear = pcall(require, "smear_cursor")
-if smear_ok then
-  smear.setup({
-    stiffness = 0.7,
-    trailing_stiffness = 0.5,
-    distance_stop_animating = 0.5,
-  })
-end
+-- 延后 setup：纯视觉效果，约 20ms，启动完成后再加载
+vim.schedule(function()
+  local smear_ok, smear = pcall(require, "smear_cursor")
+  if smear_ok then
+    smear.setup({
+      stiffness = 0.7,
+      trailing_stiffness = 0.5,
+      distance_stop_animating = 0.5,
+    })
+  end
+end)
 
 -- ====== snacks.nvim 一体化增强 ======
 -- 提供 UI 增强：Dashboard、通知、缩进线、滚动条、状态列
@@ -681,33 +689,37 @@ if dropbar_ok then
 end
 
 -- ====== 折叠增强 (nvim-ufo) ======
-local ufo_ok, ufo = pcall(require, "ufo")
-if ufo_ok then
-  ufo.setup({
-    provider_selector = function()
-      return { "treesitter", "indent" }
-    end,
-    fold_virt_text_handler = function(virt_text, lnum, end_lnum, width, truncate)
-      local text = vim.fn.getline(lnum):gsub("^%s+", "")
-      local suffix = " …  " .. (end_lnum - lnum)
-      if vim.fn.strdisplaywidth(text) > width - 6 then
-        text = truncate(text, width - 6)
-      end
-      return {
-        { text, "NormalFloat" },
-        { suffix, "Comment" },
-      }
-    end,
-    open_fold_hl_timeout = 200,
-    preview = {
-      win_config = {
-        border = "rounded",
-        winblend = 12,
-        maxheight = 15,
+-- 延后到启动完成：require('ufo') 会连锁加载 fold/manager/model 约 45ms，
+-- 折叠对首屏不是必需，schedule 后加载不影响体验
+vim.schedule(function()
+  local ufo_ok, ufo = pcall(require, "ufo")
+  if ufo_ok then
+    ufo.setup({
+      provider_selector = function()
+        return { "treesitter", "indent" }
+      end,
+      fold_virt_text_handler = function(virt_text, lnum, end_lnum, width, truncate)
+        local text = vim.fn.getline(lnum):gsub("^%s+", "")
+        local suffix = " …  " .. (end_lnum - lnum)
+        if vim.fn.strdisplaywidth(text) > width - 6 then
+          text = truncate(text, width - 6)
+        end
+        return {
+          { text, "NormalFloat" },
+          { suffix, "Comment" },
+        }
+      end,
+      open_fold_hl_timeout = 200,
+      preview = {
+        win_config = {
+          border = "rounded",
+          winblend = 12,
+          maxheight = 15,
+        },
       },
-    },
-  })
-end
+    })
+  end
+end)
 
 -- ====== 彩虹括号 ======
 -- rainbow-delimiters.nvim: 使用 Treesitter 高亮括号层级
@@ -756,44 +768,58 @@ if deepseek_key then
   vim.env.DEEPSEEK_API_KEY = deepseek_key
 end
 
-local minuet_ok, minuet = pcall(require, "minuet")
-if minuet_ok and deepseek_key then
-  minuet.setup({
-    provider = "openai_fim_compatible",
-    provider_options = {
-      openai_fim_compatible = {
-        api_key = "DEEPSEEK_API_KEY",
-        name = "deepseek",
-        optional = {
-          max_tokens = 512,
-          top_p = 0.9,
+-- 延后 setup：AI ghost text 只在你按 <A-m> 之后才用得到，
+-- 且 minuet 模块链约 15ms，不占启动时间
+vim.schedule(function()
+  vim.cmd.packadd("minuet-ai.nvim")
+  local ok, minuet = pcall(require, "minuet")
+  if not ok then return end
+  if deepseek_key then
+    minuet.setup({
+      provider = "openai_fim_compatible",
+      provider_options = {
+        openai_fim_compatible = {
+          api_key = "DEEPSEEK_API_KEY",
+          name = "deepseek",
+          optional = {
+            max_tokens = 512,
+            top_p = 0.9,
+          },
         },
       },
-    },
-    -- Virtual Text 模式（类 Copilot ghost text）
-    virtualtext = {
-      auto_trigger_ft = {},  -- 默认关闭，用 <A-m> 手动开启
-      keymap = {
-        accept = "<A-A>",       -- 接受整段补全
-        accept_line = "<A-a>",  -- 接受一行
-        accept_n_lines = "<A-z>", -- 接受 N 行
-        prev = "<A-[>",         -- 上一个候选项
-        next = "<A-]>",         -- 下一个候选项
-        dismiss = "<A-e>",      -- 取消补全
+      -- Virtual Text 模式（类 Copilot ghost text）
+      virtualtext = {
+        auto_trigger_ft = {},  -- 默认关闭，用 <A-m> 手动开启
+        keymap = {
+          accept = "<A-A>",       -- 接受整段补全
+          accept_line = "<A-a>",  -- 接受一行
+          accept_n_lines = "<A-z>", -- 接受 N 行
+          prev = "<A-[>",         -- 上一个候选项
+          next = "<A-]>",         -- 下一个候选项
+          dismiss = "<A-e>",      -- 取消补全
+        },
       },
-    },
-    -- 不用 blink/cmp 前端
-    add_single_line_entry = false,
-    n_completions = 3,
-    fetching_timeout = 2000,
-  })
-elseif minuet_ok then
-  vim.notify("minuet: DeepSeek key not found in auth.json", vim.log.levels.WARN)
-end
+      -- 不用 blink/cmp 前端
+      add_single_line_entry = false,
+      n_completions = 3,
+      fetching_timeout = 2000,
+    })
+  else
+    vim.notify("minuet: DeepSeek key not found in auth.json", vim.log.levels.WARN)
+  end
+end)
 
--- ====== R 语言开发 (R.nvim) ======
-local r_ok, rlg = pcall(require, "r")
-if r_ok then
+-- ====== R 语言开发 (R.nvim)：按文件类型懒加载 ======
+-- 启动时不 packadd（省插件文件 + r 模块链约 15ms），
+-- 打开 .R/.Rmd/.Rnw/.qmd 时再加载；用 BufReadPre 保证早于 FileType，
+-- 这样 R.nvim 自己的 FileType autocmd（auto_start）也能正常触发。
+local r_setup_done = false
+local function setup_r()
+  if r_setup_done then return end
+  r_setup_done = true
+  vim.cmd.packadd("R.nvim")
+  local r_ok, rlg = pcall(require, "r")
+  if not r_ok then return end
   rlg.setup({
     R_args = { "--quiet", "--no-save" },
     -- 编辑 R 文件时自动启动 R 会话（否则按 Enter 会提示 "Did you start R?"）
@@ -816,6 +842,15 @@ if r_ok then
     },
   })
 end
+vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
+  pattern = { "*.R", "*.r", "*.Rmd", "*.rmd", "*.Rnw", "*.rnw", "*.qmd" },
+  callback = setup_r,
+})
+-- 兜底：手动 :set ft=r 的情况（此时 auto_start 不会对当前 buffer 生效）
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "r", "rmd", "quarto", "rnoweb" },
+  callback = setup_r,
+})
 
 -- ====== 其余插件 ======
 -- blink.cmp 配置在 completion.lua 中

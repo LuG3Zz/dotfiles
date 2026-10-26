@@ -162,12 +162,22 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 })
 
 -- ====== LSP 进度通知 ======
+-- 只在进度结束时提示一次，忽略中间的 report（否则 rust-analyzer / mason
+-- 这类服务器会把每个百分比都弹一条，刷屏）。事件结构：
+--   args.data = { client_id, params = { token, value = { kind, title, message } } }
 vim.api.nvim_create_autocmd('LspProgress', {
   group = vim.api.nvim_create_augroup('UserLspProgress', { clear = true }),
   callback = function(args)
-    if args.data.message then
-      vim.notify(args.data.message, vim.log.levels.INFO, { title = 'LSP: ' .. (args.data.server_name or ''), timeout = 3000 })
+    local params = args.data and args.data.params
+    local value = params and params.value
+    if type(value) ~= 'table' or value.kind ~= 'end' or not value.message then
+      return
     end
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    vim.notify(value.message, vim.log.levels.INFO, {
+      title = 'LSP: ' .. (client and client.name or 'unknown'),
+      timeout = 2000,
+    })
   end,
 })
 

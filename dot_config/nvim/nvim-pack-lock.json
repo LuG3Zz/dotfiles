@@ -136,10 +136,6 @@
       "rev": "3b0a4c5f97b7124d94302c608fbe01c0270d4fbe",
       "src": "https://github.com/milanglacier/minuet-ai.nvim"
     },
-    "neocodeium": {
-      "rev": "ab8a3da3a66d299ad5422b76ce5ee21b68719296",
-      "src": "https://github.com/monkoose/neocodeium"
-    },
     "nvim": {
       "rev": "c7c692a0ad3080710893abbae100171819a3e4be",
       "src": "https://github.com/catppuccin/nvim"

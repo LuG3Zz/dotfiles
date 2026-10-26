@@ -56,7 +56,7 @@ end, { desc = "Search keymaps" })
 
 -- ====== 搜索 (mini.pick) ======
 map("n", "<leader>f", "<cmd>Pick files<CR>", { desc = "Find files" })
-map("n", "<leader>g", "<cmd>Pick grep<CR>", { desc = "Grep search" })
+map("n", "<leader>G", "<cmd>Pick grep<CR>", { desc = "Grep search" })
 map("n", "<leader>b", "<cmd>Pick buffers<CR>", { desc = "Find buffers" })
 map("n", "<leader>h", "<cmd>Pick help<CR>", { desc = "Find help" })
 
@@ -65,7 +65,9 @@ map({ "n", "x", "o" }, "n", "'Nn'[v:searchforward]", { desc = "Next search resul
 map({ "n", "x", "o" }, "N", "'nN'[v:searchforward]", { desc = "Prev search result", expr = true })
 
 -- ====== 撤销树 (mbbill/undotree) ======
-map("n", "<leader>u", "<cmd>UndotreeToggle<CR>", { desc = "Toggle undo tree" })
+-- 用 uu 而不是 u：u 是 UI 相关映射（uT/ud/ut/ui/uI）的前缀，
+-- 单键 u 同时是前缀时每次都要等 timeoutlen 才触发
+map("n", "<leader>uu", "<cmd>UndotreeToggle<CR>", { desc = "Toggle undo tree" })
 
 -- ====== 无干扰写作 ======
 map("n", "<leader>z", function()
@@ -96,34 +98,35 @@ map("n", "<leader>q", "<cmd>bdelete<CR>", { desc = "Close buffer" })
 map("n", "<leader>Q", "<cmd>qall<CR>", { desc = "Quit all" })
 map("n", "<Tab>", "<cmd>bnext<CR>", { desc = "Next buffer" })
 map("n", "<S-Tab>", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
-map("n", "<leader>bb", "<cmd>e #<CR>", { desc = "Switch to other buffer" })
+map("n", "<leader>B", "<cmd>e #<CR>", { desc = "Switch to other buffer" })
 
 -- ====== 文件操作 ======
-map("n", "<leader>fn", "<cmd>enew<CR>", { desc = "New file" })
+map("n", "<leader>N", "<cmd>enew<CR>", { desc = "New file" })
 map("n", "<leader>tw", "<cmd>set wrap!<CR>", { desc = "Toggle wrap", silent = true })
 
 -- ====== 快速运行代码（asynctasks） ======
 map("n", "<leader>x", "<cmd>AsyncTask file-run<CR>", { desc = "Run file" })
 
 -- ====== 返回 Dashboard ======
-map("n", "<leader>db", function()
+map("n", "<leader>D", function()
   require("mini.starter").open()
 end, { desc = "Open dashboard" })
 
--- ====== 重启 Neovim（内置 0.12） ======
+-- ====== 最近文件 / 重启 ======
 map("n", "<leader>r", function()
   require("mini.pick").start({ source = { items = vim.v.oldfiles, name = "Recent files" } })
 end, { desc = "Recent files" })
-map("n", "<leader>rr", function()
+map("n", "<leader>R", function()
   pcall(vim.cmd, 'silent! AerialClose')
   require('mini.sessions').write('_restart')
   local session_dir = vim.fn.stdpath('state') .. '/sessions'
   vim.cmd('restart +wqa! source ' .. session_dir .. '/_restart')
 end, { desc = "Save session & restart" })
 
--- ====== 增量/减量 (dial.nvim) ======
-map({ "n", "x" }, "<C-a>", "<Plug>(dial-increment)", { desc = "Increment value" })
-map({ "n", "x" }, "<C-x>", "<Plug>(dial-decrement)", { desc = "Decrement value" })
+-- ====== 增量/减量 (dial.nvim，懒加载) ======
+local dial = require("config.dial")
+map({ "n", "x" }, "<C-a>", function() dial.press("increment") end, { desc = "Increment value" })
+map({ "n", "x" }, "<C-x>", function() dial.press("decrement") end, { desc = "Decrement value" })
 
 -- ====== 折叠导航 ======
 map("n", "zv", "zMzvzz", { desc = "Close all folds except current" })
