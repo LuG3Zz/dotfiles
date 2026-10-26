@@ -59,6 +59,12 @@ map("n", "<leader>f", "<cmd>Pick files<CR>", { desc = "Find files" })
 map("n", "<leader>G", "<cmd>Pick grep<CR>", { desc = "Grep search" })
 map("n", "<leader>b", "<cmd>Pick buffers<CR>", { desc = "Find buffers" })
 map("n", "<leader>h", "<cmd>Pick help<CR>", { desc = "Find help" })
+map("n", "<leader>/", "<cmd>Pick grep_live<CR>", { desc = "Live grep" })
+
+-- 项目级搜索替换（grug-far，预填光标下单词）
+map("n", "<leader>sr", function()
+  require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") } })
+end, { desc = "Search & replace (grug-far)" })
 
 -- 智能 n/N：n 总向前，N 总向后，不受搜索方向影响
 map({ "n", "x", "o" }, "n", "'Nn'[v:searchforward]", { desc = "Next search result", expr = true })
@@ -105,7 +111,23 @@ map("n", "<leader>N", "<cmd>enew<CR>", { desc = "New file" })
 map("n", "<leader>tw", "<cmd>set wrap!<CR>", { desc = "Toggle wrap", silent = true })
 
 -- ====== 快速运行代码（asynctasks） ======
-map("n", "<leader>x", "<cmd>AsyncTask file-run<CR>", { desc = "Run file" })
+-- 用 X 而不是 x：x 留给 quickfix 组（xq/xd）
+map("n", "<leader>X", "<cmd>AsyncTask file-run<CR>", { desc = "Run file" })
+
+-- ====== Quickfix / 诊断 ======
+map("n", "<leader>xq", function()
+  local qf = vim.fn.getqflist({ winid = 0 })
+  if qf.winid ~= 0 then
+    vim.cmd("cclose")
+  else
+    vim.cmd("copen")
+  end
+end, { desc = "Toggle quickfix" })
+map("n", "<leader>xd", function()
+  vim.diagnostic.setqflist({ open = true })
+end, { desc = "Diagnostics to quickfix" })
+map("n", "]q", "<cmd>cnext<CR>", { desc = "Next quickfix item" })
+map("n", "[q", "<cmd>cprev<CR>", { desc = "Prev quickfix item" })
 
 -- ====== 返回 Dashboard ======
 map("n", "<leader>D", function()
@@ -148,6 +170,12 @@ end, { desc = "Cellular automaton: game of life" })
 map("n", "<leader>cs", function()
   vim.cmd("CellularAutomaton scramble")
 end, { desc = "Cellular automaton: scramble" })
+
+-- ====== 切换拼写检查 ======
+map("n", "<leader>us", function()
+  vim.opt_local.spell = not vim.opt_local.spell:get()
+  vim.notify("Spell " .. (vim.opt_local.spell:get() and "ON" or "OFF"), vim.log.levels.INFO)
+end, { desc = "Toggle spell" })
 
 -- ====== 清除行尾空格 ======
 map("n", "<leader>uT", function()
@@ -241,7 +269,7 @@ map("t", "<C-h>", "<cmd>wincmd h<CR>", { desc = "Terminal: Go to left window" })
 map("t", "<C-j>", "<cmd>wincmd j<CR>", { desc = "Terminal: Go to lower window" })
 map("t", "<C-k>", "<cmd>wincmd k<CR>", { desc = "Terminal: Go to upper window" })
 map("t", "<C-l>", "<cmd>wincmd l<CR>", { desc = "Terminal: Go to right window" })
--- 用 <M-Enter> 退出终端模式（避免与 Zsh vi-mode 的 <Esc> 冲突）
+-- 用 <C-\><C-\> 退出终端模式（避免与 Zsh vi-mode 的 <Esc> 冲突）
 map("t", "<C-\\><C-\\>", "<C-\\><C-n>", { desc = "Terminal: Enter normal mode" })
 
 -- ====== AI 补全 (minuet-ai.nvim virtualtext) ======

@@ -39,7 +39,15 @@ vim.opt.completeopt = 'menuone,noselect'  -- 补全行为
 vim.opt.pumblend = 10          -- 弹出菜单透明度
 vim.opt.pumheight = 10         -- 弹出菜单最大行数
 vim.opt.wildoptions = 'pum'    -- cmdline 补全弹出菜单（而非滚屏）
+vim.opt.wildmode = 'longest:full,full'  -- 先补最长公共前缀，再列出候选
 vim.opt.cmdheight = 0           -- 实验性: 隐藏底部命令行，按 : 时弹出单行输入
+
+-- ====== 编辑效率相关 ======
+vim.opt.clipboard = 'unnamedplus'  -- y/p 直接读写系统剪贴板（Wayland 走 wl-copy）
+vim.opt.inccommand = 'split'       -- :s/old/new/g 实时预览所有替换位置
+vim.opt.jumpoptions = 'stack'      -- <C-o>/<C-i> 按栈式语义跳转，来回不绕圈
+vim.opt.winborder = 'rounded'      -- 所有浮动窗口统一圆角（hover/诊断/签名等）
+vim.opt.shortmess:append('c')      -- 减少补全相关的 hit-enter 提示
 
 vim.opt.mouse = 'a'            -- 启用鼠标
 
