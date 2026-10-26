@@ -4,11 +4,44 @@
 local map = vim.keymap.set
 local sev = vim.diagnostic.severity
 
--- ====== 行级诊断背景色（柔和，不刺眼） ======
-vim.api.nvim_set_hl(0, 'DiagnosticErrorLine', { bg = '#51202A', blend = 20 })
-vim.api.nvim_set_hl(0, 'DiagnosticWarnLine',  { bg = '#3B3B1B', blend = 15 })
-vim.api.nvim_set_hl(0, 'DiagnosticInfoLine',  { bg = '#1F3342', blend = 10 })
-vim.api.nvim_set_hl(0, 'DiagnosticHintLine',  { bg = '#1E2E1E', blend = 10 })
+-- ====== 行级诊断背景色（跟随主题） ======
+-- 用当前主题的诊断前景色压暗后作为行背景，切换主题时自动重建；
+-- 避免写死 gruvbox 色值（切到 catppuccin 时违和）。
+local line_hl = {
+  [sev.ERROR] = 'DiagnosticErrorLine',
+  [sev.WARN]  = 'DiagnosticWarnLine',
+  [sev.INFO]  = 'DiagnosticInfoLine',
+  [sev.HINT]  = 'DiagnosticHintLine',
+}
+local sev_fg_hl = {
+  [sev.ERROR] = 'DiagnosticError',
+  [sev.WARN]  = 'DiagnosticWarn',
+  [sev.INFO]  = 'DiagnosticInfo',
+  [sev.HINT]  = 'DiagnosticHint',
+}
+
+local function darken(color, factor)
+  local r = math.floor(color / 65536) % 256
+  local g = math.floor(color / 256) % 256
+  local b = color % 256
+  return math.floor(r * factor) * 65536 + math.floor(g * factor) * 256 + math.floor(b * factor)
+end
+
+local function refresh_line_hl()
+  for severity, group in pairs(line_hl) do
+    local ok, hl = pcall(vim.api.nvim_get_hl, 0, { name = sev_fg_hl[severity], link = false })
+    local fg = ok and hl and hl.fg
+    if type(fg) == 'number' then
+      vim.api.nvim_set_hl(0, group, { bg = darken(fg, 0.22) })
+    end
+  end
+end
+
+refresh_line_hl()
+vim.api.nvim_create_autocmd('ColorScheme', {
+  group = vim.api.nvim_create_augroup('UserDiagnosticLineHl', { clear = true }),
+  callback = refresh_line_hl,
+})
 
 -- ====== 主配置 ======
 vim.diagnostic.config({
@@ -32,13 +65,8 @@ vim.diagnostic.config({
     source = 'if_many',
     prefix = '●',
   },
-  -- Neovim 0.11+ 行高亮
-  linehl = {
-    [sev.ERROR] = 'DiagnosticErrorLine',
-    [sev.WARN]  = 'DiagnosticWarnLine',
-    [sev.INFO]  = 'DiagnosticInfoLine',
-    [sev.HINT]  = 'DiagnosticHintLine',
-  },
+  -- Neovim 0.11+ 行高亮（颜色由上方 refresh_line_hl 按主题生成）
+  linehl = line_hl,
 })
 
 -- ====== 诊断导航快捷键 ======

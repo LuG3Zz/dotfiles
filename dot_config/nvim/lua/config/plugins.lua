@@ -151,46 +151,10 @@ vim.cmd.packadd("markview.nvim")
 -- R.nvim 不在启动时加载：按文件类型懒加载（见下方 setup_r，省约 15ms）
 
 
--- ====== 主题：Gruvbox（默认） ======
--- 从持久化文件读取上次使用的主题，没有则用 gruvbox
-local function get_saved_theme()
-  local f = vim.fn.stdpath("state") .. "/theme"
-  local ok, lines = pcall(vim.fn.readfile, f)
-  if ok and lines and #lines > 0 and lines[1] ~= "" then
-    return lines[1]
-  end
-  return "gruvbox"
-end
-
-local saved = get_saved_theme()
-local gruvbox_ok, gruvbox = pcall(require, "gruvbox")
-if gruvbox_ok then
-  gruvbox.setup({
-    transparent_mode = true,
-    contrast = "soft",
-    italic = { strings = false, comments = false },
-    overrides = {},
-  })
-end
-
--- catppuccin 也配置好供切换
-local cp_ok, cp = pcall(require, "catppuccin")
-if cp_ok then
-  cp.setup({
-    flavour = "mocha",
-    transparent_background = true,
-    no_italic = true,
-    integrations = {
-      treesitter = true,
-      cmp = true,
-      snacks = true,
-      mini = true,
-    },
-  })
-end
-
--- 应用持久化的主题
-pcall(vim.cmd.colorscheme, saved)
+-- ====== 主题：默认 gruvbox ======
+-- 只加载持久化记录的那套主题；另一套在 <leader>ut 切换时才 require
+local theme = require("config.theme")
+theme.apply(theme.saved())
 
 -- ====== Treesitter ======
 -- 注意：nvim-treesitter 使用的是 main 分支（重写版）。
@@ -203,19 +167,23 @@ local ts_ok, tsmod = pcall(require, "nvim-treesitter")
 if ts_ok then
   tsmod.setup({}) -- install_dir 默认 stdpath("data")/site（已在 rtp 上）
 
-  tsmod.install({
-    "lua",
-    "markdown",
-    "markdown_inline",
-    "python",
-    "rust",
-    "c",
-    "cpp",
-    "bash",
-    "r",
-    "rnoweb",
-    "csv",
-  }) -- 异步安装，缺的会补，已有的跳过
+  -- 延后到启动完成后：install 会连锁加载 nvim-treesitter.install（~8ms），
+  -- 且 parser 已齐全时它只是空检查，不该占用启动时间
+  vim.schedule(function()
+    tsmod.install({
+      "lua",
+      "markdown",
+      "markdown_inline",
+      "python",
+      "rust",
+      "c",
+      "cpp",
+      "bash",
+      "r",
+      "rnoweb",
+      "csv",
+    }) -- 异步安装，缺的会补，已有的跳过
+  end)
 
   vim.api.nvim_create_autocmd("FileType", {
     group = vim.api.nvim_create_augroup("UserTreesitter", { clear = true }),

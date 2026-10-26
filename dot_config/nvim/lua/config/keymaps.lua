@@ -161,22 +161,9 @@ map("n", "<leader>ud", function()
   if dim.enabled then dim.disable() else dim.enable() end
 end, { desc = "Toggle dim" })
 
--- ====== 切换主题（持久化） ======
-local function get_theme_file()
-  return vim.fn.stdpath('state') .. '/theme'
-end
-
-local function save_theme(name)
-  vim.fn.writefile({ name }, get_theme_file())
-end
-
+-- ====== 切换主题（按需加载 + 持久化） ======
 map("n", "<leader>ut", function()
-  local themes = { 'gruvbox', 'catppuccin' }
-  local current = vim.g.colors_name or 'gruvbox'
-  local next_idx = (themes[1] == current and 2) or (themes[2] == current and 1) or 1
-  vim.cmd.colorscheme(themes[next_idx])
-  save_theme(themes[next_idx])
-  vim.notify('Theme: ' .. themes[next_idx], vim.log.levels.INFO)
+  require("config.theme").toggle()
 end, { desc = "Toggle theme" })
 
 -- ====== Session 管理 ======

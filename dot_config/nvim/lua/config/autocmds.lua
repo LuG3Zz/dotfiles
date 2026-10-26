@@ -32,29 +32,6 @@ autocmd('InsertLeave', {
   end,
 })
 
--- 文件类型检测
-autocmd('FileType', {
-  group = user_group,
-  pattern = { 'json', 'yaml', 'yml', 'toml' },
-  callback = function()
-    vim.bo.tabstop = 2
-    vim.bo.shiftwidth = 2
-    vim.bo.expandtab = true
-  end,
-})
-
--- ====== 取自参考配置 ======
-
--- 切回窗口时自动重载文件改动
-autocmd({ 'FocusGained', 'TermClose', 'TermLeave' }, {
-  group = user_group,
-  callback = function()
-    if vim.o.buftype ~= 'nofile' then
-      vim.cmd('checktime')
-    end
-  end,
-})
-
 -- 复制时高亮文本
 autocmd('TextYankPost', {
   group = user_group,

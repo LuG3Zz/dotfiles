@@ -4,6 +4,14 @@ vim.opt.number = true          -- 行号
 vim.opt.relativenumber = true  -- 相对行号
 vim.opt.cursorline = true      -- 高亮当前行
 
+-- ====== PATH: mason 安装的 CLI ======
+-- mason.setup 会 prepend 自己的 bin，但它现在延后到启动完成后执行；
+-- 这里提前加上，保证 tree-sitter / stylua / shfmt 等工具随时可用
+local mason_bin = vim.fn.stdpath('data') .. '/mason/bin'
+if vim.fn.isdirectory(mason_bin) == 1 and not (vim.env.PATH or ''):find(mason_bin, 1, true) then
+  vim.env.PATH = mason_bin .. ':' .. (vim.env.PATH or '')
+end
+
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true       -- 空格代替 tab

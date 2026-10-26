@@ -2,14 +2,32 @@
 -- 参考 Duy NG: https://gitlab.com/tduyng/nvim
 -- 使用 Neovim 0.12 API: vim.lsp.config() + vim.lsp.enable()
 
--- ====== Mason: LSP 安装器 ======
-require('mason').setup({})
+-- ====== LSP 日志轮转 ======
+-- lsp.log 会无限增长（此前已到 1.4MB），启动时超过 1MB 轮转一次
+pcall(function()
+  local log_path = vim.lsp.log.get_filename()
+  local stat = vim.uv.fs_stat(log_path)
+  if stat and stat.size > 1024 * 1024 then
+    vim.uv.fs_rename(log_path, log_path .. '.old')
+  end
+end)
 
--- ====== mason-lspconfig: 自动安装 ======
-require('mason-lspconfig').setup({
-  ensure_installed = { 'lua_ls', 'pyright', 'rust_analyzer', 'clangd' },
-  automatic_installation = true,
-})
+-- ====== Mason: LSP 安装器 ======
+-- 延后到启动完成后：mason + mason-lspconfig 本体约 40~90ms，registry 自动
+-- 刷新还会走网络（GitHub 直连不通时会报错并拖慢启动）。LSP 本身
+-- （vim.lsp.config / vim.lsp.enable）不依赖 mason，保持立即生效。
+vim.schedule(function()
+  require('mason').setup({
+    -- 关闭 registry 自动刷新（默认 24h 过期就联网更新）；需要时手动 :MasonUpdate
+    registry_cache = { refresh = false },
+  })
+
+  -- ====== mason-lspconfig: 自动安装 ======
+  require('mason-lspconfig').setup({
+    ensure_installed = { 'lua_ls', 'pyright', 'rust_analyzer', 'clangd' },
+    automatic_installation = true,
+  })
+end)
 
 -- ====== Per-server 配置 ======
 -- nvim-lspconfig 的 lsp/*.lua 提供 cmd/filetypes/root_markers 基础配置
