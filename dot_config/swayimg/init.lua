@@ -1,5 +1,7 @@
 -- ~/swayimg/init.lua — vim 风格导航 (hjkl + g/G 首尾)
 -- 默认原生键位不破坏, 只追加; 保留 PgUp/PgDn 原生用法。
+-- 默认启动进画廊模式 (可被 -v/--viewer 等命令行覆盖)
+swayimg.mode = "gallery"
 
 -- 单图模式: j/k = 下/上一张, g/G = 列表首/尾
 -- (h/l 保留默认 = 满图片左/右平移, 与 vim 滚动语义一致)
