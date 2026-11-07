@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+Name=Swayimg Gallery
+Name[zh_CN]=Swayimg 画廊
+GenericName=Image Viewer (Folder Gallery)
+GenericName[zh_CN]=图片浏览（所在目录画廊）
+Comment=Double-click an image to browse its whole folder as a gallery
+Comment[zh_CN]=双击图片即以其所在文件夹为画廊浏览全部图片
+Exec=/home/brownlu/.config/mango/scripts/img_open.sh %F
+Icon=swayimg
+Terminal=false
+Categories=Graphics;Viewer;
+StartupNotify=true
+MimeType=image/png;image/jpeg;image/webp;image/gif;image/bmp;image/tiff;image/svg+xml;
