@@ -70,7 +70,10 @@ vim.lsp.config('rust_analyzer', {
   settings = {
     ['rust-analyzer'] = {
       cargo = { allFeatures = true },
-      checkOnSave = { command = 'clippy' },
+      -- 新版 rust-analyzer 要求 checkOnSave 是布尔值；
+      -- 想用 clippy 而不是默认 check，通过 check.command 指定
+      checkOnSave = true,
+      check = { command = 'clippy' },
       procMacro = { enable = true },
       inlayHints = {
         bindingModeHints = { enable = true },

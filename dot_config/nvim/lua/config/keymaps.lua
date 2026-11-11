@@ -129,6 +129,13 @@ end, { desc = "Diagnostics to quickfix" })
 map("n", "]q", "<cmd>cnext<CR>", { desc = "Next quickfix item" })
 map("n", "[q", "<cmd>cprev<CR>", { desc = "Prev quickfix item" })
 
+-- ====== Cargo / Rust 任务 (asynctasks) ======
+-- 运行文件用 <leader>X（rust 下即 cargo run），这里补 build/test/check/clippy
+map("n", "<leader>Cb", "<cmd>AsyncTask cargo-build<CR>", { desc = "Cargo build" })
+map("n", "<leader>Ct", "<cmd>AsyncTask cargo-test<CR>", { desc = "Cargo test" })
+map("n", "<leader>Ck", "<cmd>AsyncTask cargo-check<CR>", { desc = "Cargo check" })
+map("n", "<leader>Cl", "<cmd>AsyncTask cargo-clippy<CR>", { desc = "Cargo clippy" })
+
 -- ====== 返回 Dashboard ======
 map("n", "<leader>D", function()
   require("mini.starter").open()
