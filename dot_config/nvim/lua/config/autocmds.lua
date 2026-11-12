@@ -144,21 +144,7 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
   end,
 })
 
--- 保存 chezmoi 源文件后自动 apply
-local chezmoi_dir = vim.fn.expand('~/.local/share/chezmoi') .. '/'
-autocmd('BufWritePost', {
-  group = user_group,
-  callback = function()
-    local file = vim.api.nvim_buf_get_name(0)
-    if file:sub(1, #chezmoi_dir) ~= chezmoi_dir then
-      return
-    end
-    vim.system({ 'chezmoi', 'apply' }, { text = true }, function(obj)
-      if obj.code ~= 0 then
-        vim.schedule(function()
-          vim.notify('chezmoi apply: ' .. (obj.stdout or obj.stderr or ''), vim.log.levels.WARN)
-        end)
-      end
-    end)
-  end,
-})
+-- 保存 chezmoi 源文件后自动 apply：
+-- 已由 chezmoi-template.nvim 的 apply-on-save 接管（按 buffer target 精确
+-- apply，且能对 .chezmoiignore 等源状态文件报告 chezmoi 的警告），不再
+-- 全量 chezmoi apply。见 plugins/tools.lua。

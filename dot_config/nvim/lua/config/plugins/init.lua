@@ -65,7 +65,7 @@ vim.pack.add({
   -- AI
   gh("milanglacier/minuet-ai.nvim"),
   -- 工具 / 集成
-  gh("alker0/chezmoi.vim"),
+  gh("dpezto/chezmoi-template.nvim"),
   gh("h-hg/fcitx.nvim"),
   gh("skywind3000/asyncrun.vim"),
   gh("skywind3000/asynctasks.vim"),
@@ -80,8 +80,6 @@ vim.pack.add({
 })
 
 -- ====== 启动时加载的插件（opt/ 目录需 packadd） ======
--- 顺序有依赖：chezmoi.vim 需在 filetype/syntax 之前加载，放最前
-vim.cmd.packadd("chezmoi.vim")
 vim.cmd.packadd("gruvbox.nvim")
 vim.cmd.packadd("nvim") -- catppuccin/nvim
 vim.cmd.packadd("nvim-treesitter")
@@ -139,6 +137,7 @@ vim.cmd.packadd("asynctasks.vim")
 vim.cmd.packadd("markview.nvim")
 vim.cmd.packadd("grug-far.nvim")
 vim.cmd.packadd("crates.nvim")
+vim.cmd.packadd("chezmoi-template.nvim")
 -- 懒加载（不在上面加载）：
 --   dial.nvim      -> config/dial.lua（首次 <C-a>/<C-x>）
 --   R.nvim         -> config/plugins/languages.lua（打开 R 文件）

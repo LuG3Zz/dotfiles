@@ -27,6 +27,7 @@ if ts_ok then
       "r",
       "rnoweb",
       "csv",
+      "gotmpl", -- chezmoi 模板
     }) -- 异步安装，缺的会补，已有的跳过
   end)
 

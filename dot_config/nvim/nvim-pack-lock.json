@@ -28,9 +28,9 @@
       "rev": "1606e9d5d04ff254023c3f3c62842d065708d6d3",
       "src": "https://ghproxy.net/https://github.com/Eandrju/cellular-automaton.nvim.git"
     },
-    "chezmoi.vim": {
-      "rev": "73b30df35c6b645ebd2e6a440eea8463ef3c3f47",
-      "src": "https://github.com/alker0/chezmoi.vim.git"
+    "chezmoi-template.nvim": {
+      "rev": "256f2a887315935c239f0f03ebe2fdea9e660c08",
+      "src": "https://github.com/dpezto/chezmoi-template.nvim"
     },
     "colorful-winsep.nvim": {
       "rev": "6134b5cd4a38990c7b720adc90973ed32f726179",
