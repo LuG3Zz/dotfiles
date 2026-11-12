@@ -78,3 +78,20 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = { "r", "rmd", "quarto", "rnoweb" },
   callback = setup_r,
 })
+
+-- ====== Cargo 清单 (crates.nvim) ======
+-- 内置 in-process LSP，给 Cargo.toml 提供：
+--   - 版本/依赖补全（走 blink 的 lsp 源，无需额外配置）
+--   - K 查看 crate 信息；<leader>ca 里出现 upgrade/update code action
+-- 默认还会显示最新版本虚拟文本 + 过期版本诊断（autoload 在打开时触发）
+local crates_ok, crates = pcall(require, "crates")
+if crates_ok then
+  crates.setup({
+    lsp = {
+      enabled = true,
+      actions = true,
+      completion = true,
+      hover = true,
+    },
+  })
+end

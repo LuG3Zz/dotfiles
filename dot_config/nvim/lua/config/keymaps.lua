@@ -135,6 +135,9 @@ map("n", "<leader>Cb", "<cmd>AsyncTask cargo-build<CR>", { desc = "Cargo build" 
 map("n", "<leader>Ct", "<cmd>AsyncTask cargo-test<CR>", { desc = "Cargo test" })
 map("n", "<leader>Ck", "<cmd>AsyncTask cargo-check<CR>", { desc = "Cargo check" })
 map("n", "<leader>Cl", "<cmd>AsyncTask cargo-clippy<CR>", { desc = "Cargo clippy" })
+map("n", "<leader>Cp", function()
+  require("crates").show_popup()
+end, { desc = "Crates popup (versions/features/deps)" })
 
 -- ====== 返回 Dashboard ======
 map("n", "<leader>D", function()

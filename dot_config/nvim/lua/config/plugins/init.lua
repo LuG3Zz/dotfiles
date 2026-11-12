@@ -60,6 +60,7 @@ vim.pack.add({
   gh("OXY2DEV/markview.nvim"),
   gh("vimwiki/vimwiki"),
   gh("R-nvim/R.nvim"),
+  gh("saecki/crates.nvim"),
   gh("rafamadriz/friendly-snippets"),
   -- AI
   gh("milanglacier/minuet-ai.nvim"),
@@ -137,6 +138,7 @@ vim.cmd.packadd("asyncrun.vim")
 vim.cmd.packadd("asynctasks.vim")
 vim.cmd.packadd("markview.nvim")
 vim.cmd.packadd("grug-far.nvim")
+vim.cmd.packadd("crates.nvim")
 -- 懒加载（不在上面加载）：
 --   dial.nvim      -> config/dial.lua（首次 <C-a>/<C-x>）
 --   R.nvim         -> config/plugins/languages.lua（打开 R 文件）
