@@ -63,18 +63,14 @@ fullscreen)
 	exit 0
 	;;
 windows)
-	SEL="$( { MON_GEO; WIN_GEO; } | slurp -r 2>/dev/null)"
+	# 自由拖框模式 (挪回独立键): 原有视觉样式 + 防误触吸附
+	SEL="$(slurp -b '#2E2A1E55' -c '#fb751bff' 2>/dev/null)"
 	SEL="$(snap_tiny "$SEL" "$( { MON_GEO; WIN_GEO; } )")"
 	;;
 smart | *)
-	SEL="$(slurp -b '#2E2A1E55' -c '#fb751bff' 2>/dev/null)"
-	if [ -z "$SEL" ]; then
-		# slurp 1.5: 单击不拖=直接取消 → 转矩形点击模式实现"点哪吸哪整窗"
-		SEL="$( { MON_GEO; WIN_GEO; } | slurp -r 2>/dev/null)"
-	fi
-	{ echo "=== $(date '+%T') 吸附前=[$SEL]"; } >>/tmp/smart-shot.log
-	SEL="$(snap_tiny "$SEL" "$( { MON_GEO; WIN_GEO; } )")"
-	{ echo "    吸附后=[$SEL]"; } >>/tmp/smart-shot.log
+	# 主模式: 悬停即高亮所在矩形(slurp -r 原生反馈), 单击吸附
+	# 矩形含整屏 → 点桌面空白 = 整屏截图; 自由拖框在 SUPER+SHIFT+Print
+	SEL="$( { MON_GEO; WIN_GEO; } | slurp -r -s '#fb751bff' 2>/dev/null)"
 	;;
 esac
 
