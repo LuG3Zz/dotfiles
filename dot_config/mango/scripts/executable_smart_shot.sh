@@ -70,7 +70,7 @@ windows)
 smart | *)
 	# 主模式: 悬停即高亮所在矩形(slurp -r 原生反馈), 单击吸附
 	# 矩形含整屏 → 点桌面空白 = 整屏截图; 自由拖框在 SUPER+SHIFT+Print
-	SEL="$( { MON_GEO; WIN_GEO; } | slurp -r -s '#fb751bff' 2>/dev/null)"
+	SEL="$( { MON_GEO; WIN_GEO; } | slurp -r -s '#fb751b30' 2>/dev/null)"
 	;;
 esac
 
