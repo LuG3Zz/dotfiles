@@ -43,12 +43,21 @@ fullscreen)
 	wl-copy <"$FILE"
 	(
 		ACTION=$(notify-send -a "mango" "截图已保存并复制" "$FILE" -i "$FILE" -t 10000 -A "satty=satty 标注" -A "mark=Mark Shot 编辑")
+		{
+			echo "=== $(date '+%T') ACTION=[$ACTION] FILE=$FILE WD=$WAYLAND_DISPLAY"
+		} >>/tmp/smart-shot.log
 		case "$ACTION" in
 		satty)
+			echo "launching satty" >>/tmp/smart-shot.log
 			satty --filename "$FILE" --output-filename "$FILE" \
-				--actions-on-enter save-to-clipboard --save-after-copy --copy-command wl-copy
+				--actions-on-enter save-to-clipboard --save-after-copy --copy-command wl-copy >>/tmp/smart-shot.log 2>&1
+			echo "satty exited $?" >>/tmp/smart-shot.log
 			;;
-		mark) mark-shot "$FILE" ;;
+		mark)
+			echo "launching mark-shot" >>/tmp/smart-shot.log
+			mark-shot "$FILE" >>/tmp/smart-shot.log 2>&1
+			;;
+		*) echo "no branch for ACTION (timeout/expired)" >>/tmp/smart-shot.log ;;
 		esac
 	) >/dev/null 2>&1 &
 	exit 0
@@ -59,7 +68,13 @@ windows)
 	;;
 smart | *)
 	SEL="$(slurp -b '#2E2A1E55' -c '#fb751bff' 2>/dev/null)"
+	if [ -z "$SEL" ]; then
+		# slurp 1.5: 单击不拖=直接取消 → 转矩形点击模式实现"点哪吸哪整窗"
+		SEL="$( { MON_GEO; WIN_GEO; } | slurp -r 2>/dev/null)"
+	fi
+	{ echo "=== $(date '+%T') 吸附前=[$SEL]"; } >>/tmp/smart-shot.log
 	SEL="$(snap_tiny "$SEL" "$( { MON_GEO; WIN_GEO; } )")"
+	{ echo "    吸附后=[$SEL]"; } >>/tmp/smart-shot.log
 	;;
 esac
 
