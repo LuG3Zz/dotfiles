@@ -1,0 +1,18 @@
+#!/bin/bash
+# Nautilus 右键脚本: 在此打开终端 (后台空白处=当前目录; 选中文件夹=该目录; 选中文件=其所在目录)
+# 使用 xdg-terminal-exec (解析到 Alacritty.desktop, 见 ~/.config/xdg-terminals.list)
+
+DIR="$HOME"
+
+# 右键选中文件/文件夹时优先用选中项
+if [ -n "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS" ]; then
+	CAND="$(echo "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS" | head -n1)"
+	[ -d "$CAND" ] && DIR="$CAND" || DIR="$(dirname "$CAND")"
+elif [ -n "$NAUTILUS_SCRIPT_CURRENT_URI" ]; then
+	DIR="$(python3 -c 'import sys,urllib.parse
+u=sys.argv[1]
+print(urllib.parse.unquote(u[7:] if u.startswith("file://") else u))' "$NAUTILUS_SCRIPT_CURRENT_URI" 2>/dev/null || echo "$HOME")"
+	[ -d "$DIR" ] || DIR="$HOME"
+fi
+
+exec xdg-terminal-exec --dir="$DIR"
