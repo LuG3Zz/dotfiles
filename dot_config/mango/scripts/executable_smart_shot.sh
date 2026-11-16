@@ -68,9 +68,13 @@ windows)
 	SEL="$(snap_tiny "$SEL" "$( { MON_GEO; WIN_GEO; } )")"
 	;;
 smart | *)
-	# 主模式: 悬停即高亮所在矩形(slurp -r 原生反馈), 单击吸附
-	# 矩形含整屏 → 点桌面空白 = 整屏截图; 自由拖框在 SUPER+SHIFT+Print
-	SEL="$( { MON_GEO; WIN_GEO; } | slurp -r -s '#fb751b30' 2>/dev/null)"
+	# 一键双模式: 先自由拖框(样式化,拖=自定义区域);
+	# 单击/无拖动(空结果) → 转 -r 悬停高亮点击吸附(点哪吸哪整窗)
+	SEL="$(slurp -b '#2E2A1E55' -c '#fb751bff' 2>/dev/null)"
+	if [ -z "$SEL" ]; then
+		SEL="$( { MON_GEO; WIN_GEO; } | slurp -r -s '#fb751b30' 2>/dev/null)"
+	fi
+	SEL="$(snap_tiny "$SEL" "$( { MON_GEO; WIN_GEO; } )")"
 	;;
 esac
 
