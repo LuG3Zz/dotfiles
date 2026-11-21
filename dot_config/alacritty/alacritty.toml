@@ -4,10 +4,11 @@ WINIT_X11_SCALE_FACTOR = "1"
 
 [window]
 dynamic_padding = true
+padding = { x = 8, y = 8 }
 decorations = "full"
 title = "Alacritty@CachyOS"
 opacity = 0.8
-decorations_theme_variant = "Dark"
+decorations_theme_variant = "None"
 
 [window.dimensions]
 columns = 100
@@ -134,6 +135,37 @@ action = "ClearSelection"
 key = "Key0"
 mods = "Control"
 action = "ResetFontSize"
+
+[[keyboard.bindings]]
+key = "Insert"
+mods = "Shift"
+action = "Paste"
+
+[[keyboard.bindings]]
+key = "Enter"
+mods = "Control|Shift"
+action = "SpawnNewInstance"
+
+[[keyboard.bindings]]
+key = "Q"
+mods = "Control|Shift"
+action = "Quit"
+
+[[hints.enabled]]
+command = "xdg-open"
+hyperlinks = true
+mouse.enabled = true
+binding = { key = "U", mods = "Control|Shift" }
+post_processing = true
+persist = false
+regex = '(ipfs:|ipns:|magnet:|mailto:|gemini://|gopher://|https?://|news:|file:|git://|ssh:|ftp://)[^\s<>"]+'
+
+[[hints.enabled]]
+action = "Copy"
+binding = { key = "O", mods = "Control|Shift" }
+post_processing = true
+persist = false
+regex = '(~|/)[A-Za-z0-9_./@+-]+'
 
 [general]
 live_config_reload = true
