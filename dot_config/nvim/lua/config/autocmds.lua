@@ -35,19 +35,5 @@ vim.api.nvim_create_autocmd("VimResized", {
   end,
 })
 
--- Insert 模式下关闭相对行号
-vim.api.nvim_create_autocmd("InsertEnter", {
-  group = group,
-  callback = function()
-    vim.opt.relativenumber = false
-  end,
-})
-vim.api.nvim_create_autocmd("InsertLeave", {
-  group = group,
-  callback = function()
-    vim.opt.relativenumber = true
-  end,
-})
-
 -- 输入法自动切换（异步，替代同步阻塞的 fcitx.nvim）
 require("config.ime")

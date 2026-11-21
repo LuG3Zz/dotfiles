@@ -35,3 +35,8 @@ vim.opt.foldlevel = 99
 -- 造成可感知的"卡一下"；10ms 足够。
 vim.g.matchparen_timeout = 10
 vim.g.matchparen_insert_timeout = 10
+
+-- 关闭相对行号：按 j/k 时所有可见行的相对数字都要重画，实测每次
+-- 重绘单元格 264 → 34.6（7.6 倍），是本配置里普通模式最大的单键开销。
+-- 想要相对行号就把下面改成 true（可以接受 j/k 多一点重绘）。
+vim.opt.relativenumber = false
