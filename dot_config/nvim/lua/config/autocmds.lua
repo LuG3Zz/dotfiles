@@ -48,3 +48,6 @@ vim.api.nvim_create_autocmd("InsertLeave", {
     vim.opt.relativenumber = true
   end,
 })
+
+-- 输入法自动切换（异步，替代同步阻塞的 fcitx.nvim）
+require("config.ime")

@@ -1,8 +1,7 @@
--- 工具与集成：fcitx / jieba / asynctasks / chezmoi 模板
+-- 工具与集成：jieba / asynctasks / chezmoi 模板
+-- （输入法自动切换见 lua/config/ime.lua：异步调用 fcitx5-remote）
 
 return {
-  -- ====== 输入法自动切换 ======
-  { "h-hg/fcitx.nvim", event = "VeryLazy" },
 
   -- ====== 中文分词（g: 变量必须在插件加载前设置）======
   {
