@@ -57,6 +57,16 @@ return {
       opts.sources.providers = vim.tbl_extend("force", opts.sources.providers or {}, {
         chezmoi = { name = "chezmoi", module = "chezmoi-template.blink" },
       })
+
+      -- 降低每击键的渲染开销（clangd 本身 5-7ms，瓶颈在菜单 UI）：
+      -- max_items 200 -> 20：少渲染 10 倍候选
+      opts.completion = opts.completion or {}
+      opts.completion.list = vim.tbl_extend("force", opts.completion.list or {}, { max_items = 20 })
+      -- 菜单防抖 100ms：连续打字时不反复弹/重绘
+      opts.completion.menu = vim.tbl_extend("force", opts.completion.menu or {}, { auto_show_delay_ms = 100 })
+      -- 文档浮窗延迟 800ms：快速输入时不触发 completionItem/resolve + 浮窗重绘
+      opts.completion.documentation =
+        vim.tbl_extend("force", opts.completion.documentation or {}, { auto_show_delay_ms = 800 })
       return opts
     end,
   },
