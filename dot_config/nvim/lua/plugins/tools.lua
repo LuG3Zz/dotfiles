@@ -4,6 +4,11 @@
 return {
 
   -- ====== 中文分词（g: 变量必须在插件加载前设置）======
+  -- 注意：release 分支不含预编译 .so，首次安装需本地编译（国内用 rsproxy 镜像）：
+  --   cd ~/.local/share/nvim/lazy/jieba.vim
+  --   PATH=<cargo 镜像 wrapper>:$PATH JIEBA_VIM_BUILD_FROM_SOURCE=1 \
+  --     JIEBA_VIM_INSTALL_NVIM=1 bash build.sh
+  -- 或直接 cargo --config 'source.crates-io.replace-with="rsproxy"' ...
   {
     "kkew3/jieba.vim",
     branch = "release",
