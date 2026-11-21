@@ -6,6 +6,8 @@
 local map = vim.keymap.set
 
 -- ====== Cargo / Rust（asynctasks，定义见 plugins/tools.lua 的 lazy keys）======
+-- <leader>Cc = file-build：只编译当前文件，报错进 quickfix（]q/[q 浏览）
+map("n", "<leader>Cc", "<cmd>AsyncTask file-build<CR>", { desc = "Compile current file" })
 
 -- ====== 撤销树 ======
 map("n", "<leader>uu", "<cmd>UndotreeToggle<CR>", { desc = "Undo tree" })
