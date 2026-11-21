@@ -29,6 +29,10 @@ return {
       -- 插入模式不做动画：每击键都跑动画帧，叠加上透明度/模糊会明显
       -- 放大输入延迟（默认 smear_insert_mode = true）
       smear_insert_mode = false,
+      -- 上下相邻行（j/k）也不做动画：默认 true 时每按一次 j/k 会多画
+      -- 2~3 帧（实测 12 次 j：27 帧 → 关掉后 9 帧），在透明终端里就是
+      -- 一卡一卡的感觉；大跳转仍有拖影动画
+      smear_between_neighbor_lines = false,
     },
   },
 
