@@ -1,292 +1,47 @@
--- lua/config/keymaps.lua — 快捷键映射
+-- Keymaps are automatically loaded on the VeryLazy event
+-- Default keymaps: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
+-- 这里只放个人习惯；LazyVim 已覆盖的（补全回车、quickfix <leader>xq、
+-- grug-far <leader>sr、拼写 <leader>us 等）不用重复定义。
 
 local map = vim.keymap.set
-local opts = { noremap = true, silent = true }
 
--- ====== 基础操作 ======
-map("n", "<C-s>", "<cmd>w<CR>", { desc = "Save file" })
-map("i", "<C-s>", "<cmd>w<CR>", { desc = "Save file" })
-map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
+-- ====== Cargo / Rust（asynctasks，定义见 plugins/tools.lua 的 lazy keys）======
 
--- 智能 j/k：无 count 时按折行移动，有 count 时按实际行
-map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true })
-map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true })
+-- ====== 撤销树 ======
+map("n", "<leader>uu", "<cmd>UndotreeToggle<CR>", { desc = "Undo tree" })
 
--- gh/gl：行首行尾（比 ^/$ 更顺手）
-map("n", "gh", "^", { desc = "Go to start of line" })
-map("n", "gl", "$", { desc = "Go to end of line" })
-
--- ====== 窗口导航 ======
-map("n", "<C-h>", "<C-w><C-h>", { desc = "Go to left window" })
-map("n", "<C-j>", "<C-w><C-j>", { desc = "Go to lower window" })
-map("n", "<C-k>", "<C-w><C-k>", { desc = "Go to upper window" })
-map("n", "<C-l>", "<C-w><C-l>", { desc = "Go to right window" })
-
--- ====== 窗口管理 ======
-map("n", "<leader>|", "<C-w>v", { desc = "Split vertically" })
-map("n", "<leader>-", "<C-w>s", { desc = "Split horizontally" })
-map("n", "<leader>wq", "<C-w>q", { desc = "Close window" })
-map("n", "<leader>w=", "<C-w>=", { desc = "Equalize windows" })
-map("n", "<M-Right>", "<C-w>5>", { desc = "Widen window" })
-map("n", "<M-Left>", "<C-w>5<", { desc = "Narrow window" })
-map("n", "<M-Down>", "<C-w>5+", { desc = "Increase height" })
-map("n", "<M-Up>", "<C-w>5-", { desc = "Decrease height" })
-
--- ====== 文件浏览 (Oil) ======
-map("n", "<leader>e", function()
-  require("oil").open_float()
-
-  -- 等 Oil 加载完内容后自动打开预览
-  local delay = 400
-  vim.defer_fn(function()
-    local oil = require("oil")
-    if oil.get_cursor_entry() then
-      oil.open_preview({})
-    end
-  end, delay)
-end, { desc = "Open file explorer (float + preview)" })
-
--- ====== 搜索快捷键映射 ======
-map("n", "<leader>?", function()
-  local lines = vim.split(vim.fn.execute('nmap'), '\n', { plain = true })
-  require("mini.pick").start({
-    source = { items = lines, name = 'Keymaps' },
-  })
-end, { desc = "Search keymaps" })
-
--- ====== 搜索 (mini.pick) ======
-map("n", "<leader>f", "<cmd>Pick files<CR>", { desc = "Find files" })
-map("n", "<leader>G", "<cmd>Pick grep<CR>", { desc = "Grep search" })
-map("n", "<leader>b", "<cmd>Pick buffers<CR>", { desc = "Find buffers" })
-map("n", "<leader>h", "<cmd>Pick help<CR>", { desc = "Find help" })
-map("n", "<leader>/", "<cmd>Pick grep_live<CR>", { desc = "Live grep" })
-
--- 项目级搜索替换（grug-far，预填光标下单词）
-map("n", "<leader>sr", function()
-  require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") } })
-end, { desc = "Search & replace (grug-far)" })
-
--- 智能 n/N：n 总向前，N 总向后，不受搜索方向影响
-map({ "n", "x", "o" }, "n", "'Nn'[v:searchforward]", { desc = "Next search result", expr = true })
-map({ "n", "x", "o" }, "N", "'nN'[v:searchforward]", { desc = "Prev search result", expr = true })
-
--- ====== 撤销树 (mbbill/undotree) ======
--- 用 uu 而不是 u：u 是 UI 相关映射（uT/ud/ut/ui/uI）的前缀，
--- 单键 u 同时是前缀时每次都要等 timeoutlen 才触发
-map("n", "<leader>uu", "<cmd>UndotreeToggle<CR>", { desc = "Toggle undo tree" })
-
--- ====== 无干扰写作 ======
-map("n", "<leader>z", function()
-  require("snacks").zen()
-end, { desc = "Toggle zen mode" })
-
--- ====== 文本操作 ======
-map("n", "<leader>y", '"+y', { desc = "Yank to clipboard" })
-map("v", "<leader>y", '"+y', { desc = "Yank to clipboard" })
-map("n", "<leader>Y", '"+Y', { desc = "Yank line to clipboard" })
-map("n", "<leader>d", '"_d', { desc = "Delete to black hole" })
-map("v", "<leader>d", '"_d', { desc = "Delete to black hole" })
-map("n", "<leader>p", '"+p', { desc = "Paste from clipboard" })
-map("n", "<leader>P", '"+P', { desc = "Paste from clipboard (before)" })
-
--- Visual 模式改进
-map("v", "<", "<gv", { desc = "Indent left and stay selected" })
-map("v", ">", ">gv", { desc = "Indent right and stay selected" })
-map("v", "p", '"_dP', { desc = "Paste without losing clipboard" })
-
--- undo 断点：在自然停顿处分段
-map("i", ",", ",<c-g>u")
-map("i", ".", ".<c-g>u")
-map("i", ";", ";<c-g>u")
-
--- ====== 缓冲区 ======
-map("n", "<leader>q", "<cmd>bdelete<CR>", { desc = "Close buffer" })
-map("n", "<leader>Q", "<cmd>qall<CR>", { desc = "Quit all" })
-map("n", "<Tab>", "<cmd>bnext<CR>", { desc = "Next buffer" })
-map("n", "<S-Tab>", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
-map("n", "<leader>B", "<cmd>e #<CR>", { desc = "Switch to other buffer" })
-
--- ====== 文件操作 ======
-map("n", "<leader>N", "<cmd>enew<CR>", { desc = "New file" })
-map("n", "<leader>tw", "<cmd>set wrap!<CR>", { desc = "Toggle wrap", silent = true })
-
--- ====== 快速运行代码（asynctasks） ======
--- 用 X 而不是 x：x 留给 quickfix 组（xq/xd）
-map("n", "<leader>X", "<cmd>AsyncTask file-run<CR>", { desc = "Run file" })
-
--- ====== Quickfix / 诊断 ======
-map("n", "<leader>xq", function()
-  local qf = vim.fn.getqflist({ winid = 0 })
-  if qf.winid ~= 0 then
-    vim.cmd("cclose")
-  else
-    vim.cmd("copen")
-  end
-end, { desc = "Toggle quickfix" })
-map("n", "<leader>xd", function()
-  vim.diagnostic.setqflist({ open = true })
-end, { desc = "Diagnostics to quickfix" })
-map("n", "]q", "<cmd>cnext<CR>", { desc = "Next quickfix item" })
-map("n", "[q", "<cmd>cprev<CR>", { desc = "Prev quickfix item" })
-
--- ====== Cargo / Rust 任务 (asynctasks) ======
--- 运行文件用 <leader>X（rust 下即 cargo run），这里补 build/test/check/clippy
-map("n", "<leader>Cb", "<cmd>AsyncTask cargo-build<CR>", { desc = "Cargo build" })
-map("n", "<leader>Ct", "<cmd>AsyncTask cargo-test<CR>", { desc = "Cargo test" })
-map("n", "<leader>Ck", "<cmd>AsyncTask cargo-check<CR>", { desc = "Cargo check" })
-map("n", "<leader>Cl", "<cmd>AsyncTask cargo-clippy<CR>", { desc = "Cargo clippy" })
-map("n", "<leader>Cp", function()
-  require("crates").show_popup()
-end, { desc = "Crates popup (versions/features/deps)" })
-
--- ====== 返回 Dashboard ======
-map("n", "<leader>D", function()
-  require("mini.starter").open()
-end, { desc = "Open dashboard" })
-
--- ====== 最近文件 / 重启 ======
-map("n", "<leader>r", function()
-  require("mini.pick").start({ source = { items = vim.v.oldfiles, name = "Recent files" } })
-end, { desc = "Recent files" })
-map("n", "<leader>R", function()
-  pcall(vim.cmd, 'silent! AerialClose')
-  require('mini.sessions').write('_restart')
-  local session_dir = vim.fn.stdpath('state') .. '/sessions'
-  vim.cmd('restart +wqa! source ' .. session_dir .. '/_restart')
-end, { desc = "Save session & restart" })
-
--- ====== 增量/减量 (dial.nvim，懒加载) ======
-local dial = require("config.dial")
-map({ "n", "x" }, "<C-a>", function() dial.press("increment") end, { desc = "Increment value" })
-map({ "n", "x" }, "<C-x>", function() dial.press("decrement") end, { desc = "Decrement value" })
-
--- ====== 折叠导航 ======
-map("n", "zv", "zMzvzz", { desc = "Close all folds except current" })
-map("n", "zj", "zcjzOzz", { desc = "Close current fold, open next" })
-map("n", "zk", "zckzOzz", { desc = "Close current fold, open previous" })
-
--- ====== 翻译 (kd) ======
+-- ====== 翻译 ======
 map({ "n", "x" }, "<leader>kd", function()
   require("config.translate").show()
 end, { desc = "Translate word" })
 
--- ====== 细胞自动机动画 ======
-map("n", "<leader>cr", function()
-  vim.cmd("CellularAutomaton make_it_rain")
-end, { desc = "Cellular automaton: rain" })
-map("n", "<leader>cg", function()
-  vim.cmd("CellularAutomaton game_of_life")
-end, { desc = "Cellular automaton: game of life" })
-map("n", "<leader>cs", function()
-  vim.cmd("CellularAutomaton scramble")
-end, { desc = "Cellular automaton: scramble" })
-
--- ====== 切换拼写检查 ======
-map("n", "<leader>us", function()
-  vim.opt_local.spell = not vim.opt_local.spell:get()
-  vim.notify("Spell " .. (vim.opt_local.spell:get() and "ON" or "OFF"), vim.log.levels.INFO)
-end, { desc = "Toggle spell" })
-
--- ====== 清除行尾空格 ======
-map("n", "<leader>uT", function()
-  require('mini.trailspace').trim()
-  vim.notify('Trailing whitespace cleared', vim.log.levels.INFO)
-end, { desc = "Trim trailing whitespace" })
-
--- ====== 切换 Dim ======
-map("n", "<leader>ud", function()
-  local dim = require("snacks").dim
-  if dim.enabled then dim.disable() else dim.enable() end
-end, { desc = "Toggle dim" })
-
--- ====== 切换主题（按需加载 + 持久化） ======
-map("n", "<leader>ut", function()
+-- ====== 主题切换（持久化，gruvbox ⇆ catppuccin）======
+map("n", "<leader>uC", function()
   require("config.theme").toggle()
 end, { desc = "Toggle theme" })
 
--- ====== Session 管理 ======
-map("n", "<leader>Ss", function()
-  require('mini.sessions').write()
-  vim.notify('Session saved', vim.log.levels.INFO)
-end, { desc = "Save session" })
-map("n", "<leader>Sl", function()
-  require('mini.sessions').read()
-end, { desc = "Load session" })
-map("n", "<leader>St", function()
-  vim.g.autosave_session = not vim.g.autosave_session
-  require('mini.sessions').config.autowrite = vim.g.autosave_session
-  vim.notify('Autosave ' .. (vim.g.autosave_session and 'ON' or 'OFF'), vim.log.levels.INFO)
-end, { desc = "Toggle autosave" })
+-- ====== Vimwiki ======
+map("n", "<leader>W", "<cmd>VimwikiIndex<CR>", { desc = "Vimwiki index" })
 
--- ====== 检查工具 ======
-map("n", "<leader>ui", vim.show_pos, { desc = "Inspect highlight group" })
-map("n", "<leader>uI", "<cmd>InspectTree<CR>", { desc = "Inspect Treesitter tree" })
+-- ====== 折叠导航（nvim-ufo）======
+map("n", "zv", "zMzvzz", { desc = "Close folds except current" })
+map("n", "zj", "zcjzOzz", { desc = "Open next fold" })
+map("n", "zk", "zckzOzz", { desc = "Open previous fold" })
 
--- ====== Git (gitsigns + lazygit) ======
-map("n", "]g", function()
-  pcall(require("gitsigns").next_hunk)
-end, { desc = "Next git hunk" })
-map("n", "[g", function()
-  pcall(require("gitsigns").prev_hunk)
-end, { desc = "Prev git hunk" })
-map({ "n", "v" }, "<leader>gs", function()
-  pcall(require("gitsigns").stage_hunk)
-end, { desc = "Stage hunk" })
-map("n", "<leader>gS", function()
-  pcall(require("gitsigns").stage_buffer)
-end, { desc = "Stage buffer" })
-map({ "n", "v" }, "<leader>gR", function()
-  pcall(require("gitsigns").reset_hunk)
-end, { desc = "Reset hunk" })
-map("n", "<leader>gd", function()
-  pcall(require("gitsigns").diffthis)
-end, { desc = "Diff this file" })
-map("n", "<leader>gb", function()
-  pcall(require("gitsigns").blame_line)
-end, { desc = "Blame line" })
-map("n", "<leader>gB", function()
-  pcall(require("gitsigns").blame)
-end, { desc = "Blame buffer" })
-map("n", "<leader>gl", function()
-  require("snacks").lazygit()
-end, { desc = "Open lazygit" })
+-- ====== 细胞自动机 ======
+map("n", "<leader>zr", "<cmd>CellularAutomaton make_it_rain<CR>", { desc = "Cellular: rain" })
+map("n", "<leader>zg", "<cmd>CellularAutomaton game_of_life<CR>", { desc = "Cellular: game of life" })
+map("n", "<leader>zs", "<cmd>CellularAutomaton scramble<CR>", { desc = "Cellular: scramble" })
 
--- ====== 代码结构导航 (dropbar) ======
-map("n", "<leader>;", function()
-  require("dropbar.api").pick()
-end, { desc = "Pick symbols in winbar" })
-
-map("n", "[;", function()
-  require("dropbar.api").goto_context_start()
-end, { desc = "Go to start of current context" })
-
-map("n", "];", function()
-  require("dropbar.api").select_next_context()
-end, { desc = "Select next context" })
-
--- ====== 代码大纲 ======
-map("n", "<leader>O", function()
-  require("aerial").toggle()
-end, { desc = "Toggle outline" })
-
--- ====== 浮动终端 ======
-map("n", "<leader>tt", function()
-  require("snacks").terminal.toggle()
-end, { desc = "Toggle floating terminal" })
-
--- ====== Terminal 模式窗口导航 ======
-map("t", "<C-h>", "<cmd>wincmd h<CR>", { desc = "Terminal: Go to left window" })
-map("t", "<C-j>", "<cmd>wincmd j<CR>", { desc = "Terminal: Go to lower window" })
-map("t", "<C-k>", "<cmd>wincmd k<CR>", { desc = "Terminal: Go to upper window" })
-map("t", "<C-l>", "<cmd>wincmd l<CR>", { desc = "Terminal: Go to right window" })
+-- ====== 终端模式窗口导航 ======
+map("t", "<C-h>", "<cmd>wincmd h<CR>", { desc = "Terminal: left window" })
+map("t", "<C-j>", "<cmd>wincmd j<CR>", { desc = "Terminal: lower window" })
+map("t", "<C-k>", "<cmd>wincmd k<CR>", { desc = "Terminal: upper window" })
+map("t", "<C-l>", "<cmd>wincmd l<CR>", { desc = "Terminal: right window" })
 -- 用 <C-\><C-\> 退出终端模式（避免与 Zsh vi-mode 的 <Esc> 冲突）
-map("t", "<C-\\><C-\\>", "<C-\\><C-n>", { desc = "Terminal: Enter normal mode" })
+map("t", "<C-\\><C-\\>", "<C-\\><C-n>", { desc = "Terminal: normal mode" })
 
--- ====== AI 补全 (minuet-ai.nvim virtualtext) ======
--- <A-m> 开关 ghost text，按键由 minuet virtualtext keymap 自动配置（<A-A> 接受，<A-a> 接受一行等）
-map("n", "<A-m>", function()
-  vim.cmd("Minuet virtualtext toggle")
-end, { desc = "Minuet: Toggle ghost text" })
-map("i", "<A-m>", function()
-  vim.cmd("Minuet virtualtext toggle")
-end, { desc = "Minuet: Toggle ghost text" })
+-- ====== insert 模式自然停顿处分段 undo ======
+map("i", ",", ",<c-g>u")
+map("i", ".", ".<c-g>u")
+map("i", ";", ";<c-g>u")

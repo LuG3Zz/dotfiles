@@ -1,0 +1,12 @@
+{
+  "extras": [
+    "lazyvim.plugins.extras.coding.blink",
+    "lazyvim.plugins.extras.coding.mini-surround",
+    "lazyvim.plugins.extras.editor.dial"
+  ],
+  "news": {
+    "NEWS.md": "11866",
+    "neovim": true
+  },
+  "version": 8
+}
