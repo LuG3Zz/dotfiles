@@ -30,7 +30,7 @@ blink.setup({
 
   sources = {
     default = { 'lsp', 'path', 'snippets', 'buffer' },
-    min_keyword_length = 2,   -- 输入 2 字符才触发，避免打字就弹
+    min_keyword_length = 1,   -- 第 1 个字符即触发（2 会让第一个字符白等，感觉卡）
     -- chezmoi 模板补全（{{ }} 内的数据键/模板函数/块片段），只在 gotmpl 生效
     per_filetype = {
       gotmpl = { 'lsp', 'path', 'snippets', 'buffer', 'chezmoi' },

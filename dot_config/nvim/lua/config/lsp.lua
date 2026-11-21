@@ -92,6 +92,14 @@ vim.lsp.config('rust_analyzer', {
 -- ====== 启用 LSP 服务器 ======
 vim.lsp.enable({ 'lua_ls', 'pyright', 'rust_analyzer', 'clangd' })
 
+-- clangd 补全提速：默认 completion-style=detailed，每个候选项都带完整
+-- 签名/文档，返回体大、每次按键都传一遍 —— 是 C 补全“每次都慢”的主因。
+-- bundled 只回符号本身（重载合并），响应显著变小；代价是候选项不再带
+-- 内联文档（仍可 K 查看）。
+vim.lsp.config('clangd', {
+  cmd = { 'clangd', '--completion-style=bundled' },
+})
+
 -- ====== LspAttach：键位绑定 + 功能启用 ======
 -- 使用 server_capabilities[has] 检查（非弃用 API）
 local lsp_keys = {
