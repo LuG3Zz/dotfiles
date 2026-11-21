@@ -10,7 +10,9 @@ vim.opt.clipboard = "unnamedplus"
 vim.opt.fileencodings = "utf-8,gbk,gb2312,gb18030,big5,latin1"
 
 -- 键序列超时（which-key 弹出与映射等待的平衡）
-vim.opt.timeoutlen = 500
+-- 500 会让 s / g / 空格 这类"有前缀映射"的键最多等 0.5 秒才响应，
+-- 体感就是"按了没反应"，用 LazyVim 默认的 300 更跟手。
+vim.opt.timeoutlen = 300
 vim.opt.updatetime = 300
 
 -- 滚动上下文
