@@ -413,3 +413,8 @@ desc = "Create a directory"
 on   = [ "g", "f" ]
 run  = "follow"
 desc = "Follow the hovered symlink"
+
+[[mgr.prepend_keymap]]
+on   = "C"
+run  = "plugin ouch"
+desc = "Compress with ouch"

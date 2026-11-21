@@ -53,3 +53,6 @@ Status:children_add(function(self)
 	local fmt = os.date("%Y", time) == os.date("%Y") and "%b %d %H:%M" or "%Y-%m-%d"
 	return ui.Line { ui.Span(os.date(fmt, time) .. " "):fg("blue") }
 end, 500, Status.RIGHT)
+
+-- starship 提示符集成（git 分支等信息显示在状态栏）
+require("starship"):setup()

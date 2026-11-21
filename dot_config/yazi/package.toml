@@ -24,8 +24,8 @@ rev = "7c174cc"
 hash = "d6f60c24d8c0cf57a855bf46115b2502"
 
 [[flavor.deps]]
-use = "yazi-rs/flavors:dracula"
-rev = "d04a298"
+use = "yazi-rs/flavors:catppuccin-mocha"
+rev = "38c08d8"
 hash = "7b9ff01a0070cc9176e0c683329aeb26"
 
 [[plugin.deps]]
@@ -56,4 +56,13 @@ hash = ""
 [[plugin.deps]]
 use = "yazi-rs/plugins:jump-to-char"
 rev = "1ef5fe0"
+hash = ""
+[[plugin.deps]]
+use = "Rolv-Apneseth/starship"
+rev = "ea92cf4"
+hash = ""
+
+[[plugin.deps]]
+use = "ndtoan96/ouch"
+rev = "596b666"
 hash = ""

@@ -43,7 +43,7 @@ reveal = [
 	{ run = '''exiftool "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
 ]
 extract = [
-	{ run = 'ya pub extract --list "$@"', desc = "Extract here", for = "unix" },
+	{ run = 'ouch d -y "$@"', desc = "Extract here with ouch", for = "unix" },
 	{ run = 'ya pub extract --list %*',   desc = "Extract here", for = "windows" },
 ]
 play = [
@@ -88,7 +88,9 @@ prepend_fetchers = [
 	{ url = "*/", run = "git", group = "git" },
 ]
 prepend_preloaders = []
-prepend_previewers = []
+prepend_previewers = [
+	{ mime = "application/{*zip,tar,bzip2,7z*,rar,xz,zstd,java-archive}", run = "ouch --show-file-icons" },
+]
 
 [input]
 cursor_blink = false
