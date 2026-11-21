@@ -66,3 +66,8 @@ hash = ""
 use = "ndtoan96/ouch"
 rev = "596b666"
 hash = ""
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:catppuccin-latte"
+rev = "38c08d8"
+hash = ""
