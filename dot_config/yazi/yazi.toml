@@ -82,7 +82,10 @@ image_bound      = [ 0, 0 ]
 suppress_preload = false
 
 [plugin]
-prepend_fetchers = []
+prepend_fetchers = [
+	{ url = "*",  run = "git", group = "git" },
+	{ url = "*/", run = "git", group = "git" },
+]
 prepend_preloaders = []
 prepend_previewers = []
 

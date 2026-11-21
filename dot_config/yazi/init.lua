@@ -21,3 +21,8 @@ require("full-border"):setup({
 	-- Available values: ui.Border.PLAIN, ui.Border.ROUNDED
 	type = ui.Border.ROUNDED,
 })
+
+-- git 状态列（M/A/? 等，配合 yazi.toml 的 prepend_fetchers）
+require("git"):setup({
+	order = 1500,
+})
