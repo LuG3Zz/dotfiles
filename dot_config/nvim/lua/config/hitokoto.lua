@@ -65,7 +65,9 @@ function M._refresh_dashboard(text)
   vim.schedule(function()
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
       if not vim.api.nvim_buf_is_loaded(buf) then goto continue end
-      if vim.bo[buf].filetype ~= 'ministarter' then goto continue end
+      local ft = vim.bo[buf].filetype
+      -- mini.starter（旧启动页）与 snacks dashboard（LazyVim 启动页）都支持
+      if ft ~= 'ministarter' and ft ~= 'snacks_dashboard' then goto continue end
       local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
       for i, line in ipairs(lines) do
         if line:find(PLACEHOLDER, 1, true) then
