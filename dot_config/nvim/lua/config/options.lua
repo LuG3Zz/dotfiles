@@ -39,7 +39,14 @@ vim.g.matchparen_timeout = 10
 vim.g.matchparen_insert_timeout = 10
 
 -- 相对行号（用户偏好，已开启）。
--- 代价：j/k 时整列相对数字都要重画（每次约 230 个单元格），比绝对行号多
--- 7 倍重绘量；这在套了 UI 转发的环境里会略微影响跟手感。插入模式下仍
--- 自动切回绝对行号（见 autocmds.lua），避免打字时反复重画数字列。
+-- 代价：每次 j/k 所有可见行的相对数字都会变，nvim 每行发一次小的
+-- grid_line 更新——实测 52.8 行更新/键（关掉相对行号是 6.8）。
+-- 这个和数字列宽无关（numberwidth / signcolumn 都试过，无变化）。
+-- 插入模式下仍自动切回绝对行号（见 autocmds.lua）。
 vim.opt.relativenumber = true
+
+-- cursorline 只高亮行号列，不高亮整行。
+-- 移动光标时整行高亮需要把"旧行去掉高亮 + 新行加上高亮"整行重画；
+-- 只高亮行号时，实测每次 j 的重绘单元格从 123 → 76（-39%）。
+-- 想恢复整行高亮：改成 "both"（或删掉这一行，默认就是 both）。
+vim.opt.cursorlineopt = "number"
