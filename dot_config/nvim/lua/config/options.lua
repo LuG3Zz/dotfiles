@@ -38,7 +38,8 @@ vim.opt.foldlevel = 99
 vim.g.matchparen_timeout = 10
 vim.g.matchparen_insert_timeout = 10
 
--- 关闭相对行号：按 j/k 时所有可见行的相对数字都要重画，实测每次
--- 重绘单元格 264 → 34.6（7.6 倍），是本配置里普通模式最大的单键开销。
--- 想要相对行号就把下面改成 true（可以接受 j/k 多一点重绘）。
-vim.opt.relativenumber = false
+-- 相对行号（用户偏好，已开启）。
+-- 代价：j/k 时整列相对数字都要重画（每次约 230 个单元格），比绝对行号多
+-- 7 倍重绘量；这在套了 UI 转发的环境里会略微影响跟手感。插入模式下仍
+-- 自动切回绝对行号（见 autocmds.lua），避免打字时反复重画数字列。
+vim.opt.relativenumber = true
