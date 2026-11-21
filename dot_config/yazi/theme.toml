@@ -1,10 +1,14 @@
-# Catppuccin Mocha —— 官方 flavor 方式
+# Catppuccin 双主题（官方 flavor 方式）
+#   dark  : catppuccin-mocha
+#   light : catppuccin-latte
 #
-# 原理：yazi 启动后向终端查询背景色（OSC 11），确认深色后加载 [flavor] dark。
-# 你的 alacritty 会回复 rgb:2e2e/3434/4040（luma≈0.2 → 深色），探测正常。
+# yazi 启动时向终端查询背景色（OSC 11）自动选择：
+#   - alacritty 深色回复 rgb:2e2e/3434/4040（luma≈0.2）→ mocha
+#   - 浅色背景（luma>0.6）→ latte
+# 切换终端主题后重启 yazi（探测只在启动时进行）。
 #
-# 注意：主题文件里除 [flavor] 外的任何样式都会「覆盖」flavor 的配色，
-# 所以这里保持最小化。需要微调时再加单项覆盖（如 hovered）。
+# 注意：除 [flavor] 外的任何样式都会覆盖 flavor 配色，保持最小化；
+# 需要微调时再加单项（如 hovered）。
 
 [flavor]
 dark  = "catppuccin-mocha"
