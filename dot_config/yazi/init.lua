@@ -26,3 +26,16 @@ require("full-border"):setup({
 require("git"):setup({
 	order = 1500,
 })
+
+-- MIME 类型按扩展名判断（比默认读文件内容快，牺牲少量准确性）
+require("mime-ext"):setup()
+
+-- 状态栏显示符号链接目标
+Status:children_add(function(self)
+	local h = self._current.hovered
+	if h and h.link_to then
+		return " -> " .. tostring(h.link_to)
+	else
+		return ""
+	end
+end, 3300, Status.LEFT)
