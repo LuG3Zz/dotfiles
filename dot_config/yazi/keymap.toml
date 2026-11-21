@@ -77,8 +77,8 @@ keymap = [
 	{ on = "<C-g>",     run = "shell --confirm --block lazygit",desc = "Lazygit" },
 	{ on = ":",         run = "shell --block --interactive", desc = "Run a shell command (block until finishes)" },
 	{ on = ".",         run = "hidden toggle",               desc = "Toggle the visibility of hidden files" },
-	{ on = "s",         run = "search --via=fd",             desc = "Search files by name via fd" },
-	{ on = "S",         run = 'shell "$SHELL" --block --confirm' },
+	{ on = "s",         run = "plugin jump-to-char",         desc = "Jump to file by char (vim f)" },
+	{ on = "S",         run = "search --via=fd",             desc = "Search files by name via fd" },
 	{ on = "<C-s>",     run = "escape --search",             desc = "Cancel the ongoing search" },
 	{ on = "z",         run = "plugin zoxide",               desc = "Jump to a directory via zoxide" },
 	{ on = "Z",         run = "plugin fzf",                  desc = "Jump to a file/directory via fzf" },
@@ -397,3 +397,19 @@ desc = "Diff hovered against selected file"
 on   = [ "g", "r" ]
 run  = 'shell -- ya emit cd "$(git rev-parse --show-toplevel)"'
 desc = "Cd to the root of the current Git repository"
+
+# ====== 社区配置常用（Matt-FTW / 官方 tips）======
+[[mgr.prepend_keymap]]
+on   = "!"
+run  = 'shell "$SHELL" --block'
+desc = "Open $SHELL here"
+
+[[mgr.prepend_keymap]]
+on   = "A"
+run  = "create --dir"
+desc = "Create a directory"
+
+[[mgr.prepend_keymap]]
+on   = [ "g", "f" ]
+run  = "follow"
+desc = "Follow the hovered symlink"

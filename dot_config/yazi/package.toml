@@ -52,3 +52,8 @@ hash = ""
 use = "yazi-rs/plugins:diff"
 rev = "1ef5fe0"
 hash = ""
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:jump-to-char"
+rev = "1ef5fe0"
+hash = ""

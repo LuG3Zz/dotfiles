@@ -39,3 +39,17 @@ Status:children_add(function(self)
 		return ""
 	end
 end, 3300, Status.LEFT)
+
+-- 状态栏显示悬停文件的修改时间（joelazar 配置里的做法）
+Status:children_add(function(self)
+	local h = self._current.hovered
+	if not h then
+		return ""
+	end
+	local time = math.floor((h.cha.mtime or 0) / 1)  -- mtime 已是秒
+	if time == 0 then
+		return ""
+	end
+	local fmt = os.date("%Y", time) == os.date("%Y") and "%b %d %H:%M" or "%Y-%m-%d"
+	return ui.Line { ui.Span(os.date(fmt, time) .. " "):fg("blue") }
+end, 500, Status.RIGHT)
