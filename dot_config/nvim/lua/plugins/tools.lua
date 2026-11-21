@@ -46,6 +46,9 @@ return {
     -- stylua: ignore
     opts = function(_, opts)
       opts.sources = opts.sources or {}
+      -- LazyVim/blink 默认 min_keyword_length=0：每敲一个字符都向 LSP 发
+      -- 补全请求（clangd 每次都要重建 sema context），是 C 输入卡顿主因之一。
+      opts.sources.min_keyword_length = 2
       opts.sources.per_filetype = opts.sources.per_filetype or {}
       opts.sources.per_filetype.gotmpl = vim.list_extend(
         vim.deepcopy(opts.sources.per_filetype.gotmpl or { "lsp", "path", "snippets", "buffer" }),

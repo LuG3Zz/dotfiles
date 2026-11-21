@@ -26,6 +26,9 @@ return {
       stiffness = 0.7,
       trailing_stiffness = 0.5,
       distance_stop_animating = 0.5,
+      -- 插入模式不做动画：每击键都跑动画帧，叠加上透明度/模糊会明显
+      -- 放大输入延迟（默认 smear_insert_mode = true）
+      smear_insert_mode = false,
     },
   },
 
