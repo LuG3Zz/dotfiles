@@ -151,16 +151,25 @@ return {
     "Bekaboo/dropbar.nvim",
     event = { "BufReadPost", "BufNewFile" },
     opts = {
+      -- winbar 更新策略：去掉 TextChanged，并把 debounce 加大。
+      -- 原来每次击键（含退格）都会触发一次 winbar 更新，且 sources 以
+      -- LSP documentSymbols 优先 → 异步回应 + 重绘，表现为"删字卡一下"。
       bar = {
+        update_debounce = 250,
+        update_events = {
+          win = { "CursorMoved", "WinResized" },
+          buf = { "FileChangedShellPost", "ModeChanged" },
+          global = { "DirChanged", "VimResized" },
+        },
+        -- 栏内容来源：treesitter 优先、LSP 兜底（减少每次更新的 documentSymbols 请求）
         sources = function(buf, _)
           if vim.bo[buf].buftype == "terminal" then
             return {}
           end
           local sources = require("dropbar.sources")
           local utils = require("dropbar.utils")
-          return { utils.source.fallback({ sources.lsp, sources.treesitter, sources.path }) }
+          return { utils.source.fallback({ sources.treesitter, sources.path, sources.lsp }) }
         end,
-        truncate = true,
       },
     },
   },

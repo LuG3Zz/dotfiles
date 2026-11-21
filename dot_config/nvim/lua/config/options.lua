@@ -30,3 +30,8 @@ vim.opt.synmaxcol = 300
 
 -- 折叠交给 nvim-ufo（默认全展开）
 vim.opt.foldlevel = 99
+
+-- 括号匹配插件 matchparen 在插入模式的默认等待较长，退格/输入时会
+-- 造成可感知的"卡一下"；10ms 足够。
+vim.g.matchparen_timeout = 10
+vim.g.matchparen_insert_timeout = 10
