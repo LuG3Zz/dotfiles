@@ -26,31 +26,33 @@ ueberzug_scale  = 1
 ueberzug_offset = [ 0, 0, 0, 0 ]
 
 [opener]
+# 占位符（yazi 26.x）：%s=所有选中文件路径，%sN=第 N 个，%d=所在目录，
+# %% 转义。旧的 "$@" / "$1" / %* 在 26.x 里不再展开。
 edit = [
-	{ run = '${EDITOR:-nvim} "$@"', desc = "$EDITOR", block = true, for = "unix" },
-	{ run = 'code %*',    orphan = true, desc = "code",           for = "windows" },
-	{ run = 'code -w %*', block = true,  desc = "code (block)",   for = "windows" },
+	{ run = '${EDITOR:-nvim} %s', desc = "$EDITOR", block = true, for = "unix" },
+	{ run = 'code %s',    orphan = true, desc = "code",           for = "windows" },
+	{ run = 'code -w %s', block = true,  desc = "code (block)",   for = "windows" },
 ]
 open = [
-	{ run = 'xdg-open "$1"',                desc = "Open", for = "linux" },
-	{ run = 'open "$@"',                    desc = "Open", for = "macos" },
-	{ run = 'start "" "%1"', orphan = true, desc = "Open", for = "windows" },
+	{ run = 'xdg-open %s',                 desc = "Open", for = "linux" },
+	{ run = 'open %s',                     desc = "Open", for = "macos" },
+	{ run = 'start "" %s', orphan = true,  desc = "Open", for = "windows" },
 ]
 reveal = [
-	{ run = 'xdg-open "$(dirname "$1")"',           desc = "Reveal", for = "linux" },
-	{ run = 'open -R "$1"',                         desc = "Reveal", for = "macos" },
-	{ run = 'explorer /select,"%1"', orphan = true, desc = "Reveal", for = "windows" },
-	{ run = '''exiftool "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
+	{ run = 'xdg-open %d',                          desc = "Reveal", for = "linux" },
+	{ run = 'open -R %s',                           desc = "Reveal", for = "macos" },
+	{ run = 'explorer /select,%s', orphan = true,   desc = "Reveal", for = "windows" },
+	{ run = '''exiftool %s; echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
 ]
 extract = [
-	{ run = 'ouch d -y "$@"', desc = "Extract here with ouch", for = "unix" },
-	{ run = 'ya pub extract --list %*',   desc = "Extract here", for = "windows" },
+	{ run = 'ouch d -y %s', desc = "Extract here with ouch", for = "unix" },
+	{ run = 'ya pub extract --list %s',   desc = "Extract here", for = "windows" },
 ]
 play = [
-	{ run = 'mpv --force-window "$@"', orphan = true, for = "unix" },
-	{ run = 'xdg-open "$1"', desc = "Open (fallback)", for = "linux" },
-	{ run = 'mpv --force-window %*', orphan = true, for = "windows" },
-	{ run = '''mediainfo "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show media info", for = "unix" },
+	{ run = 'mpv --force-window %s', orphan = true, for = "unix" },
+	{ run = 'xdg-open %s', desc = "Open (fallback)", for = "linux" },
+	{ run = 'mpv --force-window %s', orphan = true, for = "windows" },
+	{ run = '''mediainfo %s; echo "Press enter to exit"; read _''', block = true, desc = "Show media info", for = "unix" },
 ]
 
 [open]
