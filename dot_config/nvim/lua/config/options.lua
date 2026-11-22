@@ -41,12 +41,13 @@ vim.g.matchparen_insert_timeout = 10
 -- 相对行号（用户偏好，已开启）。
 -- 代价：每次 j/k 所有可见行的相对数字都会变，nvim 每行发一次小的
 -- grid_line 更新——实测 52.8 行更新/键（关掉相对行号是 6.8）。
--- 这个和数字列宽无关（numberwidth / signcolumn 都试过，无变化）。
 -- 插入模式下仍自动切回绝对行号（见 autocmds.lua）。
 vim.opt.relativenumber = true
 
--- cursorline 只高亮行号列，不高亮整行。
--- 移动光标时整行高亮需要把"旧行去掉高亮 + 新行加上高亮"整行重画；
--- 只高亮行号时，实测每次 j 的重绘单元格从 123 → 76（-39%）。
--- 想恢复整行高亮：改成 "both"（或删掉这一行，默认就是 both）。
-vim.opt.cursorlineopt = "number"
+-- 光标行保持整行高亮（LazyVim 默认）
+vim.opt.cursorlineopt = "both"
+
+-- 卡顿探针（默认关闭）：NVIM_PERF_WATCH=1 nvim 文件 → :PerfSummary
+if vim.env.NVIM_PERF_WATCH == "1" then
+  require("config.perf")
+end
