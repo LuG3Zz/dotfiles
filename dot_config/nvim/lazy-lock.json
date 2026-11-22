@@ -55,10 +55,6 @@
     "branch": "master",
     "commit": "f2634758455cfa52a8acea6f142dcd6271a1bf57"
   },
-  "dropbar.nvim": {
-    "branch": "master",
-    "commit": "75df03973f3a06a85300bc8ca1f9f68e935cb78e"
-  },
   "flash.nvim": {
     "branch": "main",
     "commit": "5f0f270fdc7c5b0c21d903ee85b9cb06f2ac636a"
