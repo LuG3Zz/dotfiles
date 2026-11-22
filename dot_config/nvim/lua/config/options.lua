@@ -51,3 +51,6 @@ vim.opt.cursorlineopt = "both"
 if vim.env.NVIM_PERF_WATCH == "1" then
   require("config.perf")
 end
+
+-- :HeavyOff / :HeavyOn —— 一键关掉重 UI 组件来二分定位卡顿
+require("config.heavy")
