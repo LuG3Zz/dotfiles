@@ -34,11 +34,6 @@ rev = "1ef5fe0"
 hash = ""
 
 [[plugin.deps]]
-use = "yazi-rs/plugins:smart-paste"
-rev = "1ef5fe0"
-hash = ""
-
-[[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
 rev = "1ef5fe0"
 hash = ""
@@ -57,6 +52,7 @@ hash = ""
 use = "yazi-rs/plugins:jump-to-char"
 rev = "1ef5fe0"
 hash = ""
+
 [[plugin.deps]]
 use = "Rolv-Apneseth/starship"
 rev = "ea92cf4"
@@ -71,3 +67,4 @@ hash = ""
 use = "yazi-rs/flavors:catppuccin-latte"
 rev = "38c08d8"
 hash = ""
+
