@@ -9,9 +9,7 @@ vim.opt.clipboard = "unnamedplus"
 -- 中文编码自动检测
 vim.opt.fileencodings = "utf-8,gbk,gb2312,gb18030,big5,latin1"
 
--- 键序列超时（which-key 弹出与映射等待的平衡）
--- 500 会让 s / g / 空格 这类"有前缀映射"的键最多等 0.5 秒才响应，
--- 体感就是"按了没反应"，用 LazyVim 默认的 300 更跟手。
+-- 键序列超时（which-key 弹出与映射等待的平衡；500 太钝，300 更跟手）
 vim.opt.timeoutlen = 300
 vim.opt.updatetime = 300
 
@@ -33,24 +31,6 @@ vim.opt.synmaxcol = 300
 -- 折叠交给 nvim-ufo（默认全展开）
 vim.opt.foldlevel = 99
 
--- 括号匹配插件 matchparen 在插入模式的默认等待较长，退格/输入时会
--- 造成可感知的"卡一下"；10ms 足够。
+-- matchparen 的默认等待偏长，退格/输入时会有可感知停顿，10ms 足够
 vim.g.matchparen_timeout = 10
 vim.g.matchparen_insert_timeout = 10
-
--- 相对行号（用户偏好，已开启）。
--- 代价：每次 j/k 所有可见行的相对数字都会变，nvim 每行发一次小的
--- grid_line 更新——实测 52.8 行更新/键（关掉相对行号是 6.8）。
--- 插入模式下仍自动切回绝对行号（见 autocmds.lua）。
-vim.opt.relativenumber = true
-
--- 光标行保持整行高亮（LazyVim 默认）
-vim.opt.cursorlineopt = "both"
-
--- 卡顿探针（默认关闭）：NVIM_PERF_WATCH=1 nvim 文件 → :PerfSummary
-if vim.env.NVIM_PERF_WATCH == "1" then
-  require("config.perf")
-end
-
--- :HeavyOff / :HeavyOn —— 一键关掉重 UI 组件来二分定位卡顿
-require("config.heavy")

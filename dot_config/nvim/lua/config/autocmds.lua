@@ -35,20 +35,5 @@ vim.api.nvim_create_autocmd("VimResized", {
   end,
 })
 
--- 插入模式下切回绝对行号：打字时不重画整列相对数字（省每次约 200 单元格），
--- 离开插入模式再恢复相对行号。
-vim.api.nvim_create_autocmd("InsertEnter", {
-  group = group,
-  callback = function()
-    vim.opt.relativenumber = false
-  end,
-})
-vim.api.nvim_create_autocmd("InsertLeave", {
-  group = group,
-  callback = function()
-    vim.opt.relativenumber = true
-  end,
-})
-
 -- 输入法自动切换（异步，替代同步阻塞的 fcitx.nvim）
 require("config.ime")
