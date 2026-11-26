@@ -1,4 +1,4 @@
--- 语言与文档：vimwiki / R.nvim / crates / markview / minuet
+-- 语言与文档：vimwiki / R.nvim / crates / minuet
 
 return {
   -- ====== Vimwiki（懒加载：命令触发）======
@@ -64,18 +64,6 @@ return {
         function() require("crates").show_popup() end,
         ft = { "rust", "toml" },
         desc = "Crates popup (versions/features/deps)",
-      },
-    },
-  },
-
-  -- ====== Markdown 预览 ======
-  {
-    "OXY2DEV/markview.nvim",
-    ft = "markdown",
-    opts = {
-      preview = {
-        enable = true,
-        filetypes = { "markdown" },
       },
     },
   },

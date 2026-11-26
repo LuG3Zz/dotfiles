@@ -95,10 +95,6 @@
     "branch": "master",
     "commit": "221ce6b2d999187044529f49da6554a92f740a96"
   },
-  "markview.nvim": {
-    "branch": "main",
-    "commit": "a6dbc5a4a4828b474c81fbcec11546cbd9000e3b"
-  },
   "mason-lspconfig.nvim": {
     "branch": "main",
     "commit": "761d376b5fbe6b21f659432ffadc1205c660176c"
