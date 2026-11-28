@@ -53,7 +53,7 @@ apply_once() {
 if [ "${1:-}" = "--watch" ]; then
 	while true; do
 		apply_once
-		sleep 60
+		sleep 10
 	done
 else
 	apply_once
